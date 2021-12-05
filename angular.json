@@ -103,9 +103,52 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "Alter:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "Alter:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "Alter:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "Alter:serve:production"
+            }
+          }
         }
       }
     }
   },
-  "defaultProject": "Alter"
+  "defaultProject": "Alter",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }
