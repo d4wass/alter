@@ -65,11 +65,11 @@
   },
   "lint-staged": {
     "{src,project,cypress}/**/*.ts": [
-      "prettier-eslint --write",
+      "prettier --write",
       "eslint --fix"
     ],
     "{src,project,cypress}/**/*.{html,json,md}": [
-      "prettier-eslint --write",
+      "prettier --write",
       "eslint --fix"
     ],
     "{src,project,cypress}/**/*.*css": [
