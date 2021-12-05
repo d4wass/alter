@@ -12,7 +12,6 @@
     "cypress:run": "cypress run",
     "prepare": "husky install",
     "lint": "ng lint && npm run lint:styles",
-    "lint:staged": "node ./helper/lint/lint-staged.js && npm run lint:styles",
     "lint:styles": "stylelint src/**/*.html src/**/*.*css"
   },
   "private": true,
@@ -66,10 +65,12 @@
   },
   "lint-staged": {
     "{src,project,cypress}/**/*.ts": [
-      "prettier-eslint --write"
+      "prettier-eslint --write",
+      "eslint --fix"
     ],
-    "{src,project,cypress}/**/*.{html,json}": [
-      "prettier-eslint --write"
+    "{src,project,cypress}/**/*.{html,json,md}": [
+      "prettier-eslint --write",
+      "eslint --fix"
     ],
     "{src,project,cypress}/**/*.*css": [
       "stylelint --fix"

@@ -7,5 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Alter';
+
   number = 'dalskjdaslkdmals';
+
+  showNumber(): void {
+    console.log(this.number);
+  }
 }
