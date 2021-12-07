@@ -1,4 +1,9 @@
 {
   "extends": "stylelint-config-standard-scss",
-  "plugins": ["stylelint-scss"]
+  "plugins": ["stylelint-scss"],
+  "overrides": [
+    {
+      "files": ["src/app/**/*.*css", "src/project/**/*.*css"]
+    }
+  ]
 }
