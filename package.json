@@ -64,16 +64,13 @@
     "typescript": "~4.3.2"
   },
   "lint-staged": {
-    "{src,project,cypress}/**/*.ts": [
+    "{src,cypress}/**/*.ts": [
       "prettier --write",
       "eslint --fix"
     ],
-    "{src,project,cypress}/**/*.{html,json,md}": [
+    "{src,cypress}/**/*.{html,json,md}": [
       "prettier --write",
       "eslint --fix"
-    ],
-    "{src,project,cypress}/**/*.*css": [
-      "stylelint --fix"
     ]
   },
   "husky": {
