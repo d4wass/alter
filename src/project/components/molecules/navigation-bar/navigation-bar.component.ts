@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
+import { urlList } from '../../../../utils/routes';
 
 @Component({
   selector: 'app-navigation-bar',
   template: `
     <nav>
       <ul>
-        <li>Learn more</li>
-        <li>How it's work</li>
-        <li>Become a host</li>
-        <li>Create Account</li>
+        <li *ngFor="let item of urlList">
+          <app-navigation-item [item]="item"></app-navigation-item>
+        </li>
       </ul>
     </nav>
   `,
   styleUrls: ['./navigation-bar.component.scss']
 })
-export class NavigationBarComponent {}
+export class NavigationBarComponent {
+  urlList = urlList;
+}
