@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { NavigationModule } from 'src/project/components/organisms/navigation/navigation.module';
 import { FaqViewModule } from 'src/project/views/faq-view/faq-view.module';
 import { HostViewModule } from 'src/project/views/host-view/host-view.module';
@@ -20,7 +21,8 @@ import { AppComponent } from './app.component';
     SearchResultViewModule,
     HostViewModule,
     FaqViewModule,
-    NavigationModule
+    NavigationModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
