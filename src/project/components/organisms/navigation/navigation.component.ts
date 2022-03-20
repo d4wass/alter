@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-navigation',
   template: `
-    <ng-container>
+    <div>
       <p>logo</p>
       <app-navigation-bar></app-navigation-bar>
       <p>log in</p>
-    </ng-container>
+    </div>
   `,
   styleUrls: ['./navigation.component.scss']
 })

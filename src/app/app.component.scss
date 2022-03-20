@@ -1,3 +1,17 @@
-.terminal {
-  height: 300px;
+$gridGap: 2em;
+$mainSidePadding: 6.3em;
+$minColWidth: 15em;
+
+.container {
+  padding: $gridGap $mainSidePadding;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($minColWidth, 1fr));
+  gap: 2rem;
+
+  & + .grid {
+    margin-top: $gridGap;
+  }
 }
