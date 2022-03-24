@@ -4,7 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-navigation',
   template: `
     <div>
-      <p>logo</p>
+      <a routerLink="/">
+        <img src="assets/logo.svg" alt="logo" class="logo" />
+      </a>
       <app-navigation-bar></app-navigation-bar>
       <p>log in</p>
     </div>
