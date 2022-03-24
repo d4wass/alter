@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "strict": true,
+    "module": "commonjs",
+    "target": "es2019",
+    "lib": ["ES2019", "DOM"],
+    "types": ["cypress"],
+    "resolveJsonModule": true
+  },
+  "include": ["**/*.ts"]
+}

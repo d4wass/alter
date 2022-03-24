@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-main-view-component',
-  template: ` <h1>main template view</h1> `,
+  templateUrl: './main-view-component.html',
   styleUrls: ['./main-view-component.scss']
 })
 export class MainViewComponent {

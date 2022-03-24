@@ -1,7 +1,13 @@
+@use 'base';
 @import '~normalize.css/normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;900&display=swap');
 
 *,
 *::after,
 *::before {
   box-sizing: border-box;
+}
+
+body {
+  font-family: base.$main-font;
 }

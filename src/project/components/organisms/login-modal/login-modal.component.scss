@@ -1,0 +1,99 @@
+@use '../../../../base';
+
+.wrapper {
+  border-radius: base.$main-border-rad;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  border: solid 10px #eee;
+}
+
+.wrapper > * {
+  width: 100%;
+}
+
+.title {
+  text-align: center;
+}
+
+.buttons,
+.inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.standard-btn {
+  cursor: pointer;
+  width: 100%;
+  padding: 20px 0;
+  border-radius: base.$main-border-rad;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  font-weight: 700;
+  margin: 30px 0;
+}
+
+.cancel-btn {
+  text-decoration: underline;
+  font-weight: 700;
+  text-transform: capitalize;
+  border: none;
+  width: 100%;
+  padding: 20px 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.input {
+  padding: 15px 30px;
+  border-radius: base.$main-border-rad;
+  border: solid 2px base.$light-grey;
+  margin-bottom: 20px;
+
+  &::placeholder {
+    color: base.$light-grey;
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 30px 0;
+  p {
+    color: base.$light-grey;
+    font-size: 25px;
+    font-weight: 700;
+    margin: 0 20px;
+  }
+  span {
+    content: '';
+    height: 2px;
+    width: 100%;
+    background-color: base.$light-grey;
+  }
+}
+
+.social-btn {
+  padding: 20px 20px;
+  margin-bottom: 15px;
+  border-radius: base.$main-border-rad;
+  border: solid 2px base.$light-grey;
+  background-color: transparent;
+  font-weight: 700;
+  text-align: start;
+  display: flex;
+  align-items: center;
+
+  img {
+    height: 25px;
+  }
+
+  p {
+    margin: 0;
+    margin-left: 10px;
+  }
+}
