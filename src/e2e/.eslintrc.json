@@ -15,7 +15,4 @@
     "no-console": "error"
   },
   "parser": "@typescript-eslint/parser"
-  //   "parserOptions": {
-  //     "project": "tsconfig.json"
-  //   }
 }
