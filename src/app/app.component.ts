@@ -14,6 +14,7 @@ import { Component } from '@angular/core';
         <p>footer</p>
       </div>
     </main>
+    <app-login-modal></app-login-modal>
   `,
   styleUrls: ['./app.component.scss']
 })

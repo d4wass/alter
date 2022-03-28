@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
         <img src="assets/logo.svg" alt="logo" class="logo" />
       </a>
       <app-navigation-bar></app-navigation-bar>
-      <p>log in</p>
+      <app-login-btn></app-login-btn>
     </div>
   `,
   styleUrls: ['./navigation.component.scss']

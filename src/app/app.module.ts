@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { LoginModalModule } from 'src/project/components/organisms/login-modal/login-modal.module';
 import { NavigationModule } from 'src/project/components/organisms/navigation/navigation.module';
 import { FaqViewModule } from 'src/project/views/faq-view/faq-view.module';
 import { HostViewModule } from 'src/project/views/host-view/host-view.module';
@@ -22,7 +23,8 @@ import { AppComponent } from './app.component';
     HostViewModule,
     FaqViewModule,
     NavigationModule,
-    RouterModule
+    RouterModule,
+    LoginModalModule
   ],
   providers: [],
   bootstrap: [AppComponent]
