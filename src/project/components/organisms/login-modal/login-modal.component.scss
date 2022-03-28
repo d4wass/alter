@@ -1,16 +1,30 @@
 @use '../../../../base';
 
 .wrapper {
+  position: fixed;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(51, 51, 51, 0.6);
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.wrapper-modal {
   border-radius: base.$main-border-rad;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 30px;
-  border: solid 10px #eee;
+  background-color: #fff;
+  width: 35%;
 }
 
-.wrapper > * {
+.wrapper-modal > * {
   width: 100%;
 }
 
