@@ -112,3 +112,19 @@
     margin-left: 10px;
   }
 }
+
+.change-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    margin-right: 20px;
+  }
+  button {
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: transparent;
+    border: 1px #000 solid;
+    font-size: 13px;
+  }
+}

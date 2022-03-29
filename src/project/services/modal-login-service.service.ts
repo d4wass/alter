@@ -6,6 +6,7 @@ import { BehaviorSubject, fromEvent, map, mapTo, Observable, of, Subject, tap } 
 })
 export class ModalLoginService {
   isVisible$ = new BehaviorSubject(true);
+  isLogin$ = new BehaviorSubject(true);
   clickEvent = fromEvent(document, 'click');
 
   constructor() {}
@@ -13,4 +14,12 @@ export class ModalLoginService {
   setModalVisibility(isVisible: boolean) {
     this.isVisible$.next(isVisible);
   }
+
+  setModalViewState(isLogin: boolean) {
+    this.isLogin$.next(isLogin);
+  }
 }
+
+// Todo in service
+// default state for modal showing log in or sign up state
+//
