@@ -62,17 +62,6 @@
   cursor: pointer;
 }
 
-.input {
-  padding: 15px 30px;
-  border-radius: base.$main-border-rad;
-  border: solid 2px base.$light-grey;
-  margin-bottom: 20px;
-
-  &::placeholder {
-    color: base.$light-grey;
-  }
-}
-
 .divider {
   display: flex;
   align-items: center;
@@ -118,6 +107,10 @@
   justify-content: center;
   align-items: center;
   p {
+<<<<<<< HEAD
+    font-weight: 700;
+=======
+>>>>>>> main
     margin-right: 20px;
   }
   button {
@@ -126,5 +119,9 @@
     background-color: transparent;
     border: 1px #000 solid;
     font-size: 13px;
+<<<<<<< HEAD
+    border-radius: base.$main-border-rad;
+=======
+>>>>>>> main
   }
 }

@@ -1,0 +1,24 @@
+@use '../../../../base';
+
+.input {
+  width: 100%;
+  padding: 15px 20px;
+  border-radius: base.$main-border-rad;
+  border: solid 2px base.$light-grey;
+  margin-bottom: 20px;
+
+  &::placeholder {
+    color: base.$light-grey;
+  }
+}
+
+.personal {
+  padding: 15px 20px;
+  border-radius: base.$main-border-rad;
+  border: solid 2px base.$light-grey;
+  margin-bottom: 10px;
+
+  &::placeholder {
+    color: base.$light-grey;
+  }
+}
