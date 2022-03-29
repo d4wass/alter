@@ -11,11 +11,15 @@ export class LoginModalDirective {
   onClick(className: string) {
     if (className === 'wrapper') {
       this.modalLoginService.isVisible$.next(false);
+      this.modalLoginService.isEmailView$.next(false);
+      this.modalLoginService.isLogin$.next(true);
     }
   }
 
   @HostListener('document:keyup.escape', ['$event'])
   onEscape(): void {
     this.modalLoginService.isVisible$.next(false);
+    this.modalLoginService.isEmailView$.next(false);
+    this.modalLoginService.isLogin$.next(true);
   }
 }
