@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
       <div class="grid">
         <app-navigation></app-navigation>
       </div>
-      <div class="grid">
+      <div class="flex">
         <router-outlet></router-outlet>
       </div>
       <div class="grid">
