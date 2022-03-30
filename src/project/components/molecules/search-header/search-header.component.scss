@@ -1,0 +1,44 @@
+@use '../../../../base';
+
+.wrapper {
+  padding: 20px 30px;
+  border-radius: base.$main-border-rad;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 5em;
+  font-weight: 900;
+  text-align: center;
+}
+
+.input-wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: base.$main-border-rad;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: 1px solid base.$light-grey;
+  height: 90px;
+  padding: 10px 30px;
+  max-width: 80%;
+
+  div {
+    width: 100%;
+  }
+
+  span {
+    content: '';
+    width: 2px;
+    height: 80%;
+    background-color: base.$placeholder-gray;
+    margin: 0 25px;
+  }
+
+  .input-data {
+    display: flex;
+    align-items: center;
+  }
+}
