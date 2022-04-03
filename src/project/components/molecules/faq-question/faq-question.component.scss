@@ -1,0 +1,17 @@
+@use '../../../../base';
+
+.faq-wrapper{
+    border-bottom: solid 1px base.$placeholder-gray;
+    width: 50vw;
+}
+
+.faq-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.faq-content {
+    margin: 30px;
+}
