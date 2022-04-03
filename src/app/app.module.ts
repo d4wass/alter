@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { FooterModule } from 'src/project/components/organisms/footer/footer.module';
 import { LoginModalModule } from 'src/project/components/organisms/login-modal/login-modal.module';
 import { NavigationModule } from 'src/project/components/organisms/navigation/navigation.module';
 import { FaqViewModule } from 'src/project/views/faq-view/faq-view.module';
@@ -24,7 +25,8 @@ import { AppComponent } from './app.component';
     FaqViewModule,
     NavigationModule,
     RouterModule,
-    LoginModalModule
+    LoginModalModule,
+    FooterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

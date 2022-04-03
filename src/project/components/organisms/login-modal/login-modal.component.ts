@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ModalLoginService } from 'src/project/services/modal-login-service.service';
+import { Component, OnInit } from '@angular/core';
+import { ModalLoginService } from 'src/project/services/modal-login/modal-login-service.service';
 
 @Component({
   selector: 'app-login-modal',

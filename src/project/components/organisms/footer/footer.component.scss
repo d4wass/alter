@@ -1,0 +1,56 @@
+@use '../../../../base';
+
+:host {
+  padding: 0 6.3em;
+  background-color: base.$footer-gray;
+}
+
+.wrapper {
+  margin: 60px 0 30px 0;
+  border: solid base.$placeholder-gray;
+  border-width: 3px 0 3px 0;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 0;
+}
+
+.wrapper-nav {
+  display: flex;
+  padding-right: 70px;
+}
+
+.wrapper-social {
+  display: flex;
+  flex-direction: column;
+  a {
+    margin-left: 20px;
+  }
+  .social-links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .apps-links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    a {
+      margin: 0;
+    }
+  }
+
+  .language-selector {
+  }
+}
+
+.under-footer {
+  padding-bottom: 30px;
+  a {
+    margin-right: 30px;
+  }
+}

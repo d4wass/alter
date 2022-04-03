@@ -10,10 +10,10 @@ import { Component } from '@angular/core';
       <div class="flex">
         <router-outlet></router-outlet>
       </div>
-      <div class="grid">
-        <p>footer</p>
-      </div>
     </main>
+    <div class="grid">
+      <app-footer></app-footer>
+    </div>
     <app-login-modal></app-login-modal>
   `,
   styleUrls: ['./app.component.scss']
