@@ -1,5 +1,5 @@
 import { Directive, HostListener } from '@angular/core';
-import { ModalLoginService } from '../services/modal-login-service.service';
+import { ModalLoginService } from '../services/modal-login/modal-login-service.service';
 
 @Directive({
   selector: '[appLoginModal]'

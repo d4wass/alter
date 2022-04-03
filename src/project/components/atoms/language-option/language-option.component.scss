@@ -1,0 +1,17 @@
+.option{
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	padding: 10px 20px;
+	.radio{
+		display: none;
+	}
+	label{
+		cursor: pointer;
+	}
+	img{
+		margin-right: 10px;
+		height: 30px;
+		width: 30px;
+	}
+}

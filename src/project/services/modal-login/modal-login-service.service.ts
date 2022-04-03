@@ -23,7 +23,3 @@ export class ModalLoginService {
     this.isEmailView$.next(isEmail);
   }
 }
-
-// Todo in service
-// default state for modal showing log in or sign up state
-//
