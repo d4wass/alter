@@ -1,0 +1,29 @@
+@use '../../../../base';
+
+.wrapper{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 50px 0;
+}
+.faq-content{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    h1{
+        margin-bottom: 50px;
+    }
+}
+
+.faq-content-wrapper{
+    margin-right: 50px;
+}
+
+.faq-img-wrapper{
+    width: 30%;
+    height: auto;
+    border-radius: base.$main-border-rad;
+    background-image: url('../../../../assets/faq/faq-img.svg');
+    background-repeat: no-repeat;
+    background-position-x: -300px;
+}
