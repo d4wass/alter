@@ -1,0 +1,22 @@
+.reviews-wrapper,
+.reviews-section,
+.reviews {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviews {
+    padding: 0 30px;
+}
+
+.reviews-wrapper{
+    img{
+        height: 50px;
+    }
+}
+
+h1{
+    text-align: center;
+    padding-bottom: 40px;
+}
