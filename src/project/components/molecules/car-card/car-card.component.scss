@@ -1,0 +1,16 @@
+@use '../../../../base';
+
+.car-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: base.$main-border-rad;
+    height: 290px;
+    width: 245px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    img{
+        border-radius: 10px 10px 0 0;
+        width: 100%;
+    }
+}

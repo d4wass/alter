@@ -5,6 +5,7 @@ import { LoginModalModule } from 'src/project/components/organisms/login-modal/l
 import { SearchHeaderModule } from 'src/project/components/molecules/search-header/search-header.module';
 import { FaqSectionModule } from 'src/project/components/organisms/faq-section/faq-section.module';
 import { ReviewSectionModule } from 'src/project/components/molecules/review-section/review-section.module';
+import { CarouselSectionModule } from 'src/project/components/organisms/carousel-section/carousel-section.module';
 
 @NgModule({
   declarations: [MainViewComponent],
@@ -13,7 +14,8 @@ import { ReviewSectionModule } from 'src/project/components/molecules/review-sec
     LoginModalModule,
     SearchHeaderModule,
     FaqSectionModule,
-    ReviewSectionModule
+    ReviewSectionModule,
+    CarouselSectionModule
   ]
 })
 export class MainViewModule {}
