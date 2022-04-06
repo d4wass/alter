@@ -1,0 +1,15 @@
+.carousel-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+        height: 50px;
+    }
+
+    .car-card-wrapper {
+        width: 100%;
+        padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+    }
+}
