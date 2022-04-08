@@ -1,6 +1,10 @@
+$gridGap: 1em;
+$mainSidePadding: 6.3em;
+
 div {
   display: flex;
   justify-content: space-between;
+  padding: $gridGap $mainSidePadding;
 }
 
 .logo {

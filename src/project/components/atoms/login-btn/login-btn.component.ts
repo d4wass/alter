@@ -3,7 +3,12 @@ import { ModalLoginService } from 'src/project/services/modal-login/modal-login-
 
 @Component({
   selector: 'app-login-btn',
-  template: ` <button class="login-btn" (click)="handleClick($event)">login</button> `,
+  template: `
+    <button class="login-btn" (click)="handleClick($event)">
+      Log in
+      <img src="assets/usericon.svg" alt="" />
+    </button>
+  `,
   styleUrls: ['./login-btn.component.scss']
 })
 export class LoginBtnComponent {

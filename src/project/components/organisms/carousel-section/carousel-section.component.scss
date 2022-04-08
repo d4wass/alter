@@ -1,3 +1,14 @@
+:host{
+
+}
+
+.carousel-section{
+    padding: 50px 0;
+    h1{
+        margin-bottom: 50px;
+    }
+}
+
 .carousel-content {
     display: flex;
     justify-content: center;
@@ -9,7 +20,7 @@
     .car-card-wrapper {
         width: 100%;
         padding: 0 30px;
-            display: flex;
-            justify-content: space-between;
+        display: flex;
+        justify-content: space-between;
     }
 }

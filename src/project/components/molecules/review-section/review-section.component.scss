@@ -1,5 +1,5 @@
 .reviews-wrapper,
-.reviews-section,
+.review-section,
 .reviews {
     display: flex;
     justify-content: center;
@@ -8,6 +8,12 @@
 
 .reviews {
     padding: 0 30px;
+}
+
+.review-section {
+    flex-direction: column;
+    height: 50vh;
+    padding: 50px 0;
 }
 
 .reviews-wrapper{
