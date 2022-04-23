@@ -16,12 +16,6 @@ export class FaqButtonComponent {
 
   handleOpen() {
     this.isOpenEvent.emit(!this.isOpen);
-
     this.isOpen = !this.isOpen;
-    // if (this.isOpen) {
-    //   this.isOpenEvent.emit(false);
-    // } else {
-    //   this.isOpenEvent.emit(true);
-    // }
   }
 }

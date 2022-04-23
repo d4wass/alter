@@ -1,6 +1,6 @@
-// setup-jest.ts
 import 'zone.js/fesm2015/zone-testing-bundle.min.js';
-import './jest-global-mocks';
+import 'jest-preset-angular';
+import { ngMocks } from 'ng-mocks';
 
 import { getTestBed } from '@angular/core/testing';
 import {
@@ -10,7 +10,8 @@ import {
 
 getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting(), {
   teardown: {
-    destroyAfterEach: true // Angular recommends this, but it may break existing tests
+    destroyAfterEach: true
   }
 });
-getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
+
+ngMocks.autoSpy('jest');

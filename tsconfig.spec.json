@@ -3,9 +3,11 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
-    "types": ["jest"],
-    "module": "CommonJs"
+    "types": ["jest", "node"],
+    "module": "CommonJs",
+    "allowJs": true
   },
+  "esModuleInterop": true,
   "files": ["src/polyfills.ts"],
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }

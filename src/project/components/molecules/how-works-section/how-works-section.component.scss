@@ -1,0 +1,31 @@
+@use '../../../../base';
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+    h2{
+        font-size: 50px;
+        margin: 0;
+    }
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+}
+
+.img-wrapper {
+    border-radius: base.$main-border-rad;
+    width: 100%;
+    height: 100%;
+    max-height: 400px;
+    background-image: url('../../../../assets/car-keys.jpg');
+    background-size: cover;
+    background-position-y: 60%;
+    margin-right: 50px;
+}

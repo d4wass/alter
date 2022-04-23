@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { SearchHeaderModule } from 'src/project/components/molecules/search-header/search-header.module';
+import { TitleHeaderModule } from 'src/project/components/molecules/title-header/title-header.module';
 import { FooterModule } from 'src/project/components/organisms/footer/footer.module';
 import { LoginModalModule } from 'src/project/components/organisms/login-modal/login-modal.module';
 import { NavigationModule } from 'src/project/components/organisms/navigation/navigation.module';
@@ -17,7 +17,7 @@ import { AppComponent } from './app.component';
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    SearchHeaderModule,
+    TitleHeaderModule,
     BrowserModule,
     AppRoutingModule,
     MainViewModule,
