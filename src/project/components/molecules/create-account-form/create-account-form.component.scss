@@ -1,5 +1,9 @@
 @use '../../../../base';
 
+:host ::ng-deep .personal{
+  width: 100%;
+}
+
 .signup-btn {
   width: 100%;
   background-color: #000;
@@ -19,7 +23,6 @@
   margin-bottom: 10px;
   .personal-inputs {
     display: flex;
-    justify-content: space-between;
   }
   span {
     font-size: 13px;

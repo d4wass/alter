@@ -1,0 +1,48 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 70px 0;
+    h1{
+        font-size: 40px;
+    }
+}
+
+.benefit-container {
+    width: 800px;
+}
+
+.graphic-content {
+    position: relative;
+
+    .img {
+        height: 300px;
+        width: 300px;
+        border-radius: 50%;
+        background-size: contain;
+        background-image:url('../../../../assets/benefit-car.jpg') ;
+        background-position: 50%;
+    }
+    .svg-1,
+    .svg-2 {
+        position: absolute;
+        height: 150px;
+        width: 400px;
+        background-image: url('../../../../assets/fall.svg');
+        background-repeat: no-repeat;
+    }
+
+    .svg-2 {
+        top: 50%;
+        left: 40%;
+        z-index: -1;
+    }
+
+    .svg-1 {
+        top: 0;
+        right: 30%;
+        z-index: 1;
+    }
+
+}

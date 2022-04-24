@@ -1,5 +1,9 @@
 @use '../../../../base';
 
+:host {
+  width: 100%;
+}
+
 .input {
   width: 100%;
   padding: 15px 20px;
@@ -16,7 +20,7 @@
   padding: 15px 20px;
   border-radius: base.$main-border-rad;
   border: solid 2px base.$light-grey;
-  margin-bottom: 10px;
+  width: 100%;
 
   &::placeholder {
     color: base.$light-grey;

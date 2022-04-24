@@ -1,6 +1,6 @@
+$minColWidth: 15em;
 $gridGap: 2em;
 $mainSidePadding: 6.3em;
-$minColWidth: 15em;
 
 .container {
   padding: $gridGap $mainSidePadding;
@@ -14,9 +14,4 @@ $minColWidth: 15em;
   & + .grid {
     margin-top: $gridGap;
   }
-}
-
-.flex {
-  display: flex;
-  flex-direction: column;
 }

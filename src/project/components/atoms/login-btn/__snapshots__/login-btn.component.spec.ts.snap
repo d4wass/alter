@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginBtnComponent should match to snapshot 1`] = `
+<app-login-btn
+  __ngContext__={[Function LRootView]}
+  modalLoginService={[Function ModalLoginService]}
+>
+  <button
+    class="login-btn"
+  >
+     Log in 
+    <img
+      alt=""
+      src="assets/usericon.svg"
+    />
+  </button>
+</app-login-btn>
+`;
