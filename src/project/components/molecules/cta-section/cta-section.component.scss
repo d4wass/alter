@@ -12,19 +12,6 @@
     align-items: center;
     justify-content: center;
     padding: 30px 0;
-
-    button {
-        padding: 20px 30px;
-        border: none;
-        background-color: #000;
-        color: #fff;
-        transition: all ease-in-out .3s;
-        cursor: pointer;
-        &:hover{
-            color:#000;
-            background-color: base.$yellow-span;
-        }
-    }
 }
 
 p{
