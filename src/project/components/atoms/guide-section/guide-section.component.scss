@@ -1,0 +1,13 @@
+@use '../../../../_mixins';
+
+.wrapper{
+    @include mixins.title(50px);
+}
+
+.guides-container {
+    padding: 50px 0 70px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 450px;
+    grid-gap: 30px;
+}

@@ -1,0 +1,25 @@
+@use './base';
+
+@mixin title($size){
+    h1{
+        font-family: base.$title-font;
+        font-weight: 900;
+        font-size: $size;
+        margin-bottom: 10px;
+    }
+}
+
+@mixin subtitle($size) {
+    h3{
+        font-family: base.$main-font;
+        font-weight: 900;
+        font-size: $size;
+    }
+}
+
+@mixin paragraph {
+    p{
+        line-height: 1.50;
+        font-weight: 300;
+    }
+}
