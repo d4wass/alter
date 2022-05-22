@@ -16,7 +16,7 @@ import { Component } from '@angular/core';
           sports car for a special night out, find the perfect car for all kinds of occasions and
           budgets on Turo.
         </p>
-        <button>Book the perfect car</button>
+        <button class="cta-btn">Book the perfect car</button>
       </div>
     </div>
   `,

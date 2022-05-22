@@ -1,0 +1,31 @@
+@use '../../../../base';
+@use '../../../../mixins';
+
+@include mixins.title(50px);
+
+.wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 0 50px 0;
+    height: 100%;
+}
+
+.content {
+    @include mixins.paragraph;
+    width: 50%;
+
+    p   {
+        margin-bottom: 40px;
+        max-width: 60%;
+    }
+}
+
+.graphic-content {
+    height: 300px;
+    width: 50%;
+    border-radius: base.$main-border-rad;
+    background-image: url('../../../../assets/host-section.jpg');
+    background-size: cover;
+    background-position-y: 40%;
+}

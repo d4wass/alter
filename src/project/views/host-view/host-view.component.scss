@@ -1,0 +1,24 @@
+@use '../../../base';
+@use '../../../_mixins';
+
+.flex-wrapper {
+    padding: 0;
+    padding-top: 50px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.introduction-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 30px;
+    max-width: 50%;
+
+    h1,h3{
+        margin: 0;
+    }
+
+    @include mixins.title(90px);
+    @include mixins.subtitle(28px);
+    @include mixins.paragraph;
+}

@@ -1,0 +1,25 @@
+@use '../../../../mixins';
+@use '../../../../base';
+
+.img-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+        width: 200px;
+        height: 200px;
+    }
+}
+
+.wrapper{
+    @include mixins.subtitle(25px);
+    @include mixins.paragraph;
+    border-radius: base.$main-border-rad;
+    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+    height: 100%;
+    padding: 20px;
+
+    h3{
+        margin: 0
+    }
+}
