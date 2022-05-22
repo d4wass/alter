@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalLoginService } from 'src/project/services/modal-login/modal-login-service.service';
+import { ModalLoginService } from '../../../services/modal-login/modal-login-service.service';
+import { FormControl } from '@ngneat/reactive-forms';
+import { Validators } from '@angular/forms';
+import { combineLatest, combineLatestAll, merge, Observable } from 'rxjs';
+import { AuthService } from '../../../services/auth-service/auth.service';
 
 @Component({
   selector: 'app-login-modal',
@@ -11,14 +15,25 @@ import { ModalLoginService } from 'src/project/services/modal-login/modal-login-
           <h1 class="title" *ngIf="!isLogin">Create an account</h1>
           <div class="content">
             <ng-container *ngIf="isLogin">
-              <div class="inputs">
-                <app-input-form placeholder="email"></app-input-form>
-                <app-input-form [type]="type" placeholder="password"></app-input-form>
-              </div>
-              <div class="buttons">
-                <button class="standard-btn">Confirm</button>
-                <button class="cancel-btn" (click)="onCancel()">cancel</button>
-              </div>
+              <form (submit)="onLogin($event)">
+                <div class="inputs">
+                  <input
+                    placeholder="email"
+                    [formControl]="emailCtrl"
+                    [ngClass]="{ invalid: (isEmailCtrlValid | async) }"
+                  />
+                  <input
+                    type="password"
+                    placeholder="password"
+                    [formControl]="passwordCtrl"
+                    [ngClass]="{ invalid: (isPasswordCtrlValid | async) }"
+                  />
+                </div>
+                <div class="buttons">
+                  <button class="standard-btn" type="submit">Confirm</button>
+                  <button class="cancel-btn" (click)="onCancel()">cancel</button>
+                </div>
+              </form>
               <div class="divider">
                 <span></span>
                 <p>Or</p>
@@ -74,9 +89,13 @@ export class LoginModalComponent implements OnInit {
   isVisible?: boolean;
   isLogin?: boolean;
   isEmail?: boolean;
-  type: string = 'password';
 
-  constructor(private modalLoginService: ModalLoginService) {}
+  emailCtrl = new FormControl('', [Validators.required, Validators.email]);
+  passwordCtrl = new FormControl('', [Validators.required, Validators.minLength(8)]);
+  isEmailCtrlValid = this.emailCtrl.valid$;
+  isPasswordCtrlValid = this.passwordCtrl.valid$;
+
+  constructor(private modalLoginService: ModalLoginService, private authService: AuthService) {}
 
   ngOnInit() {
     this.modalLoginService.isVisible$.subscribe((isVisible) => (this.isVisible = isVisible));
@@ -84,8 +103,30 @@ export class LoginModalComponent implements OnInit {
     this.modalLoginService.isEmailView$.subscribe((isEmail) => (this.isEmail = isEmail));
   }
 
+  onLogin(event: Event): void {
+    let emailValid;
+    let passwordValid;
+    this.isEmailCtrlValid.subscribe((value) => (emailValid = value));
+    this.isPasswordCtrlValid.subscribe((value) => (passwordValid = value));
+
+    if (emailValid && passwordValid) {
+      this.authService.loginUser(this.emailCtrl.value, this.passwordCtrl.value);
+    }
+
+    console.log(emailValid, passwordValid);
+    console.log(this.emailCtrl.valid);
+  }
+
   onCancel() {
     this.modalLoginService.isVisible$.next(false);
+  }
+
+  onSubmit(event: Event) {
+    console.log('dziala');
+    event.preventDefault();
+    if (this.emailCtrl.valid && this.passwordCtrl.valid) {
+      console.log('valid form');
+    }
   }
 
   setStateModalView(event: Event) {

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 import { TitleHeaderModule } from 'src/project/components/molecules/title-header/title-header.module';
 import { FooterModule } from 'src/project/components/organisms/footer/footer.module';
 import { LoginModalModule } from 'src/project/components/organisms/login-modal/login-modal.module';
@@ -28,7 +29,8 @@ import { AppComponent } from './app.component';
     NavigationModule,
     RouterModule,
     LoginModalModule,
-    FooterModule
+    FooterModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
