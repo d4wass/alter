@@ -119,3 +119,30 @@
     border-radius: base.$main-border-rad;
   }
 }
+
+input {
+  width: 100%;
+  padding: 15px 20px;
+  border-radius: base.$main-border-rad;
+  border: solid 2px base.$light-grey;
+  margin-bottom: 20px;
+
+  &::placeholder {
+    color: base.$light-grey;
+  }
+}
+
+.personal {
+  padding: 15px 20px;
+  border-radius: base.$main-border-rad;
+  border: solid 2px base.$light-grey;
+  width: 100%;
+
+  &::placeholder {
+    color: base.$light-grey;
+  }
+}
+
+.invalid {
+  border: solid 2px red;
+}

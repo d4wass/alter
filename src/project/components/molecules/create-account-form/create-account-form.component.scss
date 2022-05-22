@@ -39,3 +39,23 @@
     }
   }
 }
+
+input {
+  width: 100%;
+  padding: 15px 20px;
+  border-radius: base.$main-border-rad;
+  border: solid 2px base.$light-grey;
+  margin-bottom: 20px;
+
+  &::placeholder {
+    color: base.$light-grey;
+  }
+}
+
+.invalid {
+  border: solid 2px red;
+}
+
+.unchecked {
+  color: red
+}
