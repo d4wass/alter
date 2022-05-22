@@ -1,0 +1,3 @@
+[submodule "alter"]
+	path = alter
+	url = https://github.com/d4wass/alter.git
