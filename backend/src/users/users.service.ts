@@ -14,17 +14,19 @@ export class UsersService {
     return result.id as string;
   }
 
-  async getUser(userId: string) {
+  async getUser(email: string): Promise<User | undefined> {
+    // console.log(email);
     let user;
     try {
-      user = await this.userModel.findById(userId);
+      user = await this.userModel.findOne({ email });
     } catch (error) {
       throw new NotFoundException('Cannot find user');
     }
+
     if (!user) {
       throw new NotFoundException('Cannot find user');
     }
-
+    // console.log(user);
     return user as User;
   }
 }
