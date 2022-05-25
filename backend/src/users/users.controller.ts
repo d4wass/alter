@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Post, Body, Get } from '@nestjs/common';
+import { Controller, UseGuards, Post, Body, Get, Request } from '@nestjs/common';
 import { LocalAuthGuard } from 'src/guards/local-auth.guard';
 import { UsersService } from './users.service';
 
@@ -15,5 +15,12 @@ export class UsersController {
     @Body('password') password: string
   ) {
     await this.usersService.addUser(email, firstName, lastName, password);
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @Post('login')
+  async login(@Request() req): Promise<any> {
+    console.log(req.user);
+    return req.user;
   }
 }

@@ -5,13 +5,14 @@ import { UsersService } from '../users/users.service';
 export class AuthService {
   constructor(private usersService: UsersService) {}
 
-  async validateUser(username: string, pass: string): Promise<any> {
-    // const user = await this.usersService.findOne(username);
-    // if (user && user.password === pass) {
-    //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    //   const { password, ...result } = user;
-    //   return result;
-    // }
-    // return null;
+  async validateUser(email: string, password: string): Promise<any> {
+    const user = await this.usersService.getUser(email);
+    console.log(user);
+    if (user && user.password === password) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password, email, ...result } = user;
+      return result;
+    }
+    return null;
   }
 }
