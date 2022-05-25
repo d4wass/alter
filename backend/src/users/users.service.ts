@@ -15,7 +15,7 @@ export class UsersService {
   }
 
   async getUser(email: string): Promise<User | undefined> {
-    console.log(email);
+    // console.log(email);
     let user;
     try {
       user = await this.userModel.findOne({ email });
@@ -26,7 +26,7 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException('Cannot find user');
     }
-    console.log(user);
+    // console.log(user);
     return user as User;
   }
 }
