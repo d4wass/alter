@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { Extras, Feature, Review, Specification } from '../models/vehicle.model';
 import { VehiclesService } from './vehicles.service';
 
@@ -16,8 +16,7 @@ export class VehiclesController {
     @Body('rewievs') rewievs: Review[],
     @Body('extras') extras: Extras[],
     @Body('description') description: string,
-    @Body('isCancelFree') isCancelFree: boolean,
-    @Body('isBooked') isBooked: boolean
+    @Body('isCancelFree') isCancelFree: boolean
   ) {
     //add guard that prevents from adding vehicle when user is host and is login
     await this.vehicleService.addVehicle({
@@ -29,8 +28,26 @@ export class VehiclesController {
       rewievs,
       extras,
       description,
-      isCancelFree,
-      isBooked
+      isCancelFree
     });
+  }
+
+  @Get('search/:brand')
+  async getVehiclesByBrand(@Param('brand') param: string) {
+    const formattedParam = this.vehicleService.stringFormatter(param);
+    const vehiclesByBrand = await this.vehicleService.getVehiclesByBrand(formattedParam);
+    return vehiclesByBrand;
+  }
+
+  @Get('search')
+  async getVehiclesByQuery(@Query() query) {
+    const vehiclesByQuery = await this.vehicleService.getVehiclesByQuery(query);
+    return vehiclesByQuery;
+  }
+
+  @Get('vehicles')
+  async getAllVehicles() {
+    const vehicles = await this.vehicleService.getAllVehicles();
+    return vehicles;
   }
 }

@@ -12,7 +12,7 @@ export const VehicleSchema = new mongoose.Schema({
   extras: { type: Array },
   description: { type: String },
   isCancelFree: { type: Boolean },
-  isBooked: { type: Boolean }
+  Reservations: { type: Array }
 });
 
 export interface Vehicle extends mongoose.Document {
@@ -27,7 +27,6 @@ export interface Vehicle extends mongoose.Document {
   extras: Extras[];
   description: string;
   isCancelFree: boolean;
-  isBooked: boolean;
 }
 
 export interface Feature {

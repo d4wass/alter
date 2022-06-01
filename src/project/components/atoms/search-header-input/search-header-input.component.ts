@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-search-header-input',
@@ -10,6 +11,7 @@ import { Component, Input } from '@angular/core';
         id="where"
         placeholder="{{ placeholderValue }}"
         [ngClass]="{ 'search-input': labelValue, 'search-input-noLabel': !labelValue }"
+        [formControl]="control"
       />
     </div>
   `,
@@ -19,4 +21,5 @@ export class SearchHeaderInputComponent {
   @Input() labelValue!: string;
   @Input() placeholderValue!: string;
   @Input() typeValue!: string;
+  @Input() control!: FormControl;
 }
