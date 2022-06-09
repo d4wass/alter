@@ -14,6 +14,10 @@ import { SearchResultViewModule } from 'src/project/views/search-result-view/sea
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { StoreModule } from '@ngrx/store';
+import { userReducer } from 'src/+state/user/user.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { vehiclesReducer } from 'src/+state/vehicles/vehicle.reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +34,11 @@ import { AppComponent } from './app.component';
     RouterModule,
     LoginModalModule,
     FooterModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot({ user: userReducer, vehicles: vehiclesReducer }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 500
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
