@@ -4,6 +4,8 @@ import { FormControl } from '@ngneat/reactive-forms';
 import { Validators } from '@angular/forms';
 import { combineLatest, combineLatestAll, merge, Observable } from 'rxjs';
 import { AuthService } from '../../../services/auth-service/auth.service';
+import { Store } from '@ngrx/store';
+import { UserActions } from 'src/+state/user/user.actions';
 
 @Component({
   selector: 'app-login-modal',
@@ -95,7 +97,11 @@ export class LoginModalComponent implements OnInit {
   isEmailCtrlValid = this.emailCtrl.valid$;
   isPasswordCtrlValid = this.passwordCtrl.valid$;
 
-  constructor(private modalLoginService: ModalLoginService, private authService: AuthService) {}
+  constructor(
+    private modalLoginService: ModalLoginService,
+    private authService: AuthService,
+    private readonly store: Store
+  ) {}
 
   ngOnInit() {
     this.modalLoginService.isVisible$.subscribe((isVisible) => (this.isVisible = isVisible));
@@ -110,7 +116,10 @@ export class LoginModalComponent implements OnInit {
     this.isPasswordCtrlValid.subscribe((value) => (passwordValid = value));
 
     if (emailValid && passwordValid) {
-      this.authService.loginUser(this.emailCtrl.value, this.passwordCtrl.value);
+      // this.authService.loginUser(this.emailCtrl.value, this.passwordCtrl.value);
+      this.store.dispatch(
+        UserActions.loginUser({ email: this.emailCtrl.value, password: this.passwordCtrl.value })
+      );
     }
 
     console.log(emailValid, passwordValid);
