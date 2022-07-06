@@ -18,6 +18,8 @@ import { StoreModule } from '@ngrx/store';
 import { userReducer } from 'src/+state/user/user.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { vehiclesReducer } from 'src/+state/vehicles/vehicle.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { VehicleEffects } from '../+state/vehicles/vehicle.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,6 +38,7 @@ import { vehiclesReducer } from 'src/+state/vehicles/vehicle.reducer';
     FooterModule,
     HttpClientModule,
     StoreModule.forRoot({ user: userReducer, vehicles: vehiclesReducer }),
+    EffectsModule.forRoot([VehicleEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 500
     })

@@ -23,7 +23,21 @@ export class VehiclesService {
 
   //search request
   // async getAllVehicles() {}
-  // async getVehiclesByModel() {}
+  async getVehiclesByModel(model: string) {
+    let vehiclesByModel: Vehicle[];
+    try {
+      vehiclesByModel = await this.vehicleModel.find({ model }).exec();
+    } catch (error) {
+      throw new NotFoundException('Cannot find vehicles by model');
+    }
+
+    if (!vehiclesByModel) {
+      throw new NotFoundException('Cannot find vehicles by model');
+    }
+
+    return vehiclesByModel as Vehicle[];
+  }
+
   async getVehiclesByBrand(brand: string) {
     let vehiclesByBrand: Vehicle[];
     try {
@@ -68,8 +82,7 @@ export class VehiclesService {
 
     return vehiclesByPlace as Vehicle[];
   }
-  // async getVehiclesByHost() {}
-  // async getVehicle() {}
+
   async getAllVehicles() {
     const vehicles = await this.vehicleModel.find().exec();
     console.log(vehicles);

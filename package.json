@@ -30,6 +30,7 @@
     "@nestjs/jwt": "^8.0.1",
     "@ngneat/reactive-forms": "^4.1.0",
     "@ngrx/effects": "^13.2.0",
+    "@ngrx/entity": "^13.2.0",
     "@ngrx/store": "^13.2.0",
     "@ngrx/store-devtools": "^13.2.0",
     "concurrently": "^7.1.0",
