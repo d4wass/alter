@@ -11,9 +11,9 @@ export class VehiclesController {
     @Body('brand') brand: string,
     @Body('model') model: string,
     @Body('place') place: string,
+    @Body('price') price: number,
     @Body('specification') specification: Specification,
     @Body('features') features: Feature,
-    @Body('rewievs') rewievs: Review[],
     @Body('extras') extras: Extras[],
     @Body('description') description: string,
     @Body('isCancelFree') isCancelFree: boolean
@@ -23,9 +23,9 @@ export class VehiclesController {
       brand,
       model,
       place,
+      price,
       specification,
       features,
-      rewievs,
       extras,
       description,
       isCancelFree

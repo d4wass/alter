@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@ngneat/reactive-forms';
+import { Store } from '@ngrx/store';
+import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
+import { VehicleSelectors } from 'src/+state/vehicles/vehicle.selectors';
 import { SearchService } from 'src/project/services/search-service/search.service';
 
 @Component({
@@ -10,7 +14,6 @@ import { SearchService } from 'src/project/services/search-service/search.servic
       <form formGroup="[searchForm]" class="input-wrapper">
         <div>
           <app-search-header-input
-            typeValue="text"
             labelValue="Where"
             placeholderValue="City, airport, address or hotel"
             [control]="searchForm.controls.place"
@@ -19,13 +22,13 @@ import { SearchService } from 'src/project/services/search-service/search.servic
         <span></span>
         <div class="input-data">
           <app-search-header-input
-            typeValue="data"
+            typeValue="date"
             labelValue="Until"
             placeholderValue="ex: 11/03/21"
             [control]="searchForm.controls.fromDate"
           ></app-search-header-input>
           <app-search-header-input
-            typeValue="data"
+            typeValue="time"
             placeholderValue="10:00 am"
             [control]="searchForm.controls.fromHour"
           ></app-search-header-input>
@@ -39,7 +42,7 @@ import { SearchService } from 'src/project/services/search-service/search.servic
             [control]="searchForm.controls.endDate"
           ></app-search-header-input>
           <app-search-header-input
-            typeValue="date"
+            typeValue="time"
             placeholderValue="11:00 am"
             [control]="searchForm.controls.endHour"
           ></app-search-header-input>
@@ -51,7 +54,7 @@ import { SearchService } from 'src/project/services/search-service/search.servic
   styleUrls: ['./main-search-form.component.scss']
 })
 export class MainSearchFormComponent {
-  constructor(private searchService: SearchService) {}
+  constructor(private store: Store) {}
 
   searchForm = new FormGroup({
     place: new FormControl('', Validators.required),
@@ -62,16 +65,10 @@ export class MainSearchFormComponent {
   });
 
   onSubmit(): void {
-    console.log(this.searchForm.controls);
     const { place, fromDate, fromHour, endDate, endHour } = this.searchForm.controls;
-    if (this.searchForm.valid) {
-      this.searchService.searchVehicles(
-        place.value,
-        fromDate.value,
-        fromHour.value,
-        endDate.value,
-        endHour.value
-      );
+    if (place.valid) {
+      this.store.dispatch(VehiclesActions.loadVehicles());
+      this.store.dispatch(VehiclesActions.searchVehicles({ query: place.value }));
     }
   }
 }

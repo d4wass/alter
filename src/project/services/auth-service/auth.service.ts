@@ -21,6 +21,7 @@ export class AuthService {
       email,
       password
     });
+
     console.log(auth_token);
     return auth_token;
   }

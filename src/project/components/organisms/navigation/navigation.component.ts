@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <a routerLink="/">
-        <img src="assets/logo.svg" alt="logo" class="logo" />
+        <img src="assets/Logo.svg" alt="logo" class="logo" />
       </a>
       <app-navigation-bar></app-navigation-bar>
       <app-login-btn></app-login-btn>

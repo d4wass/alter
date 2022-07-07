@@ -1,38 +1,20 @@
 import { createAction, props } from '@ngrx/store';
+import { Vehicle } from '../models/vehicle.model';
 
-interface Vehicle {}
-
-const getVehiclesByMade = createAction(
-  '[Vehicles] Get Vehicles by Made',
-  props<{ made: string }>()
-);
-const getVehiclesByMadeError = createAction(
-  '[Vehicles] Get Vehicles by Made',
-  props<{ error: string }>()
-);
-const getVehiclesByMadeComplete = createAction(
-  '[Vehicles] Get Vehicles by Made',
+const searchVehicles = createAction('[Vehicles] Get Vehicles by query', props<{ query: string }>());
+const loadVehicles = createAction('[Vehicles] Load Vehicles');
+const loadVehiclesSuccess = createAction(
+  '[Vehicles] Load Vehicles Success',
   props<{ vehicles: Vehicle[] }>()
 );
-
-const getVehiclesByQuery = createAction(
-  '[Vehicles] Get Vehicles by query',
-  props<{ query: string }>()
-);
-const getVehiclesByQueryError = createAction(
-  '[Vehicles] Get Vehicles by query',
+const loadVehiclesError = createAction(
+  '[Vehicles] Load Vehicles Error',
   props<{ error: string }>()
-);
-const getVehiclesByQueryComplete = createAction(
-  '[Vehicles] Get Vehicles by query',
-  props<{ vehicles: Vehicle[] }>()
 );
 
 export const VehiclesActions = {
-  getVehiclesByMade,
-  getVehiclesByMadeComplete,
-  getVehiclesByMadeError,
-  getVehiclesByQuery,
-  getVehiclesByQueryComplete,
-  getVehiclesByQueryError
+  searchVehicles,
+  loadVehicles,
+  loadVehiclesSuccess,
+  loadVehiclesError
 };

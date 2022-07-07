@@ -1,23 +1,5 @@
-import * as mongoose from 'mongoose';
-
-export const VehicleSchema = new mongoose.Schema({
-  id: { type: String },
-  hostId: { type: String },
-  brand: { type: String },
-  model: { type: String },
-  place: { type: String },
-  price: { type: Number },
-  rate: { type: Number },
-  specification: { type: Object },
-  features: { type: Object },
-  rewievs: { type: Array },
-  extras: { type: Array },
-  description: { type: String },
-  isCancelFree: { type: Boolean }
-});
-
-export interface Vehicle extends mongoose.Document {
-  id: string;
+export interface Vehicle {
+  _id: string;
   hostId: string;
   brand: string;
   model: string;
@@ -32,7 +14,7 @@ export interface Vehicle extends mongoose.Document {
   isCancelFree: boolean;
 }
 
-export interface Feature {
+interface Feature {
   engine: { capacity: number; power: number };
   gearbox: { manual: boolean; automatic: boolean };
   drive: { rear: boolean; front: boolean; all: boolean };
@@ -52,7 +34,7 @@ export interface Feature {
   };
 }
 
-export interface Review {
+interface Review {
   userId: string;
   userName: string;
   date: string;
@@ -60,13 +42,13 @@ export interface Review {
   review: string;
 }
 
-export interface Extras {
+interface Extras {
   title: string;
   description: string;
   price: number;
 }
 
-export interface Specification {
+interface Specification {
   fuelConsumption: { units: string; quantity: number };
   fuelType: string;
   doors: number;
