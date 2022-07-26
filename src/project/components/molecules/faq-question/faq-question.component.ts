@@ -23,7 +23,6 @@ export class FaqQuestionComponent {
   constructor() {}
 
   handleContentOpen(value: boolean) {
-    console.log('value');
     this.isContentOpen = value;
   }
 }

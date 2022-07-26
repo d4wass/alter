@@ -28,7 +28,6 @@ export class TitleHeaderComponent implements OnInit {
   }
 
   private setBgHeader(): void {
-    console.log(this._router.url);
     switch (this._router.url) {
       case '/':
         this.bgHeader = 'main';

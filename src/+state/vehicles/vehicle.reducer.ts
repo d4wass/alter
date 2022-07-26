@@ -3,8 +3,7 @@ import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { VehiclesActions } from './vehicle.actions';
 import { Vehicle } from '../models/vehicle.model';
 
-export const VEHICLE_FEAURE = 'vehicles';
-export const VEHICLE = 'weatherSearchedVehicles';
+export const VEHICLE_FEATURE = 'vehicles';
 
 //w miejsce any dodac cos na interface ktory typuje nasz state dla Vehicle
 export const adapter: EntityAdapter<Vehicle> = createEntityAdapter({

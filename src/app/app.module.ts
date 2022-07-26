@@ -20,6 +20,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { vehiclesReducer } from 'src/+state/vehicles/vehicle.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { VehicleEffects } from '../+state/vehicles/vehicle.effects';
+import { UserEffects } from '../+state/user/user.effects';
+import { appReducer } from '../+state/app-state/app-state.reducer';
+import { AppEffects } from '../+state/app-state/app-state.effects';
+import { UserProfileGuard } from 'src/guards/userProfile.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,13 +41,13 @@ import { VehicleEffects } from '../+state/vehicles/vehicle.effects';
     LoginModalModule,
     FooterModule,
     HttpClientModule,
-    StoreModule.forRoot({ user: userReducer, vehicles: vehiclesReducer }),
-    EffectsModule.forRoot([VehicleEffects]),
+    StoreModule.forRoot({ user: userReducer, vehicles: vehiclesReducer, app: appReducer }),
+    EffectsModule.forRoot([VehicleEffects, UserEffects, AppEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 500
     })
   ],
-  providers: [],
+  providers: [UserProfileGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

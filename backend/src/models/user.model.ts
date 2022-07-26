@@ -8,6 +8,12 @@ export const UserSchema = new mongoose.Schema({
   isHost: { type: Boolean }
 });
 
+UserSchema.virtual('id').get(function () {
+  return this._id.toHexString();
+});
+
+UserSchema.set('toObject', { virtuals: true });
+
 export interface User extends mongoose.Document {
   id: string;
   email: string;

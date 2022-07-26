@@ -6,6 +6,7 @@ import { combineLatest, combineLatestAll, merge, Observable } from 'rxjs';
 import { AuthService } from '../../../services/auth-service/auth.service';
 import { Store } from '@ngrx/store';
 import { UserActions } from 'src/+state/user/user.actions';
+import { AppActions } from 'src/+state/app-state/app-state.actions';
 
 @Component({
   selector: 'app-login-modal',
@@ -97,11 +98,7 @@ export class LoginModalComponent implements OnInit {
   isEmailCtrlValid = this.emailCtrl.valid$;
   isPasswordCtrlValid = this.passwordCtrl.valid$;
 
-  constructor(
-    private modalLoginService: ModalLoginService,
-    private authService: AuthService,
-    private readonly store: Store
-  ) {}
+  constructor(private modalLoginService: ModalLoginService, private readonly store: Store) {}
 
   ngOnInit() {
     this.modalLoginService.isVisible$.subscribe((isVisible) => (this.isVisible = isVisible));
@@ -109,29 +106,24 @@ export class LoginModalComponent implements OnInit {
     this.modalLoginService.isEmailView$.subscribe((isEmail) => (this.isEmail = isEmail));
   }
 
-  onLogin(event: Event): void {
+  onLogin(): void {
     let emailValid;
     let passwordValid;
     this.isEmailCtrlValid.subscribe((value) => (emailValid = value));
     this.isPasswordCtrlValid.subscribe((value) => (passwordValid = value));
 
     if (emailValid && passwordValid) {
-      // this.authService.loginUser(this.emailCtrl.value, this.passwordCtrl.value);
       this.store.dispatch(
-        UserActions.loginUser({ email: this.emailCtrl.value, password: this.passwordCtrl.value })
+        UserActions.login({ email: this.emailCtrl.value, password: this.passwordCtrl.value })
       );
     }
-
-    console.log(emailValid, passwordValid);
-    console.log(this.emailCtrl.valid);
   }
 
   onCancel() {
-    this.modalLoginService.isVisible$.next(false);
+    this.store.dispatch(AppActions.closeLoginModal({ isLoginModalOpen: false }));
   }
 
   onSubmit(event: Event) {
-    console.log('dziala');
     event.preventDefault();
     if (this.emailCtrl.valid && this.passwordCtrl.valid) {
       console.log('valid form');
@@ -142,16 +134,15 @@ export class LoginModalComponent implements OnInit {
     let target = event.target as HTMLElement;
 
     if (target.id === 'login') {
-      this.modalLoginService.isLogin$.next(true);
+      this.store.dispatch(AppActions.setLoginModalToLoginView({ isLogin: true }));
     }
 
     if (target.id === 'signup') {
-      this.modalLoginService.isLogin$.next(false);
-      this.modalLoginService.setEmailViewForModal(false);
+      this.store.dispatch(AppActions.setLoginModalToSignUpView({ isSignUp: false }));
     }
   }
 
   setCreateAccountView(isEmail: boolean) {
-    this.modalLoginService.setEmailViewForModal(isEmail);
+    this.store.dispatch(AppActions.setLoginModalToSingUpEmailView({ isEmail }));
   }
 }
