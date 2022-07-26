@@ -1,12 +1,39 @@
 import { createAction, props } from '@ngrx/store';
+import { Credentials, User } from '../models/user.model';
 
-const initUser = createAction('Init User');
-const loginUser = createAction('[User] Login User', props<{ email: string; password: string }>());
-const loginUserComplete = createAction('[User] Login User Complete', props<{ token: string }>());
-const loginUserError = createAction('[User] Login User Error', props<{ error: string }>());
+const login = createAction(
+  '[User Login Modal] Login user',
+  props<{ email: string; password: string }>()
+);
+const loginSuccess = createAction(
+  '[User Login Modal] Login user success',
+  props<{ token: string }>()
+);
+const loginError = createAction('[User Login Modal] Login user error', props<{ error: string }>());
+
+const createUser = createAction('[User Create Modal] Create user', props<{ user: User }>());
+const createUserSuccess = createAction('[User Create Modal] Create user success', props<any>());
+const createUserError = createAction(
+  '[User Create Modal] Create user error',
+  props<{ error: string }>()
+);
+
+const getUserProfileSuccess = createAction(
+  '[User Login Modal] Get User Profile success',
+  props<{ user: { email: string; firstName: string; id: string; lastName: string } }>()
+);
+const getUserProfileError = createAction(
+  '[User Login Modal] Get User Profile error',
+  props<{ error: string }>()
+);
 
 export const UserActions = {
-  loginUser,
-  loginUserComplete,
-  loginUserError
+  login,
+  loginSuccess,
+  loginError,
+  createUser,
+  createUserSuccess,
+  createUserError,
+  getUserProfileSuccess,
+  getUserProfileError
 };

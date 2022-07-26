@@ -1,30 +1,43 @@
 import { createReducer, on } from '@ngrx/store';
+import { User } from '../models/user.model';
 import { UserActions } from './user.actions';
 
-interface userState {
+export const USER_FEATURE = 'user';
+
+export interface UserState {
   isLoading: boolean;
   isAuthorized: boolean;
   isHost: boolean;
   token: string;
   errorMsg: string;
+  userProfile: Partial<User>;
 }
 
-export const initialState: userState = {
+export const initialState: UserState = {
   isLoading: false,
   isAuthorized: false,
   token: '',
   isHost: false,
-  errorMsg: ''
+  errorMsg: '',
+  userProfile: {}
 };
 
 export const userReducer = createReducer(
   initialState,
-  on(UserActions.loginUser, (state) => ({ ...state, isLoading: true })),
-  on(UserActions.loginUserComplete, (state, { token }) => ({
+  on(UserActions.login, (state) => ({ ...state, isLoading: true })),
+  on(UserActions.loginSuccess, (state, { token }) => ({
     ...state,
     isAuthorized: true,
     isLoading: false,
     token
   })),
-  on(UserActions.loginUserError, (state, { error }) => ({ ...state, errorMsg: error }))
+  on(UserActions.loginError, (state, { error }) => ({ ...state, errorMsg: error })),
+  on(UserActions.getUserProfileSuccess, (state, { user }) => ({
+    ...state,
+    userProfile: { ...user }
+  })),
+  on(UserActions.getUserProfileError, (state, { error }) => ({
+    ...state,
+    errorMsg: error
+  }))
 );

@@ -22,4 +22,10 @@ export class ModalLoginService {
   setEmailViewForModal(isEmail: boolean) {
     this.isEmailView$.next(isEmail);
   }
+
+  setModalToInitialState() {
+    this.isVisible$.next(false);
+    this.isEmailView$.next(false);
+    this.isLogin$.next(true);
+  }
 }

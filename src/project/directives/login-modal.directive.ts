@@ -1,25 +1,17 @@
 import { Directive, HostListener } from '@angular/core';
-import { ModalLoginService } from '../services/modal-login/modal-login-service.service';
+import { Store } from '@ngrx/store';
+import { AppActions } from 'src/+state/app-state/app-state.actions';
 
 @Directive({
   selector: '[appLoginModal]'
 })
 export class LoginModalDirective {
-  constructor(private modalLoginService: ModalLoginService) {}
+  constructor(private store: Store) {}
 
   @HostListener('click', ['$event.target.className'])
-  onClick(className: string) {
-    if (className === 'wrapper') {
-      this.modalLoginService.isVisible$.next(false);
-      this.modalLoginService.isEmailView$.next(false);
-      this.modalLoginService.isLogin$.next(true);
-    }
-  }
-
-  @HostListener('document:keyup.escape', ['$event'])
-  onEscape(): void {
-    this.modalLoginService.isVisible$.next(false);
-    this.modalLoginService.isEmailView$.next(false);
-    this.modalLoginService.isLogin$.next(true);
+  @HostListener('document:keyup.escape', ['$event.key'])
+  closeModal(event: string) {
+    if (event === 'wrapper' || event === 'Escape')
+      this.store.dispatch(AppActions.closeLoginModalOnEvent());
   }
 }

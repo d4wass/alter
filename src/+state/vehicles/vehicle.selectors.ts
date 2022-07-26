@@ -1,9 +1,9 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Vehicle } from '../models/vehicle.model';
-import { VEHICLE_FEAURE, VehicleState } from './vehicle.reducer';
+import { VEHICLE_FEATURE, VehicleState } from './vehicle.reducer';
 import * as fromVehicles from './vehicle.reducer';
 
-const vehicleFeatureSelector = createFeatureSelector<VehicleState>(VEHICLE_FEAURE);
+const vehicleFeatureSelector = createFeatureSelector<VehicleState>(VEHICLE_FEATURE);
 const selectVehiclesState = createSelector(vehicleFeatureSelector, (state) => state);
 
 const selectAllVehicles = createSelector(
