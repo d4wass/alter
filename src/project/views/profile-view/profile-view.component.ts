@@ -17,11 +17,10 @@ export class ProfileViewComponent implements OnInit {
   ngOnInit(): void {
     this.userEmail$ = this.userFacade.userEmail$;
     this.userName$ = this.userFacade.userName$;
-    this.userLastName$ = this.userFacade.userLastName$.pipe(
-      tap((x) => console.log(x)),
-      map((x) => x?.substring(0, 1))
-    );
+    this.userLastName$ = this.lastnameShortened();
   }
 
-  lastnameShortened() {}
+  lastnameShortened(): Observable<string | undefined> {
+    return this.userFacade.userLastName$.pipe(map((x) => x?.substring(0, 1)));
+  }
 }
