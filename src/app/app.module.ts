@@ -24,6 +24,7 @@ import { UserEffects } from '../+state/user/user.effects';
 import { appReducer } from '../+state/app-state/app-state.reducer';
 import { AppEffects } from '../+state/app-state/app-state.effects';
 import { UserProfileGuard } from 'src/guards/userProfile.guard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -45,7 +46,8 @@ import { UserProfileGuard } from 'src/guards/userProfile.guard';
     EffectsModule.forRoot([VehicleEffects, UserEffects, AppEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 500
-    })
+    }),
+    BrowserAnimationsModule
   ],
   providers: [UserProfileGuard],
   bootstrap: [AppComponent]

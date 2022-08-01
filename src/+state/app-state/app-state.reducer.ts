@@ -1,19 +1,23 @@
+import { state } from '@angular/animations';
 import { createReducer, on } from '@ngrx/store';
 import { AppActions } from './app-state.actions';
 
 interface appState {
-  isLoginModalOpen: boolean;
+  isModalOpen: boolean;
+  isEditProfile: boolean;
 }
 
 export const initialState: appState = {
-  isLoginModalOpen: false
+  isModalOpen: false,
+  isEditProfile: false
 };
 
 export const appReducer = createReducer(
   initialState,
-  on(AppActions.openLoginModal, AppActions.closeLoginModal, (state, { isLoginModalOpen }) => ({
+  on(AppActions.openModal, AppActions.closeModal, (state, { isModalOpen }) => ({
     ...state,
-    isLoginModalOpen
+    isModalOpen
   })),
-  on(AppActions.closeLoginModalOnEvent, (state) => ({ ...state, isLoginModalOpen: false }))
+  on(AppActions.closeLoginModalOnEvent, (state) => ({ ...state, isLoginModalOpen: false })),
+  on(AppActions.editProfileUser, (state) => ({ ...state, isEditProfile: true }))
 );

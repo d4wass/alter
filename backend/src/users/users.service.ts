@@ -1,27 +1,28 @@
-import { ConsoleLogger, Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from '../models/user.model';
 import * as bcrypt from 'bcrypt';
-import { from, iif, Observable, of } from 'rxjs';
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
 
-  async create(userData: User): Promise<void> {
+  async create(userData: User): Promise<Partial<User>> {
+    let user;
     const { email, firstName, lastName, password } = userData;
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await this.hashPassword(password);
     const isUser = await this.isUserExist(email);
 
-    console.log('create user', isUser);
     if (!isUser) {
       const newUser = new this.userModel({ email, firstName, lastName, password: hashedPassword });
       await newUser.save();
+      user = { id: newUser.id, email: newUser.email };
     } else {
-      console.log('User is already exists');
+      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
     }
+
+    return user as Partial<User>;
   }
 
   async getUser(email: string): Promise<User | undefined> {
@@ -57,10 +58,40 @@ export class UsersService {
     } as User;
   }
 
+  async updateUser(dataRequest: {
+    id: string;
+    firstName: string;
+    lastName: string;
+  }): Promise<unknown> {
+    const { id, firstName, lastName } = dataRequest;
+
+    let update;
+    try {
+      update = await this.userModel.findOneAndUpdate(
+        { id },
+        { firstName, lastName },
+        { new: true }
+      );
+    } catch (error) {
+      throw new NotFoundException('User Not Found');
+    }
+
+    if (!update) {
+      throw new NotFoundException('Cannot find user');
+    }
+    return update as User;
+  }
+
   private async isUserExist(email: string): Promise<boolean> {
     const user = await this.userModel.findOne({ email });
-    const isUser = user ? true : false;
 
-    return isUser;
+    return user ? true : false;
+  }
+
+  private async hashPassword(password: string): Promise<string> {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    return hashedPassword;
   }
 }

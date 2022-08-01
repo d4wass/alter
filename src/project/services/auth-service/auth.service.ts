@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { User } from 'src/+state/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,15 @@ import { Observable, tap } from 'rxjs';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  createUser(firstName: string, lastName: string, email: string, password: string) {
-    this.http.post('http://localhost:3000/auth/register', { firstName, lastName, email, password });
+  createUser(user: Partial<User>): Observable<Partial<User>> {
+    const { firstName, lastName, email, password } = user;
+    const createdUser = this.http.post('http://localhost:3000/auth/register', {
+      firstName,
+      lastName,
+      email,
+      password
+    });
+    return createdUser;
   }
 
   loginUser(email: string, password: string): Observable<{ access_token: string }> {

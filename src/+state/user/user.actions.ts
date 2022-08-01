@@ -11,7 +11,10 @@ const loginSuccess = createAction(
 );
 const loginError = createAction('[User Login Modal] Login user error', props<{ error: string }>());
 
-const createUser = createAction('[User Create Modal] Create user', props<{ user: User }>());
+const createUser = createAction(
+  '[User Create Modal] Create user',
+  props<{ user: Partial<User> }>()
+);
 const createUserSuccess = createAction('[User Create Modal] Create user success', props<any>());
 const createUserError = createAction(
   '[User Create Modal] Create user error',

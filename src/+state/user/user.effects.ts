@@ -4,6 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs';
 import { AuthService } from 'src/project/services/auth-service/auth.service';
 import { ModalLoginService } from 'src/project/services/modal-login/modal-login-service.service';
+import { AppActions } from '../app-state/app-state.actions';
 import { UserActions } from './user.actions';
 
 @Injectable()
@@ -44,12 +45,27 @@ export class UserEffects {
       )
   );
 
-  closeLoginOnSuccessful = createEffect(
+  createUser = createEffect(
     () => () =>
       this.actions$.pipe(
-        ofType(UserActions.getUserProfileSuccess),
-        tap(() => this.modalService.setModalToInitialState())
-      ),
-    { dispatch: false }
+        ofType(UserActions.createUser),
+        switchMap(({ user }) => {
+          return this.authService.createUser(user).pipe(
+            map(({ createdUser }: any) => UserActions.createUserSuccess({ createdUser })),
+            catchError(async (error) => UserActions.createUserError({ error }))
+          );
+        })
+      )
+  );
+
+  closeModalSuccess = createEffect(
+    () => () =>
+      this.actions$.pipe(
+        ofType(UserActions.getUserProfileSuccess, UserActions.createUserSuccess),
+        map(() => {
+          this.modalService.setModalToInitialState();
+          return AppActions.closeModal({ isModalOpen: false });
+        })
+      )
   );
 }

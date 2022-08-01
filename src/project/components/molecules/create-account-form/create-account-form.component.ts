@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ControlsOf, FormControl, FormGroup } from '@ngneat/reactive-forms';
-import { AuthService } from 'src/project/services/auth-service/auth.service';
+import { Store } from '@ngrx/store';
+import { UserActions } from 'src/+state/user/user.actions';
 
 interface IAccount {
   firstName: string;
@@ -15,56 +16,66 @@ interface IAccount {
 @Component({
   selector: 'app-create-account-form',
   template: `
-    <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
-      <div class="personal-info">
-        <div class="personal-inputs">
+    <div>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="personal-info">
+          <div class="personal-inputs">
+            <input
+              placeholder="First name"
+              formControlName="firstName"
+              [ngClass]="{
+                invalid: !this.controls.firstName.valid && this.controls.firstName.dirty
+              }"
+            />
+            <input
+              placeholder="Last name"
+              formControlName="lastName"
+              [ngClass]="{ invalid: !this.controls.lastName.valid && this.controls.lastName.dirty }"
+            />
+          </div>
+          <span>Enter your name as it appears on your driver’s license</span>
+        </div>
+        <div>
           <input
-            placeholder="First name"
-            formControlName="firstName"
-            [ngClass]="{ invalid: !this.controls.firstName.valid && this.controls.firstName.dirty }"
+            placeholder="Email"
+            formControlName="email"
+            [ngClass]="{ invalid: !this.controls.email.valid && this.controls.email.dirty }"
           />
           <input
-            placeholder="Last name"
-            formControlName="lastName"
-            [ngClass]="{ invalid: !this.controls.lastName.valid && this.controls.lastName.dirty }"
+            type="password"
+            placeholder="Password"
+            formControlName="password"
+            [ngClass]="{ invalid: !this.controls.password.valid && this.controls.password.dirty }"
           />
         </div>
-        <span>Enter your name as it appears on your driver’s license</span>
-      </div>
-      <div>
-        <input
-          placeholder="Email"
-          formControlName="email"
-          [ngClass]="{ invalid: !this.controls.email.valid && this.controls.email.dirty }"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          formControlName="password"
-          [ngClass]="{ invalid: !this.controls.password.valid && this.controls.password.dirty }"
-        />
-      </div>
-      <div class="checkbox-terms">
-        <div class="checkbox">
-          <input type="checkbox" id="terms" name="terms" formControlName="isTerms" />
-          <label
-            for="terms"
-            [ngClass]="{
-              unchecked:
-                (this.controls.isTerms.invalid$ | async) && (this.controls.isTerms.dirty$ | async)
-            }"
-            >I agree to the terms of service and privacy policy.</label
-          >
+        <div class="checkbox-terms">
+          <div class="checkbox">
+            <input type="checkbox" id="terms" name="terms" formControlName="isTerms" />
+            <label
+              for="terms"
+              [ngClass]="{
+                unchecked:
+                  (this.controls.isTerms.invalid$ | async) && (this.controls.isTerms.dirty$ | async)
+              }"
+              >I agree to the terms of service and privacy policy.</label
+            >
+          </div>
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="newsletter"
+              name="newsletter"
+              formControlName="isNewsletter"
+            />
+            <label for="newsletter">Yes, send me deals, discounts, and updates!</label>
+          </div>
         </div>
-        <div class="checkbox">
-          <input type="checkbox" id="newsletter" name="newsletter" formControlName="isNewsletter" />
-          <label for="newsletter">Yes, send me deals, discounts, and updates!</label>
+        <div>
+          <button class="signup-btn" type="submit">Sign up</button>
         </div>
-      </div>
-      <div>
-        <button class="signup-btn" type="submit">Sign up</button>
-      </div>
-    </form>
+      </form>
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
   `,
   styleUrls: ['./create-account-form.component.scss']
 })
@@ -79,15 +90,16 @@ export class CreateAccountFormComponent {
   });
   controls = this.form.controls;
 
-  constructor(private authService: AuthService) {}
+  constructor(private store: Store) {}
 
-  onSubmit(event: Event) {
+  onSubmit() {
     const { firstName, lastName, email, password } = this.form.controls;
-    console.log(firstName.value, lastName.value, email.value, password.value);
-    if (this.form.valid) {
-      this.authService.createUser(firstName.value, lastName.value, email.value, password.value);
-    } else {
-      console.log(this.controls.isTerms.value);
-    }
+    const user = {
+      firstName: firstName.value,
+      lastName: lastName.value,
+      email: email.value,
+      password: password.value
+    };
+    this.store.dispatch(UserActions.createUser({ user }));
   }
 }

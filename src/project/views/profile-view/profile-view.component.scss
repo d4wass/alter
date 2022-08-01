@@ -1,3 +1,28 @@
+.wrapper {
+  height: 100vh;
+}
+
+.profile-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bg-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-reviews-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 50vw;
+}
+
+.profile-info-wrapper {
+  width: 50vw;
+}
+
 .profile-section {
   display: flex;
 }
