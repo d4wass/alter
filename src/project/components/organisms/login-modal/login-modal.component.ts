@@ -120,7 +120,7 @@ export class LoginModalComponent implements OnInit {
   }
 
   onCancel() {
-    this.store.dispatch(AppActions.closeLoginModal({ isLoginModalOpen: false }));
+    this.store.dispatch(AppActions.closeModal({ isModalOpen: false }));
   }
 
   onSubmit(event: Event) {

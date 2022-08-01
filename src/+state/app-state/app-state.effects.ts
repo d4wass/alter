@@ -11,8 +11,8 @@ export class AppEffects {
   handleModalVisibility = createEffect(
     () => () =>
       this.actions$.pipe(
-        ofType(AppActions.openLoginModal, AppActions.closeLoginModal),
-        tap(({ isLoginModalOpen }) => this.modalLoginService.setModalVisibility(isLoginModalOpen))
+        ofType(AppActions.openModal, AppActions.closeModal),
+        tap(({ isModalOpen }) => this.modalLoginService.setModalVisibility(isModalOpen))
       ),
     { dispatch: false }
   );

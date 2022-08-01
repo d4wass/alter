@@ -9,7 +9,7 @@
 
 .bg-section {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .profile-reviews-wrapper {
@@ -21,6 +21,8 @@
 
 .profile-info-wrapper {
   width: 50vw;
+}
+
 .profile-section {
   display: flex;
 }

@@ -9,7 +9,8 @@ export class AuthService {
   constructor(private usersService: UsersService, private jwtService: JwtService) {}
 
   async register(userData: User): Promise<any> {
-    return await this.usersService.create(userData);
+    const user = await this.usersService.create(userData);
+    return user;
   }
 
   async validateUser(email: string, password: string): Promise<any> {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { UserFacade } from 'src/+state/facade/user.facade';
 
 @Component({
@@ -11,6 +11,8 @@ export class ProfileViewComponent implements OnInit {
   userName$!: Observable<string | undefined>;
   userLastName$!: Observable<string | undefined>;
   userEmail$!: Observable<string | undefined>;
+  profileBtn: string = 'Edit Profile';
+  isEditView: boolean = false;
 
   constructor(private userFacade: UserFacade) {}
 
@@ -22,5 +24,25 @@ export class ProfileViewComponent implements OnInit {
 
   lastnameShortened(): Observable<string | undefined> {
     return this.userFacade.userLastName$.pipe(map((x) => x?.substring(0, 1)));
+  }
+
+  onLogoutClick() {
+    console.log('logout');
+  }
+
+  onEditClick() {
+    this.isEditView = !this.isEditView;
+    if (this.isEditView) {
+      this.profileBtn = 'Save Profile';
+    }
+
+    if (!this.isEditView) {
+      this.profileBtn = 'Edit Profile';
+    }
+  }
+
+  onCancelClick() {
+    this.profileBtn = 'Edit Profile';
+    this.isEditView = false;
   }
 }
