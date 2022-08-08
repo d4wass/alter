@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-
 import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs';
 import { AuthService } from 'src/project/services/auth-service/auth.service';
 import { ModalLoginService } from 'src/project/services/modal-login/modal-login-service.service';
@@ -12,7 +12,8 @@ export class UserEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private modalService: ModalLoginService
+    private modalService: ModalLoginService,
+    private router: Router
   ) {}
 
   login = createEffect(
@@ -58,7 +59,7 @@ export class UserEffects {
       )
   );
 
-  closeModalSuccess = createEffect(
+  closeModal = createEffect(
     () => () =>
       this.actions$.pipe(
         ofType(UserActions.getUserProfileSuccess, UserActions.createUserSuccess),
@@ -67,5 +68,14 @@ export class UserEffects {
           return AppActions.closeModal({ isModalOpen: false });
         })
       )
+  );
+
+  logout = createEffect(
+    () => () =>
+      this.actions$.pipe(
+        ofType(UserActions.logoutUser),
+        tap((x) => this.router.navigateByUrl('/'))
+      ),
+    { dispatch: false }
   );
 }

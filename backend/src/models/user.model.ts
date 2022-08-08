@@ -5,7 +5,10 @@ export const UserSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   password: { type: String, required: true },
-  isHost: { type: Boolean }
+  isHost: { type: Boolean },
+  description: { type: String },
+  reviews: { type: Array },
+  profilePhoto: { type: String }
 });
 
 UserSchema.virtual('id').get(function () {

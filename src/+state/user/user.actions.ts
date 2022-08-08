@@ -11,6 +11,10 @@ const loginSuccess = createAction(
 );
 const loginError = createAction('[User Login Modal] Login user error', props<{ error: string }>());
 
+const logoutUser = createAction('[User Profile] Logout user');
+const logoutUserSuccess = createAction('[User Profile] Logout user');
+const logoutUserError = createAction('[User Profile] Logout user', props<{ error: string }>());
+
 const createUser = createAction(
   '[User Create Modal] Create user',
   props<{ user: Partial<User> }>()
@@ -38,5 +42,8 @@ export const UserActions = {
   createUserSuccess,
   createUserError,
   getUserProfileSuccess,
-  getUserProfileError
+  getUserProfileError,
+  logoutUser,
+  logoutUserError,
+  logoutUserSuccess
 };

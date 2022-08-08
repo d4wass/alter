@@ -39,5 +39,6 @@ export const userReducer = createReducer(
   on(UserActions.getUserProfileError, (state, { error }) => ({
     ...state,
     errorMsg: error
-  }))
+  })),
+  on(UserActions.logoutUser, (state) => ({ ...state, isAuthorized: false, userProfile: {} }))
 );

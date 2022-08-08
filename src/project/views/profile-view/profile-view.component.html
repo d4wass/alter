@@ -12,7 +12,7 @@
   </div>
   <div class="flex-wrapper">
     <div class="bg-section"></div>
-    <div class="profile-section">
+    <div class="profile-section" *ngIf="!isEditView">
       <div class="profile-info-wrapper">
         <div class="profile-title">
           <h3>{{ userName$ | async }} {{ userLastName$ | async }}.</h3>
@@ -32,6 +32,44 @@
       <div class="profile-reviews-wrapper">
         <h5>Review from hosts</h5>
         <div class="profile-review-item"></div>
+      </div>
+    </div>
+
+    <div class="profile-section-edit" *ngIf="isEditView">
+      <div class="profile-section-edit-wrapper">
+        <div class="profile-section-column">
+          <div class="profile-title">
+            <h3>{{ userName$ | async }} {{ userLastName$ | async }}.</h3>
+            <p>Joined Jul 2022</p>
+          </div>
+          <div class="profile-info">
+            <h5>Verified info</h5>
+            <div class="profile-info-item">
+              <p>Approved to drive</p>
+              <a href="#">Verify ID</a>
+            </div>
+            <div class="profile-info-item">
+              <p>{{ userEmail$ | async }}</p>
+              <a href="#">verified</a>
+            </div>
+          </div>
+        </div>
+        <div class="profile-section-column">
+          <div>
+            <h5>About {{ userName$ | async }}</h5>
+            <p>
+              Tell hosts and guests about yourself and why you’re a responsible, trustworthy person.
+              Share your favorite travel experiences, your hobbies, your dream car, or your driving
+              experience. Feel free to include links to your LinkedIn, Twitter, or Facebook profiles
+              so they get to know you even better.
+            </p>
+            <textarea placeholder="description"></textarea>
+          </div>
+          <div>
+            <h5>Review from hosts</h5>
+            <div class="profile-review-item"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
