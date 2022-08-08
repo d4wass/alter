@@ -26,3 +26,13 @@
 .profile-section {
   display: flex;
 }
+
+.profile-section-edit-wrapper {
+  display: flex;
+}
+
+.profile-section-column {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}

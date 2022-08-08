@@ -15,7 +15,15 @@ export class UsersService {
     const isUser = await this.isUserExist(email);
 
     if (!isUser) {
-      const newUser = new this.userModel({ email, firstName, lastName, password: hashedPassword });
+      const newUser = new this.userModel({
+        email,
+        firstName,
+        lastName,
+        password: hashedPassword,
+        description: '',
+        profilePhoto: '',
+        reviews: []
+      });
       await newUser.save();
       user = { id: newUser.id, email: newUser.email };
     } else {
