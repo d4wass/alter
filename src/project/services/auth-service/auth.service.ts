@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from 'src/+state/models/user.model';
+import { User, UserDataUpdate } from 'src/+state/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -43,14 +43,14 @@ export class AuthService {
     return userProfile;
   }
 
-  validateUserCredentials(
-    value: { oldValue: string; newValue: string; confirmValue: string },
+  validateUserDataUpdate(
+    updatedData: UserDataUpdate,
     token: string
   ): Observable<{ isValid: boolean }> {
-    console.log(value, token);
+    console.log(updatedData, token);
     const validateUserCredentials = this.http.post<{ isValid: boolean }>(
       'http://localhost:3000/validate',
-      { value },
+      { updatedData },
       { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) }
     );
     return validateUserCredentials;

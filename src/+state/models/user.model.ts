@@ -13,8 +13,13 @@ export interface Credentials {
   password: string;
 }
 
-export interface UpdateCredentials {
+type UpdateCredentials = {
   oldValue: string;
   newValue: string;
   confirmValue: string;
+};
+
+export interface UserDataUpdate {
+  passwordUpdate: UpdateCredentials;
+  mobileUpdate: UpdateCredentials;
 }

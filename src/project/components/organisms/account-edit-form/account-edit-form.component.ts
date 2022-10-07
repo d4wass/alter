@@ -4,12 +4,8 @@ import { FormControl } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { UserFacade } from 'src/+state/facade/user.facade';
+import { UserDataUpdate } from 'src/+state/models/user.model';
 import { UserActions } from 'src/+state/user/user.actions';
-
-interface UserUpdate {
-  passwordUpdate: {};
-  mobileUpdate: {};
-}
 
 @Component({
   selector: 'app-account-edit-form',
@@ -107,7 +103,18 @@ export class AccountEditFormComponent {
     confirmValue: new FormControl('')
   });
 
-  updateUser: UserUpdate = { passwordUpdate: {}, mobileUpdate: {} };
+  updateUser: UserDataUpdate = {
+    passwordUpdate: {
+      newValue: '',
+      oldValue: '',
+      confirmValue: ''
+    },
+    mobileUpdate: {
+      newValue: '',
+      oldValue: '',
+      confirmValue: ''
+    }
+  };
 
   constructor(private readonly store: Store) {}
 
@@ -125,7 +132,7 @@ export class AccountEditFormComponent {
     if (this.passwordForm.valid && this.isPasswordModal) {
       //emit form values or pass controls values to parent component where from it we will dispatch action to update
       this.updateUser.passwordUpdate = this.passwordForm.value;
-      this.store.dispatch(UserActions.validateUserPasswordCredentials(this.passwordForm.value));
+      this.store.dispatch(UserActions.validateUserDataUpdate({ updateUser: this.updateUser }));
     }
 
     if (this.mobileForm.valid && this.isMobileModal) {
