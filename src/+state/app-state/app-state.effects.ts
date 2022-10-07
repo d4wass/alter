@@ -12,7 +12,7 @@ export class AppEffects {
     () => () =>
       this.actions$.pipe(
         ofType(AppActions.openModal, AppActions.closeModal),
-        tap(({ isModalOpen }) => this.modalLoginService.setModalVisibility(isModalOpen))
+        tap(({ isLoginModalOpen }) => this.modalLoginService.setModalVisibility(isLoginModalOpen))
       ),
     { dispatch: false }
   );

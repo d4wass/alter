@@ -1,50 +1,83 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subject, take, takeUntil } from 'rxjs';
+import { AppActions } from 'src/+state/app-state/app-state.actions';
+import { AppSettingFacade } from 'src/+state/facade/app-settings.facade';
 import { UserFacade } from 'src/+state/facade/user.facade';
 import { UserActions } from 'src/+state/user/user.actions';
 
 @Component({
   selector: 'app-profile-view',
   templateUrl: './profile-view.component.html',
-  styleUrls: ['./profile-view.component.scss']
+  styleUrls: ['./profile-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProfileViewComponent implements OnInit {
+export class ProfileViewComponent implements OnInit, OnDestroy {
   userName$!: Observable<string | undefined>;
   userLastName$!: Observable<string | undefined>;
   userEmail$!: Observable<string | undefined>;
+  isEditView$!: Observable<boolean>;
+  token$!: Observable<string>;
   profileBtn: string = 'Edit Profile';
-  isEditView: boolean = false;
+  updatedUser: any;
 
-  constructor(private userFacade: UserFacade, private readonly store: Store) {}
+  private readonly unsubscribe$ = new Subject();
+  private isEditView: boolean = false;
+
+  constructor(
+    private userFacade: UserFacade,
+    private appSettingFacade: AppSettingFacade,
+    private readonly store: Store
+  ) {}
 
   ngOnInit(): void {
     this.userEmail$ = this.userFacade.userEmail$;
     this.userName$ = this.userFacade.userName$;
     this.userLastName$ = this.lastnameShortened();
+    this.isEditView$ = this.appSettingFacade.isEditProfile$;
+    this.token$ = this.userFacade.userToken$;
   }
 
-  lastnameShortened(): Observable<string | undefined> {
-    return this.userFacade.userLastName$.pipe(map((x) => x?.substring(0, 1)));
+  ngOnDestroy(): void {
+    this.unsubscribe$.complete();
   }
 
-  onEditClick() {
-    this.isEditView = !this.isEditView;
-    if (this.isEditView) {
-      this.profileBtn = 'Save Profile';
-    }
-
-    if (!this.isEditView) {
-      this.profileBtn = 'Edit Profile';
-    }
+  onEditClick(): void {
+    this.store.dispatch(AppActions.openEditProfileUser({ isProfile: true }));
+    this.isEditView = true;
+    this.profileBtn = 'Save Profile';
   }
 
-  onCancelClick() {
+  onSaveClick(): void {
+    this.token$
+      .pipe(
+        map((token) => token),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((token) => {
+        this.store.dispatch(AppActions.closeEditProfileUser({ isProfile: false }));
+        this.store.dispatch(UserActions.updateUserProfile({ user: this.updatedUser, token }));
+      });
+
+    this.isEditView = false;
+    this.profileBtn = 'Edit Profile';
+  }
+
+  userUpdate(event: Event) {
+    this.updatedUser = event;
+  }
+
+  onCancelClick(): void {
+    this.store.dispatch(AppActions.closeEditProfileUser({ isProfile: false }));
     this.profileBtn = 'Edit Profile';
     this.isEditView = false;
   }
 
-  onLogoutClick() {
+  onLogoutClick(): void {
     this.store.dispatch(UserActions.logoutUser());
+  }
+
+  private lastnameShortened(): Observable<string | undefined> {
+    return this.userFacade.userLastName$.pipe(map((x) => x?.substring(0, 1)));
   }
 }

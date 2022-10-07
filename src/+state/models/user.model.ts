@@ -12,3 +12,9 @@ export interface Credentials {
   email: string;
   password: string;
 }
+
+export interface UpdateCredentials {
+  oldValue: string;
+  newValue: string;
+  confirmValue: string;
+}

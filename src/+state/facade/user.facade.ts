@@ -13,6 +13,7 @@ export class UserFacade {
   userEmail$: Observable<string | undefined> = this.store.pipe(
     select(UserSelectors.selectUserEmail)
   );
+  userToken$: Observable<string> = this.store.pipe(select(UserSelectors.selectUserToken));
 
   constructor(private store: Store) {}
 }

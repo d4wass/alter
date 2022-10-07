@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ModalLoginService } from '../../../services/modal-login/modal-login-service.service';
 import { FormControl } from '@ngneat/reactive-forms';
 import { Validators } from '@angular/forms';
-import { combineLatest, combineLatestAll, merge, Observable } from 'rxjs';
-import { AuthService } from '../../../services/auth-service/auth.service';
 import { Store } from '@ngrx/store';
 import { UserActions } from 'src/+state/user/user.actions';
 import { AppActions } from 'src/+state/app-state/app-state.actions';
@@ -120,7 +118,7 @@ export class LoginModalComponent implements OnInit {
   }
 
   onCancel() {
-    this.store.dispatch(AppActions.closeModal({ isModalOpen: false }));
+    this.store.dispatch(AppActions.closeModal({ isLoginModalOpen: false }));
   }
 
   onSubmit(event: Event) {

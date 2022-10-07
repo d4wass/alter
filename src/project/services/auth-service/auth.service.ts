@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { User } from 'src/+state/models/user.model';
 
 @Injectable({
@@ -32,14 +32,27 @@ export class AuthService {
   }
 
   getUserProfile(token: string) {
-    const userProfile = this.http
-      .get<{ email: string; firstName: string; lastName: string; id: string }>(
-        'http://localhost:3000/profile',
-        {
-          headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
-        }
-      )
-      .pipe(tap((x) => console.log('getUserProfile', x)));
+    const userProfile = this.http.get<{
+      email: string;
+      firstName: string;
+      lastName: string;
+      id: string;
+    }>('http://localhost:3000/profile', {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
+    });
     return userProfile;
+  }
+
+  validateUserCredentials(
+    value: { oldValue: string; newValue: string; confirmValue: string },
+    token: string
+  ): Observable<{ isValid: boolean }> {
+    console.log(value, token);
+    const validateUserCredentials = this.http.post<{ isValid: boolean }>(
+      'http://localhost:3000/validate',
+      { value },
+      { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) }
+    );
+    return validateUserCredentials;
   }
 }

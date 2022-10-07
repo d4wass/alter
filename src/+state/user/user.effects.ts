@@ -1,10 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import {
+  catchError,
+  concatMap,
+  exhaustMap,
+  map,
+  mergeMap,
+  switchMap,
+  tap,
+  withLatestFrom
+} from 'rxjs';
 import { AuthService } from 'src/project/services/auth-service/auth.service';
 import { ModalLoginService } from 'src/project/services/modal-login/modal-login-service.service';
+import { UserService } from 'src/project/services/user-service/user.service';
 import { AppActions } from '../app-state/app-state.actions';
+import { UserFacade } from '../facade/user.facade';
 import { UserActions } from './user.actions';
 
 @Injectable()
@@ -12,8 +24,10 @@ export class UserEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private userService: UserService,
     private modalService: ModalLoginService,
-    private router: Router
+    private router: Router,
+    private userFacade: UserFacade
   ) {}
 
   login = createEffect(
@@ -35,6 +49,7 @@ export class UserEffects {
         ofType(UserActions.loginSuccess),
         switchMap(({ token }) => {
           return this.authService.getUserProfile(token).pipe(
+            tap((x) => console.log(x)),
             map(({ email, firstName, lastName, id }) => {
               return UserActions.getUserProfileSuccess({
                 user: { email, firstName, lastName, id }
@@ -62,10 +77,10 @@ export class UserEffects {
   closeModal = createEffect(
     () => () =>
       this.actions$.pipe(
-        ofType(UserActions.getUserProfileSuccess, UserActions.createUserSuccess),
+        ofType(UserActions.createUserSuccess, UserActions.loginSuccess),
         map(() => {
           this.modalService.setModalToInitialState();
-          return AppActions.closeModal({ isModalOpen: false });
+          return AppActions.closeModal({ isLoginModalOpen: false });
         })
       )
   );

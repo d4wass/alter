@@ -33,7 +33,7 @@ export class UsersService {
     return user as Partial<User>;
   }
 
-  async getUser(email: string): Promise<User | undefined> {
+  async getUserByEmail(email: string): Promise<User | undefined> {
     let user;
     try {
       user = await this.userModel.findOne({ email }).exec();
@@ -58,26 +58,40 @@ export class UsersService {
       throw new NotFoundException('Cannot find user');
     }
 
-    return {
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      id: id
-    } as User;
+    return user as User;
   }
 
-  async updateUser(dataRequest: {
-    id: string;
-    firstName: string;
-    lastName: string;
-  }): Promise<unknown> {
-    const { id, firstName, lastName } = dataRequest;
+  async getUser(id: string): Promise<User | undefined> {
+    let user;
+    try {
+      user = await this.userModel.findById(id).exec();
+    } catch (error) {
+      throw new NotFoundException('Cannot find user');
+    }
+    if (!user) {
+      throw new NotFoundException('Cannot find user');
+    }
+
+    return user as User;
+  }
+
+  // async validateCredentials(credentials: {
+  //   newValue: string;
+  //   oldValue: string;
+  //   confirmValue: string;
+  // }): Promise<boolean> {
+
+  // }
+
+  async updateUser(dataRequest: Partial<User>): Promise<unknown> {
+    console.log('dataRequest', dataRequest);
+    const { id } = dataRequest;
 
     let update;
     try {
-      update = await this.userModel.findOneAndUpdate(
-        { id },
-        { firstName, lastName },
+      update = await this.userModel.updateOne(
+        { _id: id },
+        { $set: { ...dataRequest } }, //here you pass all things that will be update for selected user
         { new: true }
       );
     } catch (error) {
