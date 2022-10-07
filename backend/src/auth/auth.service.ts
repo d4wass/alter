@@ -49,4 +49,13 @@ export class AuthService {
 
     return { isValid: isMatch };
   }
+
+  getUserIdFromToken(token: string): string {
+    const tokenizedUser = this.jwtService.decode(token.replace('Bearer ', ''), {
+      complete: true,
+      json: true
+    }) as any;
+
+    return tokenizedUser.payload.id;
+  }
 }

@@ -25,9 +25,14 @@ const createUserError = createAction(
   props<{ error: string }>()
 );
 
+const getUserProfile = createAction(
+  '[User Login Modal] Get User Profile',
+  props<{ token: string }>()
+);
+
 const getUserProfileSuccess = createAction(
   '[User Login Modal] Get User Profile success',
-  props<{ user: { email: string; firstName: string; id: string; lastName: string } }>()
+  props<{ user: Partial<User> }>()
 );
 const getUserProfileError = createAction(
   '[User Login Modal] Get User Profile error',
@@ -80,6 +85,7 @@ export const UserActions = {
   createUser,
   createUserSuccess,
   createUserError,
+  getUserProfile,
   getUserProfileSuccess,
   getUserProfileError,
   logoutUser,
