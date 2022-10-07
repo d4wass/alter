@@ -74,7 +74,7 @@ interface IAccount {
           <button class="signup-btn" type="submit">Sign up</button>
         </div>
       </form>
-      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      <!-- <mat-progress-spinner mode="indeterminate"></mat-progress-spinner> -->
     </div>
   `,
   styleUrls: ['./create-account-form.component.scss']

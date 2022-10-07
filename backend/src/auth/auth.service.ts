@@ -14,7 +14,7 @@ export class AuthService {
   }
 
   async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.usersService.getUser(email);
+    const user = await this.usersService.getUserByEmail(email);
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (user && isMatch) {
@@ -24,12 +24,29 @@ export class AuthService {
     return null;
   }
 
-  async login(credentials: { email: string; password: string }) {
-    const user = await this.usersService.getUser(credentials.email);
+  async login(credentials: { email: string; password: string }): Promise<{ access_token: string }> {
+    const user = await this.usersService.getUserByEmail(credentials.email);
     const { id, firstName, lastName, email } = user;
 
     return {
       access_token: this.jwtService.sign({ id, firstName, lastName, email })
     };
+  }
+
+  async validatePassword(
+    token: string,
+    password: { oldValue: string; newValue: string; confirmValue: string }
+  ): Promise<{ isValid: boolean }> {
+    const tokenizedUser = this.jwtService.decode(token.replace('Bearer ', ''), {
+      complete: true,
+      json: true
+    }) as any;
+    const user = await this.usersService.getUserById(tokenizedUser.payload.id);
+    console.log('USER', user);
+    console.log('Password 2', password);
+    const isMatch = await bcrypt.compare(password, user.password);
+    console.log('IS MATCH', isMatch);
+
+    return { isValid: isMatch };
   }
 }

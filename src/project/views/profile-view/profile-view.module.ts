@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileViewComponent } from './profile-view.component';
 import { ProfileBtnComponent } from 'src/project/components/atoms/profile-btn/profile-btn.component';
+import { EditAccoutnFormModule } from 'src/project/components/organisms/account-edit-form/account-edit-form.module';
 
 @NgModule({
   declarations: [ProfileViewComponent, ProfileBtnComponent],
-  imports: [CommonModule]
+  imports: [CommonModule, EditAccoutnFormModule]
 })
 export class ProfileViewModule {}

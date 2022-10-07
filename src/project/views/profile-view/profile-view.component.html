@@ -4,15 +4,18 @@
       <app-profile-btn (handleClickEvent)="onLogoutClick()">Logout</app-profile-btn>
     </div>
     <div>
-      <app-profile-btn (handleClickEvent)="onEditClick()">{{ profileBtn }}</app-profile-btn>
-      <app-profile-btn (handleClickEvent)="onCancelClick()" *ngIf="isEditView"
-        >Cancel</app-profile-btn
-      >
+      <ng-container *ngIf="isEditView$ | async">
+        <app-profile-btn (handleClickEvent)="onSaveClick()">{{ profileBtn }}</app-profile-btn>
+        <app-profile-btn (handleClickEvent)="onCancelClick()">Cancel</app-profile-btn>
+      </ng-container>
+      <ng-container *ngIf="(isEditView$ | async) === false">
+        <app-profile-btn (handleClickEvent)="onEditClick()">{{ profileBtn }}</app-profile-btn>
+      </ng-container>
     </div>
   </div>
   <div class="flex-wrapper">
     <div class="bg-section"></div>
-    <div class="profile-section" *ngIf="!isEditView">
+    <div class="profile-section" *ngIf="(isEditView$ | async) === false">
       <div class="profile-info-wrapper">
         <div class="profile-title">
           <h3>{{ userName$ | async }} {{ userLastName$ | async }}.</h3>
@@ -35,24 +38,21 @@
       </div>
     </div>
 
-    <div class="profile-section-edit" *ngIf="isEditView">
+    <div class="profile-section-edit" *ngIf="isEditView$ | async">
       <div class="profile-section-edit-wrapper">
         <div class="profile-section-column">
-          <div class="profile-title">
-            <h3>{{ userName$ | async }} {{ userLastName$ | async }}.</h3>
-            <p>Joined Jul 2022</p>
-          </div>
           <div class="profile-info">
-            <h5>Verified info</h5>
-            <div class="profile-info-item">
-              <p>Approved to drive</p>
-              <a href="#">Verify ID</a>
-            </div>
-            <div class="profile-info-item">
-              <p>{{ userEmail$ | async }}</p>
-              <a href="#">verified</a>
+            <div class="profile-title">
+              <h3>{{ userName$ | async }} {{ userLastName$ | async }}.</h3>
+              <p>Joined Jul 2022</p>
             </div>
           </div>
+          <app-account-edit-form
+            [userToken]="token$"
+            (passwordUserUpdate)="userUpdate($event)"
+            (mobileUserUpdate)="userUpdate($event)"
+            (userUpdate)="userUpdate($event)"
+          ></app-account-edit-form>
         </div>
         <div class="profile-section-column">
           <div>

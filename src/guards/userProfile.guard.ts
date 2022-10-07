@@ -14,7 +14,7 @@ export class UserProfileGuard implements CanActivate {
       map((authenticate) => {
         if (!authenticate) {
           this.router.navigateByUrl('/');
-          this.store.dispatch(AppActions.openModal({ isModalOpen: true }));
+          this.store.dispatch(AppActions.openModal({ isLoginModalOpen: true }));
         }
         return true;
       })

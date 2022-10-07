@@ -1,4 +1,5 @@
-import { Controller, UseGuards, Post, Get, Request, Put, Patch, Param } from '@nestjs/common';
+import { Controller, UseGuards, Post, Get, Request, Put } from '@nestjs/common';
+import { AuthUser } from 'src/auth/auth.decorator';
 import { AuthService } from '../auth/auth.service';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
@@ -24,7 +25,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Request() req) {
+  async getProfile(@Request() req) {
     const profile = { ...req.user };
     return profile;
   }
@@ -36,8 +37,18 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put('update')
+  @Post('update')
   async updateUser(@Request() req) {
-    return this.userService.updateUser(req.body);
+    // console.log(req);
+    // this.authService.validatePassword(req.body.passwordUpdate, req.body.token);
+    // return this.authService.validatePassword(req.body.token);
+    // return this.userService.updateUser(req.body);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('validate')
+  async validateUserCredentials(@Request() req) {
+    console.log('REQUEST', req.body, req.headers.authorization);
+    // return this.authService.validatePassword(req.headers.authorization, req.body);
   }
 }

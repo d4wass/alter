@@ -8,7 +8,10 @@ export const UserSchema = new mongoose.Schema({
   isHost: { type: Boolean },
   description: { type: String },
   reviews: { type: Array },
-  profilePhoto: { type: String }
+  profilePhoto: { type: String },
+  mobile: { type: String },
+  isNewsletter: { type: Boolean },
+  isMobileNotification: { type: Boolean }
 });
 
 UserSchema.virtual('id').get(function () {
@@ -23,4 +26,9 @@ export interface User extends mongoose.Document {
   firstName: string;
   lastName: string;
   password: string;
+  mobile?: string;
+  isHost?: boolean;
+  isNewsletter?: boolean;
+  isMobileNotification?: boolean;
+  description?: string;
 }

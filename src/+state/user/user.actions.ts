@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Credentials, User } from '../models/user.model';
+import { Credentials, UpdateCredentials, User } from '../models/user.model';
 
 const login = createAction(
   '[User Login Modal] Login user',
@@ -34,6 +34,45 @@ const getUserProfileError = createAction(
   props<{ error: string }>()
 );
 
+const updateUserProfile = createAction(
+  '[User Profile] Update user profile',
+  props<{ user: Partial<User>; token: string }>()
+);
+const updateUserProfileSuccess = createAction(
+  '[User Profile] Update user profile success',
+  props<{ updatedUser: Partial<User> }>()
+);
+const updateUserProfileError = createAction(
+  '[User Profile] Update user profile error',
+  props<{ error: string }>()
+);
+
+const validateUserPasswordCredentials = createAction(
+  '[User Modal Profile] Check user password credentials',
+  props<{ updateData: { oldValue: string; newValue: string; confirmValue: string } }>()
+);
+const validateUserPasswordCredentialsSuccess = createAction(
+  '[User Modal Profile] Check user password credentials success',
+  props<{ isValid: boolean }>()
+);
+const validateUserPasswordCredentialsError = createAction(
+  '[User Modal Profile] Check user password credentials error',
+  props<{ error: string }>()
+);
+
+const validateUserMobileCredentials = createAction(
+  '[User Modal Profile] Check user mobile credentials',
+  props<{ updateData: UpdateCredentials }>()
+);
+const validateUserMobileCredentialsSuccess = createAction(
+  '[User Modal Profile] Check user mobile credentials success',
+  props<{ isValid: boolean }>()
+);
+const validateUserMobileCredentialsError = createAction(
+  '[User Modal Profile] Check user mobile credentials error',
+  props<{ error: string }>()
+);
+
 export const UserActions = {
   login,
   loginSuccess,
@@ -45,5 +84,14 @@ export const UserActions = {
   getUserProfileError,
   logoutUser,
   logoutUserError,
-  logoutUserSuccess
+  logoutUserSuccess,
+  updateUserProfile,
+  updateUserProfileSuccess,
+  updateUserProfileError,
+  validateUserMobileCredentials,
+  validateUserMobileCredentialsSuccess,
+  validateUserMobileCredentialsError,
+  validateUserPasswordCredentials,
+  validateUserPasswordCredentialsSuccess,
+  validateUserPasswordCredentialsError
 };

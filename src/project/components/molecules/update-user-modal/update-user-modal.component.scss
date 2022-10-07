@@ -1,0 +1,30 @@
+@use '../../../../base';
+
+.wrapper {
+  position: fixed;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(51, 51, 51, 0.6);
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: base.$main-border-rad;
+  background-color: #fff;
+}
+
+.modal-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}

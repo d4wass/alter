@@ -28,6 +28,6 @@ export class NavigationComponent {
   userName: Observable<string | undefined> = this.userFacade.userName$;
 
   handleLoginBtn(isOpen: boolean) {
-    this.store.dispatch(AppActions.openModal({ isModalOpen: isOpen }));
+    this.store.dispatch(AppActions.openModal({ isLoginModalOpen: isOpen }));
   }
 }
