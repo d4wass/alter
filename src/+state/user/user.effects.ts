@@ -47,14 +47,21 @@ export class UserEffects {
     () => () =>
       this.actions$.pipe(
         ofType(UserActions.loginSuccess),
+        map(({ token }) => {
+          return UserActions.getUserProfile({ token });
+        })
+      )
+  );
+
+  getUserProfile = createEffect(
+    () => () =>
+      this.actions$.pipe(
+        ofType(UserActions.getUserProfile),
         switchMap(({ token }) => {
           return this.authService.getUserProfile(token).pipe(
-            tap((x) => console.log(x)),
-            map(({ email, firstName, lastName, id }) => {
-              return UserActions.getUserProfileSuccess({
-                user: { email, firstName, lastName, id }
-              });
-            }),
+            map(({ firstName, lastName, email, id }) =>
+              UserActions.getUserProfileSuccess({ user: { firstName, lastName, email, id } })
+            ),
             catchError(async (error) => UserActions.getUserProfileError({ error }))
           );
         })

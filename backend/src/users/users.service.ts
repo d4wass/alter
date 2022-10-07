@@ -75,14 +75,6 @@ export class UsersService {
     return user as User;
   }
 
-  // async validateCredentials(credentials: {
-  //   newValue: string;
-  //   oldValue: string;
-  //   confirmValue: string;
-  // }): Promise<boolean> {
-
-  // }
-
   async updateUser(dataRequest: Partial<User>): Promise<unknown> {
     console.log('dataRequest', dataRequest);
     const { id } = dataRequest;

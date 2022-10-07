@@ -31,7 +31,7 @@ export class AuthService {
     return auth_token;
   }
 
-  getUserProfile(token: string) {
+  getUserProfile(token: string): Observable<Partial<User>> {
     const userProfile = this.http.get<{
       email: string;
       firstName: string;
