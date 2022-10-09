@@ -53,15 +53,15 @@ const updateUserProfileError = createAction(
 );
 
 const validateUserDataUpdate = createAction(
-  '[User Modal Profile] Check user password credentials',
+  '[User Modal Profile] Validate user credentials',
   props<{ updateUser: UserDataUpdate }>()
 );
 const validateUserDataUpdateSuccess = createAction(
-  '[User Modal Profile] Check user password credentials success',
-  props<{ isValid: boolean }>()
+  '[User Modal Profile] Validate user credentials success',
+  props<{ isPasswordValid: boolean; isMobileValid: boolean }>()
 );
 const validateUserDataUpdateError = createAction(
-  '[User Modal Profile] Check user password credentials error',
+  '[User Modal Profile] Validate user credentials error',
   props<{ error: string }>()
 );
 

@@ -46,9 +46,12 @@ export class AuthService {
   validateUserDataUpdate(
     updatedData: UserDataUpdate,
     token: string
-  ): Observable<{ isValid: boolean }> {
+  ): Observable<{ isPasswordValid: boolean; isMobileValid: boolean }> {
     console.log(updatedData, token);
-    const validateUserCredentials = this.http.post<{ isValid: boolean }>(
+    const validateUserCredentials = this.http.post<{
+      isPasswordValid: boolean;
+      isMobileValid: boolean;
+    }>(
       'http://localhost:3000/validate',
       { updatedData },
       { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) }

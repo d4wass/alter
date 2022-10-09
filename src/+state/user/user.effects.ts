@@ -108,7 +108,9 @@ export class UserEffects {
         withLatestFrom(this.userFacade.userToken$),
         concatMap(([{ updateUser }, token]) => {
           return this.authService.validateUserDataUpdate(updateUser, token).pipe(
-            map(({ isValid }) => UserActions.validateUserDataUpdateSuccess({ isValid })),
+            map(({ isPasswordValid, isMobileValid }) =>
+              UserActions.validateUserDataUpdateSuccess({ isPasswordValid, isMobileValid })
+            ),
             catchError(async (error) => UserActions.validateUserDataUpdateError({ error }))
           );
         })

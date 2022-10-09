@@ -32,3 +32,14 @@ export interface User extends mongoose.Document {
   isMobileNotification?: boolean;
   description?: string;
 }
+
+export interface UserDataUpdate {
+  passwordUpdate: UpdateCredentials;
+  mobileUpdate: UpdateCredentials;
+}
+
+interface UpdateCredentials {
+  oldValue: string;
+  newValue: string;
+  confirmValue: string;
+}

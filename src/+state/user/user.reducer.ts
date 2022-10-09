@@ -10,6 +10,7 @@ export interface UserState {
   isHost: boolean;
   token: string;
   errorMsg: string;
+  isCredentialsAreValid: boolean;
   userProfile: Partial<User>;
 }
 
@@ -19,6 +20,7 @@ export const initialState: UserState = {
   token: '',
   isHost: false,
   errorMsg: '',
+  isCredentialsAreValid: false,
   userProfile: {}
 };
 
@@ -40,5 +42,6 @@ export const userReducer = createReducer(
     ...state,
     errorMsg: error
   })),
-  on(UserActions.logoutUser, (state) => ({ ...state, isAuthorized: false, userProfile: {} }))
+  on(UserActions.logoutUser, (state) => ({ ...state, isAuthorized: false, userProfile: {} })),
+  on(UserActions.validateUserDataUpdateSuccess, (state) => state)
 );

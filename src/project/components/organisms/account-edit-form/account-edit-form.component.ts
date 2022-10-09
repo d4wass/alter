@@ -4,7 +4,6 @@ import { FormControl } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { UserFacade } from 'src/+state/facade/user.facade';
-import { UserDataUpdate } from 'src/+state/models/user.model';
 import { UserActions } from 'src/+state/user/user.actions';
 
 @Component({
@@ -15,6 +14,7 @@ import { UserActions } from 'src/+state/user/user.actions';
         <app-update-user-modal
           [labelContent]="'Password'"
           [title]="'Change Password'"
+          [isConfirm]="isPasswordModal"
           [formGroupCtrl]="passwordForm"
           (handleSave)="handleSave($event)"
           (handleCancel)="handleCancel()"
@@ -24,6 +24,7 @@ import { UserActions } from 'src/+state/user/user.actions';
         <app-update-user-modal
           [labelContent]="'mobile number'"
           [title]="'Change Mobile Number'"
+          [isConfirm]="isMobileConfirm | async"
           [formGroupCtrl]="mobileForm"
           (handleSave)="handleSave($event)"
           (handleCancel)="handleCancel($event)"
@@ -88,6 +89,7 @@ export class AccountEditFormComponent {
   @Output() mobileUserUpdate = new EventEmitter<any>();
   @Output() userUpdate = new EventEmitter<any>();
 
+  isMobileConfirm: Observable<string | undefined> = this.userFacade.userMobile$;
   isPasswordModal = false;
   isMobileModal = false;
 
@@ -103,7 +105,7 @@ export class AccountEditFormComponent {
     confirmValue: new FormControl('')
   });
 
-  updateUser: UserDataUpdate = {
+  updateUser: any = {
     passwordUpdate: {
       newValue: '',
       oldValue: '',
@@ -116,7 +118,7 @@ export class AccountEditFormComponent {
     }
   };
 
-  constructor(private readonly store: Store) {}
+  constructor(private readonly store: Store, private readonly userFacade: UserFacade) {}
 
   handleModalVisibility(event: Event) {
     const target = event.target as HTMLElement;
@@ -129,25 +131,22 @@ export class AccountEditFormComponent {
   }
 
   handleSave(event: Event) {
-    if (this.passwordForm.valid && this.isPasswordModal) {
-      //emit form values or pass controls values to parent component where from it we will dispatch action to update
-      this.updateUser.passwordUpdate = this.passwordForm.value;
+    if (event) {
+      if (this.passwordForm.valid && this.isPasswordModal) {
+        this.updateUser = { ...this.updateUser, passwordUpdate: { ...this.passwordForm.value } };
+      }
+
+      if (this.mobileForm.valid && this.isMobileModal) {
+        this.updateUser = { ...this.updateUser, mobileUpdate: { ...this.mobileForm.value } };
+      }
       this.store.dispatch(UserActions.validateUserDataUpdate({ updateUser: this.updateUser }));
+      this.userUpdate.emit(this.updateUser);
     }
 
-    if (this.mobileForm.valid && this.isMobileModal) {
-      //emit form values or pass controls values to parent component where from it we will dispatch action to update
-      this.updateUser.mobileUpdate = this.mobileForm.value;
-      // this.store.dispatch(UserActions.validateUserMobileCredentials(this.mobileForm.value));
-    }
-
-    this.userUpdate.emit(this.updateUser);
     this.resetForms();
-    //if user click save btn then emit to parent event with data only if all controls are not empty
   }
 
-  handleCancel(event: Event): void {
-    console.log('emit from cancel btn: ', event);
+  handleCancel(): void {
     this.resetForms();
   }
 

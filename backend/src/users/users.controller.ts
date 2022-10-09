@@ -48,7 +48,6 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Post('validate')
   async validateUserCredentials(@Request() req) {
-    console.log('REQUEST', req.body, req.headers.authorization);
-    // return this.authService.validatePassword(req.headers.authorization, req.body);
+    return this.authService.validateDataToUpdateUser(req.headers.authorization, req.body);
   }
 }

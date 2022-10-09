@@ -8,20 +8,21 @@ import { FormControl, FormGroup } from '@angular/forms';
       <div class="modal-container">
         <h3>{{ title }}</h3>
         <form [formGroup]="formGroupCtrl" class="modal-input-conatiner">
-          <div class="modal-input-wrapper">
-            <label>Old {{ labelContent }}</label>
-            <input id="old-password" formControlName="oldValue" />
+          <div class="modal-input-wrapper" *ngIf="!!this.isConfirm">
+            <label *ngIf="this.isConfirm">Old {{ labelContent }}</label>
+            <input formControlName="oldValue" />
           </div>
           <div class="modal-input-wrapper">
-            <label>New {{ labelContent }}</label>
-            <input id="new-password" formControlName="newValue" />
+            <label *ngIf="this.isConfirm">New {{ labelContent }}</label>
+            <label *ngIf="!this.isConfirm">Add New {{ labelContent }}</label>
+            <input formControlName="newValue" />
           </div>
           <div class="modal-input-wrapper">
             <label>Confirm {{ labelContent }}</label>
-            <input id="new-password-confirm" formControlName="confirmValue" />
+            <input formControlName="confirmValue" />
           </div>
         </form>
-        <button (click)="this.handleSave.emit(true)">Save</button>
+        <button (click)="this.handleSaveEmit()">Save</button>
         <button (click)="this.handleCancel.emit(true)">Cancel</button>
       </div>
     </div>
@@ -30,8 +31,13 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class UpdateUserModalComponent {
   @Input() formGroupCtrl!: FormGroup;
+  @Input() isConfirm?: boolean;
   @Input() title!: string;
   @Input() labelContent!: string;
   @Output() handleSave = new EventEmitter<boolean>();
   @Output() handleCancel = new EventEmitter<boolean>();
+
+  handleSaveEmit() {
+    this.formGroupCtrl.valid && this.handleSave.emit(true);
+  }
 }
