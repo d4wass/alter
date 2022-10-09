@@ -100,4 +100,20 @@ export class UserEffects {
       ),
     { dispatch: false }
   );
+
+  validateUserDataUpdate = createEffect(
+    () => () =>
+      this.actions$.pipe(
+        ofType(UserActions.validateUserDataUpdate),
+        withLatestFrom(this.userFacade.userToken$),
+        concatMap(([{ updateUser }, token]) => {
+          return this.authService.validateUserDataUpdate(updateUser, token).pipe(
+            map(({ isPasswordValid, isMobileValid }) =>
+              UserActions.validateUserDataUpdateSuccess({ isPasswordValid, isMobileValid })
+            ),
+            catchError(async (error) => UserActions.validateUserDataUpdateError({ error }))
+          );
+        })
+      )
+  );
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../models/user.model';
+import { User, UserDataUpdate } from '../models/user.model';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -33,21 +33,45 @@ export class AuthService {
     };
   }
 
-  async validatePassword(
+  async validateDataToUpdateUser(
     token: string,
-    password: { oldValue: string; newValue: string; confirmValue: string }
-  ): Promise<{ isValid: boolean }> {
+    data: { updatedData: UserDataUpdate }
+  ): Promise<{ isPasswordValid: boolean; isMobileValid: boolean }> {
+    const userFromToken = this.detokenizeUser(token);
+    const { confirmValue } = data.updatedData.passwordUpdate;
+    const { confirmValue: confirmMobileValue } = data.updatedData.mobileUpdate;
+
+    const user = await this.usersService.getUserById(userFromToken.payload.id);
+
+    const isPasswordMatch = await bcrypt.compare(confirmValue, user.password);
+    const isMobileMatch = user.mobile === confirmMobileValue;
+
+    return { isPasswordValid: isPasswordMatch, isMobileValid: isMobileMatch };
+  }
+
+  getUserIdFromToken(token: string): string {
     const tokenizedUser = this.jwtService.decode(token.replace('Bearer ', ''), {
       complete: true,
       json: true
     }) as any;
-    const user = await this.usersService.getUserById(tokenizedUser.payload.id);
-    console.log('USER', user);
-    console.log('Password 2', password);
-    const isMatch = await bcrypt.compare(password, user.password);
-    console.log('IS MATCH', isMatch);
 
-    return { isValid: isMatch };
+    return tokenizedUser.payload.id;
+  }
+
+  private async hashPassword(password: string): Promise<string> {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    return hashedPassword;
+  }
+
+  private detokenizeUser(token: string) {
+    const tokenizedUser = this.jwtService.decode(token.replace('Bearer ', ''), {
+      complete: true,
+      json: true
+    }) as any;
+
+    return tokenizedUser;
   }
 
   getUserIdFromToken(token: string): string {

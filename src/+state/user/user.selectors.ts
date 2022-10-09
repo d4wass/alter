@@ -12,11 +12,13 @@ const selectUserLastName = createSelector(
 );
 const selectUserEmail = createSelector(userFeatureSelector, (state) => state.userProfile.email);
 const selectUserToken = createSelector(userFeatureSelector, (state) => state.token);
+const selectUserMobile = createSelector(userFeatureSelector, (state) => state.userProfile.mobile);
 
 export const UserSelectors = {
   selectIsAuthorized,
   selectUserName,
   selectUserLastName,
   selectUserEmail,
-  selectUserToken
+  selectUserToken,
+  selectUserMobile
 };

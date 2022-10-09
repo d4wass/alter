@@ -14,6 +14,9 @@ export class UserFacade {
     select(UserSelectors.selectUserEmail)
   );
   userToken$: Observable<string> = this.store.pipe(select(UserSelectors.selectUserToken));
+  userMobile$: Observable<string | undefined> = this.store.pipe(
+    select(UserSelectors.selectUserMobile)
+  );
 
   constructor(private store: Store) {}
 }

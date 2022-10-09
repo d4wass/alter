@@ -6,6 +6,7 @@ export interface User {
   password: string;
   isTerms: boolean;
   isNewsletter?: boolean;
+  mobile: string;
 }
 
 export interface Credentials {
@@ -13,8 +14,13 @@ export interface Credentials {
   password: string;
 }
 
-export interface UpdateCredentials {
+interface UpdateCredentials {
   oldValue: string;
   newValue: string;
   confirmValue: string;
+}
+
+export interface UserDataUpdate {
+  passwordUpdate: UpdateCredentials;
+  mobileUpdate: UpdateCredentials;
 }

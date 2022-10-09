@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Credentials, UpdateCredentials, User } from '../models/user.model';
+import { Credentials, UserDataUpdate, User } from '../models/user.model';
 
 const login = createAction(
   '[User Login Modal] Login user',
@@ -52,29 +52,16 @@ const updateUserProfileError = createAction(
   props<{ error: string }>()
 );
 
-const validateUserPasswordCredentials = createAction(
-  '[User Modal Profile] Check user password credentials',
-  props<{ updateData: { oldValue: string; newValue: string; confirmValue: string } }>()
+const validateUserDataUpdate = createAction(
+  '[User Modal Profile] Validate user credentials',
+  props<{ updateUser: UserDataUpdate }>()
 );
-const validateUserPasswordCredentialsSuccess = createAction(
-  '[User Modal Profile] Check user password credentials success',
-  props<{ isValid: boolean }>()
+const validateUserDataUpdateSuccess = createAction(
+  '[User Modal Profile] Validate user credentials success',
+  props<{ isPasswordValid: boolean; isMobileValid: boolean }>()
 );
-const validateUserPasswordCredentialsError = createAction(
-  '[User Modal Profile] Check user password credentials error',
-  props<{ error: string }>()
-);
-
-const validateUserMobileCredentials = createAction(
-  '[User Modal Profile] Check user mobile credentials',
-  props<{ updateData: UpdateCredentials }>()
-);
-const validateUserMobileCredentialsSuccess = createAction(
-  '[User Modal Profile] Check user mobile credentials success',
-  props<{ isValid: boolean }>()
-);
-const validateUserMobileCredentialsError = createAction(
-  '[User Modal Profile] Check user mobile credentials error',
+const validateUserDataUpdateError = createAction(
+  '[User Modal Profile] Validate user credentials error',
   props<{ error: string }>()
 );
 
@@ -94,10 +81,7 @@ export const UserActions = {
   updateUserProfile,
   updateUserProfileSuccess,
   updateUserProfileError,
-  validateUserMobileCredentials,
-  validateUserMobileCredentialsSuccess,
-  validateUserMobileCredentialsError,
-  validateUserPasswordCredentials,
-  validateUserPasswordCredentialsSuccess,
-  validateUserPasswordCredentialsError
+  validateUserDataUpdate,
+  validateUserDataUpdateSuccess,
+  validateUserDataUpdateError
 };
