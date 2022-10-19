@@ -4,6 +4,7 @@ import { map, Observable, Subject, take, takeUntil } from 'rxjs';
 import { AppActions } from 'src/+state/app-state/app-state.actions';
 import { AppSettingFacade } from 'src/+state/facade/app-settings.facade';
 import { UserFacade } from 'src/+state/facade/user.facade';
+import { UserDataToUpdate } from 'src/+state/models/user.model';
 import { UserActions } from 'src/+state/user/user.actions';
 
 @Component({
@@ -19,10 +20,9 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
   isEditView$!: Observable<boolean>;
   token$!: Observable<string>;
   profileBtn: string = 'Edit Profile';
-  updatedUser: any;
+  updatedUser: UserDataToUpdate | undefined;
 
   private readonly unsubscribe$ = new Subject();
-  private isEditView: boolean = false;
 
   constructor(
     private userFacade: UserFacade,
@@ -44,7 +44,6 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
 
   onEditClick(): void {
     this.store.dispatch(AppActions.openEditProfileUser({ isProfile: true }));
-    this.isEditView = true;
     this.profileBtn = 'Save Profile';
   }
 
@@ -59,18 +58,20 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
         this.store.dispatch(UserActions.updateUserProfile({ user: this.updatedUser, token }));
       });
 
-    this.isEditView = false;
     this.profileBtn = 'Edit Profile';
   }
 
   userUpdate(event: Event) {
-    this.updatedUser = event;
+    this.updatedUser = { ...this.updatedUser, ...event };
+  }
+
+  userEmailUpdate(event: any) {
+    this.updatedUser = { ...this.updatedUser, emailUpdate: event };
   }
 
   onCancelClick(): void {
     this.store.dispatch(AppActions.closeEditProfileUser({ isProfile: false }));
     this.profileBtn = 'Edit Profile';
-    this.isEditView = false;
   }
 
   onLogoutClick(): void {
