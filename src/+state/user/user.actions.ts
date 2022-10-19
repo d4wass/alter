@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Credentials, UserDataUpdate, User } from '../models/user.model';
+import { Credentials, UserDataUpdate, User, UserDataToUpdate } from '../models/user.model';
 
 const login = createAction(
   '[User Login Modal] Login user',
@@ -41,7 +41,7 @@ const getUserProfileError = createAction(
 
 const updateUserProfile = createAction(
   '[User Profile] Update user profile',
-  props<{ user: Partial<User>; token: string }>()
+  props<{ user: UserDataToUpdate | undefined; token: string }>()
 );
 const updateUserProfileSuccess = createAction(
   '[User Profile] Update user profile success',

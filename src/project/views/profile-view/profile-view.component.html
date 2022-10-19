@@ -14,7 +14,6 @@
     </div>
   </div>
   <div class="flex-wrapper">
-    <div class="bg-section"></div>
     <div class="profile-section" *ngIf="(isEditView$ | async) === false">
       <div class="profile-info-wrapper">
         <div class="profile-title">
@@ -49,9 +48,8 @@
           </div>
           <app-account-edit-form
             [userToken]="token$"
-            (passwordUserUpdate)="userUpdate($event)"
-            (mobileUserUpdate)="userUpdate($event)"
             (userUpdate)="userUpdate($event)"
+            (emailUpdate)="userEmailUpdate($event)"
           ></app-account-edit-form>
         </div>
         <div class="profile-section-column">

@@ -6,7 +6,23 @@ export interface User {
   password: string;
   isTerms: boolean;
   isNewsletter?: boolean;
-  mobile: string;
+  mobile?: string;
+  description?: string;
+}
+
+export interface UserDataToUpdate {
+  emailUpdate?: string;
+  descriptionUpdate?: string;
+  mobileUpdate?: {
+    newValue: string;
+    oldValue: string;
+    confirmValue: string;
+  };
+  passwordUpdate?: {
+    newValue: string;
+    oldValue: string;
+    confirmValue: string;
+  };
 }
 
 export interface Credentials {
