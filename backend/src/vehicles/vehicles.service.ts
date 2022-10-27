@@ -1,11 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Vehicle } from '../models/vehicle.model';
+// import { Vehicle } from '../models/vehicle.model';
 import { Model } from 'mongoose';
+import { Vehicle, VehicleDocument } from 'src/schemas/vehicle/vehicle.schema';
 
 @Injectable()
 export class VehiclesService {
-  constructor(@InjectModel('Vehicle') private readonly vehicleModel: Model<Vehicle>) {}
+  constructor(@InjectModel(Vehicle.name) private readonly vehicleModel: Model<VehicleDocument>) {}
   //host request
   async addVehicle(vehicle: Partial<Vehicle>) {
     const newVehicle = new this.vehicleModel({ ...vehicle });
@@ -24,9 +25,9 @@ export class VehiclesService {
   //search request
   // async getAllVehicles() {}
   async getVehiclesByModel(model: string) {
-    let vehiclesByModel: Vehicle[];
+    let vehiclesByModel: Promise<Vehicle[]>;
     try {
-      vehiclesByModel = await this.vehicleModel.find({ model }).exec();
+      vehiclesByModel = this.vehicleModel.find({ model }).exec();
     } catch (error) {
       throw new NotFoundException('Cannot find vehicles by model');
     }
@@ -35,7 +36,7 @@ export class VehiclesService {
       throw new NotFoundException('Cannot find vehicles by model');
     }
 
-    return vehiclesByModel as Vehicle[];
+    return vehiclesByModel;
   }
 
   async getVehiclesByBrand(brand: string) {

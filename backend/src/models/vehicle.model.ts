@@ -1,5 +1,12 @@
 import * as mongoose from 'mongoose';
 
+export const ReviewSchema = new mongoose.Schema({});
+export const ExtrasSchema = new mongoose.Schema({});
+export const AvalibilitySchema = new mongoose.Schema({
+  from: { type: String },
+  until: { type: String }
+});
+
 export const VehicleSchema = new mongoose.Schema({
   id: { type: String },
   hostId: { type: String },
@@ -13,7 +20,8 @@ export const VehicleSchema = new mongoose.Schema({
   rewievs: { type: Array },
   extras: { type: Array },
   description: { type: String },
-  isCancelFree: { type: Boolean }
+  isCancelFree: { type: Boolean },
+  avalibility: [AvalibilitySchema]
 });
 
 export interface Vehicle extends mongoose.Document {
@@ -30,6 +38,7 @@ export interface Vehicle extends mongoose.Document {
   extras: Extras[];
   description: string;
   isCancelFree: boolean;
+  avalibility: Avalibility[];
 }
 
 export interface Feature {
@@ -71,4 +80,9 @@ export interface Specification {
   fuelType: string;
   doors: number;
   seats: number;
+}
+
+export interface Avalibility {
+  from: string;
+  until: string;
 }

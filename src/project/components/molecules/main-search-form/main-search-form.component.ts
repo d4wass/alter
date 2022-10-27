@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
 import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
-import { VehicleSelectors } from 'src/+state/vehicles/vehicle.selectors';
-import { SearchService } from 'src/project/services/search-service/search.service';
 
 @Component({
   selector: 'app-main-search-form',
