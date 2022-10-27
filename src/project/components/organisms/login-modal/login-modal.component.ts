@@ -124,7 +124,6 @@ export class LoginModalComponent implements OnInit {
   onSubmit(event: Event) {
     event.preventDefault();
     if (this.emailCtrl.valid && this.passwordCtrl.valid) {
-      console.log('valid form');
     }
   }
 

@@ -33,13 +33,22 @@ export interface User extends mongoose.Document {
   description?: string;
 }
 
-export interface UserDataUpdate {
+export interface UserDataToValidate {
   passwordUpdate: UpdateCredentials;
   mobileUpdate: UpdateCredentials;
 }
 
+export interface UserDataToUpdate {
+  updateUser: {
+    emailUpdate?: string;
+    descriptionUpdate?: string;
+    mobileUpdate?: UpdateCredentials;
+    passwordUpdate?: UpdateCredentials;
+  };
+}
+
 interface UpdateCredentials {
-  oldValue: string;
-  newValue: string;
-  confirmValue: string;
+  oldValue?: string;
+  newValue?: string;
+  confirmValue?: string;
 }

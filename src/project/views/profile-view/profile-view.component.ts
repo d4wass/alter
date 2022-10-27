@@ -1,6 +1,17 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
-import { map, Observable, Subject, take, takeUntil } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  Observable,
+  Subject,
+  take,
+  takeUntil,
+  tap
+} from 'rxjs';
 import { AppActions } from 'src/+state/app-state/app-state.actions';
 import { AppSettingFacade } from 'src/+state/facade/app-settings.facade';
 import { UserFacade } from 'src/+state/facade/user.facade';
@@ -20,7 +31,21 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
   isEditView$!: Observable<boolean>;
   token$!: Observable<string>;
   profileBtn: string = 'Edit Profile';
-  updatedUser: UserDataToUpdate | undefined;
+  updatedUser: UserDataToUpdate = {
+    emailUpdate: '',
+    descriptionUpdate: '',
+    mobileUpdate: {
+      newValue: '',
+      oldValue: '',
+      confirmValue: ''
+    },
+    passwordUpdate: {
+      newValue: '',
+      oldValue: '',
+      confirmValue: ''
+    }
+  };
+  descriptionCtrl = new FormControl('');
 
   private readonly unsubscribe$ = new Subject();
 
@@ -55,9 +80,10 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
       )
       .subscribe((token) => {
         this.store.dispatch(AppActions.closeEditProfileUser({ isProfile: false }));
-        this.store.dispatch(UserActions.updateUserProfile({ user: this.updatedUser, token }));
+        this.store.dispatch(UserActions.updateUserProfile({ updateUser: this.updatedUser, token }));
       });
 
+    this.updatedUser = this.setUpdatedUserToInitialValue();
     this.profileBtn = 'Edit Profile';
   }
 
@@ -67,6 +93,16 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
 
   userEmailUpdate(event: any) {
     this.updatedUser = { ...this.updatedUser, emailUpdate: event };
+  }
+
+  handleUserDescriptionField() {
+    this.descriptionCtrl.valueChanges
+      .pipe(
+        filter((value: string) => value !== ''),
+        debounceTime(1000),
+        distinctUntilChanged()
+      )
+      .subscribe((value) => (this.updatedUser.descriptionUpdate = value));
   }
 
   onCancelClick(): void {
@@ -80,5 +116,23 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
 
   private lastnameShortened(): Observable<string | undefined> {
     return this.userFacade.userLastName$.pipe(map((x) => x?.substring(0, 1)));
+  }
+
+  private setUpdatedUserToInitialValue(): UserDataToUpdate {
+    const initUpdatedUser = {
+      emailUpdate: '',
+      descriptionUpdate: '',
+      mobileUpdate: {
+        newValue: '',
+        oldValue: '',
+        confirmValue: ''
+      },
+      passwordUpdate: {
+        newValue: '',
+        oldValue: '',
+        confirmValue: ''
+      }
+    };
+    return initUpdatedUser;
   }
 }

@@ -20,7 +20,5 @@ export class LanguageOptionComponent {
 
   constructor(private languageSelectService: LanguageSelectService) {}
 
-  handleRadioSelect(event: Event) {
-    console.log((event.target as HTMLOptionElement).value);
-  }
+  handleRadioSelect(event: Event) {}
 }

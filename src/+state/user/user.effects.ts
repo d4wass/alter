@@ -116,4 +116,33 @@ export class UserEffects {
         })
       )
   );
+
+  updateUserData = createEffect(
+    () => () =>
+      this.actions$.pipe(
+        ofType(UserActions.updateUserProfile),
+        switchMap(({ updateUser, token }) => {
+          return this.authService.updateUserData(updateUser, token).pipe(
+            map(({ user, token }) => UserActions.updateUserProfileSuccess({ user, token })),
+            catchError(async (error) => UserActions.updateUserProfileError({ error }))
+          );
+        })
+      )
+  );
+
+  updateUserProfileView = createEffect(
+    () => () =>
+      this.actions$.pipe(
+        ofType(UserActions.updateUserProfileSuccess),
+        withLatestFrom(this.userFacade.userToken$),
+        switchMap(([, token]) => {
+          return this.authService.getUserProfile(token).pipe(
+            map(({ firstName, lastName, email, id }) =>
+              UserActions.getUserProfileSuccess({ user: { firstName, lastName, email, id } })
+            ),
+            catchError(async (error) => UserActions.getUserProfileError({ error }))
+          );
+        })
+      )
+  );
 }

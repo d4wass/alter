@@ -14,9 +14,8 @@ export class VehicleFacade {
   constructor(public store: Store) {}
 
   getIsVehicleFound(): Observable<boolean> {
-    return this.store.pipe(select(VehicleSelectors.selectIsVehicleFound)).pipe(
-      map((x) => Boolean(x.length)),
-      tap((x) => console.log(x))
-    );
+    return this.store
+      .pipe(select(VehicleSelectors.selectIsVehicleFound))
+      .pipe(map((x) => Boolean(x.length)));
   }
 }

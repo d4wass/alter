@@ -9,9 +9,7 @@ export class LanguageSelectService {
 
   constructor() {}
 
-  handleOpenSelect(event: string) {
-    console.log(event);
-  }
+  handleOpenSelect(event: string) {}
 
   setOption() {}
 }
