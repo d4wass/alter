@@ -14,14 +14,14 @@ export interface UserDataToUpdate {
   emailUpdate?: string;
   descriptionUpdate?: string;
   mobileUpdate?: {
-    newValue: string;
-    oldValue: string;
-    confirmValue: string;
+    newValue?: string;
+    oldValue?: string;
+    confirmValue?: string;
   };
   passwordUpdate?: {
-    newValue: string;
-    oldValue: string;
-    confirmValue: string;
+    newValue?: string;
+    oldValue?: string;
+    confirmValue?: string;
   };
 }
 

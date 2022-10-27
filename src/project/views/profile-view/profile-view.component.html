@@ -61,7 +61,11 @@
               experience. Feel free to include links to your LinkedIn, Twitter, or Facebook profiles
               so they get to know you even better.
             </p>
-            <textarea placeholder="description"></textarea>
+            <textarea
+              placeholder="description"
+              [formControl]="descriptionCtrl"
+              (keydown)="handleUserDescriptionField()"
+            ></textarea>
           </div>
           <div>
             <h5>Review from hosts</h5>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User, UserDataUpdate } from 'src/+state/models/user.model';
+import { User, UserDataToUpdate, UserDataUpdate } from 'src/+state/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -43,11 +43,11 @@ export class AuthService {
     return userProfile;
   }
 
+  //change nameing for this service method
   validateUserDataUpdate(
     updatedData: UserDataUpdate,
     token: string
   ): Observable<{ isPasswordValid: boolean; isMobileValid: boolean }> {
-    console.log(updatedData, token);
     const validateUserCredentials = this.http.post<{
       isPasswordValid: boolean;
       isMobileValid: boolean;
@@ -57,5 +57,17 @@ export class AuthService {
       { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) }
     );
     return validateUserCredentials;
+  }
+
+  updateUserData(
+    updateUser: UserDataToUpdate,
+    token: string
+  ): Observable<{ user: Partial<User>; token: string }> {
+    const updateUserData = this.http.put<{ user: Partial<User>; token: string }>(
+      'http://localhost:3000/update',
+      { updateUser },
+      { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) }
+    );
+    return updateUserData;
   }
 }

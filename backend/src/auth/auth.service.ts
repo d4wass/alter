@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { User, UserDataUpdate } from '../models/user.model';
+import { User, UserDataToValidate } from '../models/user.model';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -35,7 +35,7 @@ export class AuthService {
 
   async validateDataToUpdateUser(
     token: string,
-    data: { updatedData: UserDataUpdate }
+    data: { updatedData: UserDataToValidate }
   ): Promise<{ isPasswordValid: boolean; isMobileValid: boolean }> {
     const userFromToken = this.detokenizeUser(token);
     const { confirmValue } = data.updatedData.passwordUpdate;

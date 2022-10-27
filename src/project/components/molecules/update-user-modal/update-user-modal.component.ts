@@ -38,8 +38,6 @@ export class UpdateUserModalComponent {
   @Output() handleCancel = new EventEmitter<boolean>();
 
   handleSaveEmit() {
-    console.log('clicks');
-    console.log(this.formGroupCtrl.valid);
     this.formGroupCtrl.valid && this.handleSave.emit(true);
   }
 }

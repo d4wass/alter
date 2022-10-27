@@ -41,11 +41,11 @@ const getUserProfileError = createAction(
 
 const updateUserProfile = createAction(
   '[User Profile] Update user profile',
-  props<{ user: UserDataToUpdate | undefined; token: string }>()
+  props<{ updateUser: UserDataToUpdate; token: string }>()
 );
 const updateUserProfileSuccess = createAction(
   '[User Profile] Update user profile success',
-  props<{ updatedUser: Partial<User> }>()
+  props<{ user: Partial<User>; token: string }>()
 );
 const updateUserProfileError = createAction(
   '[User Profile] Update user profile error',

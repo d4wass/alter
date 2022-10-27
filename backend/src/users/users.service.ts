@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from '../models/user.model';
+import { User, UserDataToUpdate } from '../models/user.model';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -22,6 +22,7 @@ export class UsersService {
         password: hashedPassword,
         description: '',
         profilePhoto: '',
+        mobile: '',
         reviews: []
       });
       await newUser.save();
@@ -75,17 +76,14 @@ export class UsersService {
     return user as User;
   }
 
-  async updateUser(dataRequest: Partial<User>): Promise<unknown> {
-    console.log('dataRequest', dataRequest);
-    const { id } = dataRequest;
+  async updateUser(dataRequest: UserDataToUpdate, userId: string): Promise<User> {
+    const updateUser = await this.updateUserConverter(dataRequest);
 
     let update;
+    let user;
+
     try {
-      update = await this.userModel.updateOne(
-        { _id: id },
-        { $set: { ...dataRequest } }, //here you pass all things that will be update for selected user
-        { new: true }
-      );
+      update = await this.userModel.findByIdAndUpdate(userId, { $set: { ...updateUser } });
     } catch (error) {
       throw new NotFoundException('User Not Found');
     }
@@ -93,13 +91,30 @@ export class UsersService {
     if (!update) {
       throw new NotFoundException('Cannot find user');
     }
-    return update as User;
+
+    return user as User;
   }
 
   private async isUserExist(email: string): Promise<boolean> {
     const user = await this.userModel.findOne({ email });
 
     return user ? true : false;
+  }
+
+  private async updateUserConverter(updatedData: UserDataToUpdate) {
+    const { updateUser } = updatedData;
+    const data = {
+      email: updateUser.emailUpdate,
+      password: updateUser.passwordUpdate.newValue
+        ? await this.hashPassword(updateUser.passwordUpdate?.newValue)
+        : '',
+      description: updateUser.descriptionUpdate,
+      mobile: updateUser.mobileUpdate.newValue
+    };
+
+    const filteredData = Object.fromEntries(Object.entries(data).filter((value) => value[1]));
+
+    return filteredData;
   }
 
   private async hashPassword(password: string): Promise<string> {

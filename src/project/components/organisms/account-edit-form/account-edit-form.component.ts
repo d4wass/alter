@@ -117,14 +117,14 @@ export class AccountEditFormComponent {
       newValue: new FormControl(''),
       oldValue: new FormControl(''),
       confirmValue: new FormControl('')
+    },
+    {
+      validators: [
+        this.controlEqualityValidator('password'),
+        Validators.required,
+        Validators.minLength(8)
+      ]
     }
-    // {
-    //   validators: [
-    //     this.controlEqualityValidator('password'),
-    //     Validators.required,
-    //     Validators.minLength(8)
-    //   ]
-    // }
   );
 
   mobileForm = new FormGroup(
@@ -132,14 +132,14 @@ export class AccountEditFormComponent {
       newValue: new FormControl('', Validators.required),
       oldValue: new FormControl(''),
       confirmValue: new FormControl('', Validators.required)
+    },
+    {
+      validators: [
+        this.controlEqualityValidator('mobile'),
+        Validators.minLength(6),
+        Validators.maxLength(12)
+      ]
     }
-    // {
-    //   validators: [
-    //     this.controlEqualityValidator('mobile'),
-    //     Validators.minLength(6),
-    //     Validators.maxLength(12)
-    //   ]
-    // }
   );
 
   emailUserUpdate: string = '';
@@ -169,7 +169,6 @@ export class AccountEditFormComponent {
   }
 
   handleSave(event: Event): void {
-    console.log(event);
     if (event) {
       if (this.passwordForm.valid && this.isPasswordModal) {
         this.updateUser = { ...this.updateUser, passwordUpdate: { ...this.passwordForm.value } };

@@ -85,7 +85,6 @@ export class VehiclesService {
 
   async getAllVehicles() {
     const vehicles = await this.vehicleModel.find().exec();
-    console.log(vehicles);
     return vehicles;
   }
 

@@ -31,7 +31,6 @@ export class LanguageSelectComponent {
 
   handleSelect(event: Event) {
     const target = event.target as HTMLElement;
-    console.log(event);
 
     document.querySelector('.select__label')?.classList.toggle('select__label--open');
     document.querySelector('.select')?.classList.toggle('select__label--open');
