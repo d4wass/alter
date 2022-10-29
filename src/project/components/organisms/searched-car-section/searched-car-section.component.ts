@@ -7,12 +7,13 @@ import { VehicleFacade } from 'src/+state/facade/vehicle.facade';
     <div class="wrapper">
       <ng-container *ngIf="vehicleFacade.getIsVehicleFound() | async">
         <app-searched-car-card
-          *ngFor="let vehicle of vehicleFacade.allVehicles$ | async"
+          *ngFor="let vehicle of vehicleFacade.allVehicles$ | async; let i = index"
           [vehicle]="vehicle"
+          [vehicleIndex]="i + 1"
         >
         </app-searched-car-card>
       </ng-container>
-      <ng-container *ngIf="!vehicleFacade.getIsVehicleFound() | async">
+      <ng-container *ngIf="(vehicleFacade.getIsVehicleFound() | async) === false">
         <h2>no result for search query</h2>
       </ng-container>
     </div>

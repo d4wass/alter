@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { map, Observable, tap } from 'rxjs';
+import { filter, map, Observable, tap } from 'rxjs';
 import { Vehicle } from '../models/vehicle.model';
 import { VehicleSelectors } from '../vehicles/vehicle.selectors';
 
@@ -14,8 +14,9 @@ export class VehicleFacade {
   constructor(public store: Store) {}
 
   getIsVehicleFound(): Observable<boolean> {
-    return this.store
-      .pipe(select(VehicleSelectors.selectIsVehicleFound))
-      .pipe(map((x) => Boolean(x.length)));
+    return this.store.pipe(select(VehicleSelectors.selectIsVehiclesFound)).pipe(
+      map((vehicles) => vehicles.length !== 0),
+      tap((x) => console.log(x))
+    );
   }
 }
