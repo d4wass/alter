@@ -1,5 +1,7 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
-import { Extras, Feature, Review, Specification } from '../models/vehicle.model';
+import { Avalibility } from 'src/schemas/vehicle/avalibility.schema';
+import { Review } from 'src/schemas/vehicle/review.schema';
+import { Extras, Feature, Specification } from '../models/vehicle.model';
 import { VehiclesService } from './vehicles.service';
 
 @Controller()
@@ -16,7 +18,9 @@ export class VehiclesController {
     @Body('features') features: Feature,
     @Body('extras') extras: Extras[],
     @Body('description') description: string,
-    @Body('isCancelFree') isCancelFree: boolean
+    @Body('isCancelFree') isCancelFree: boolean,
+    @Body('avalibility') avalibility: Avalibility[],
+    @Body('reviews') reviews: Review[]
   ) {
     //add guard that prevents from adding vehicle when user is host and is login
     await this.vehicleService.addVehicle({
@@ -28,7 +32,9 @@ export class VehiclesController {
       features,
       extras,
       description,
-      isCancelFree
+      isCancelFree,
+      avalibility,
+      reviews
     });
   }
 
