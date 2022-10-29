@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { Extras, Review } from 'src/models/vehicle.model';
 import { Feature } from './feature.schema';
 import { Specification } from './specification.schema';
 import { Avalibility } from './avalibility.schema';
+import { Review } from './review.schema';
+import { Extras } from './extras.schema';
 
 export type VehicleDocument = Vehicle & Document;
 
@@ -28,7 +29,7 @@ export class Vehicle {
   @Prop()
   features: Feature;
   @Prop()
-  rewievs: Review[];
+  reviews: Review[];
   @Prop()
   extras: Extras[];
   @Prop()

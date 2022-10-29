@@ -66,7 +66,7 @@ export interface Review {
   userName: string;
   date: string;
   score: number;
-  review: string;
+  description: string;
 }
 
 export interface Extras {
