@@ -17,31 +17,31 @@ import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
           ></app-search-header-input>
         </div>
         <span></span>
-        <div class="input-data">
+        <div class="input-data" formGroup="fromDate">
           <app-search-header-input
             typeValue="date"
             labelValue="Until"
             placeholderValue="ex: 11/03/21"
-            [control]="searchForm.controls.fromDate"
+            [control]="searchForm.controls.fromDate.controls.date"
           ></app-search-header-input>
           <app-search-header-input
             typeValue="time"
             placeholderValue="10:00 am"
-            [control]="searchForm.controls.fromHour"
+            [control]="searchForm.controls.fromDate.controls.hour"
           ></app-search-header-input>
         </div>
         <span></span>
-        <div class="input-data">
+        <div class="input-data" fromGroup="endDate">
           <app-search-header-input
             typeValue="date"
             labelValue="From"
             placeholderValue="ex: 12/03/21"
-            [control]="searchForm.controls.endDate"
+            [control]="searchForm.controls.endDate.controls.date"
           ></app-search-header-input>
           <app-search-header-input
             typeValue="time"
             placeholderValue="11:00 am"
-            [control]="searchForm.controls.endHour"
+            [control]="searchForm.controls.endDate.controls.hour"
           ></app-search-header-input>
         </div>
       </form>
@@ -55,17 +55,44 @@ export class MainSearchFormComponent {
 
   searchForm = new FormGroup({
     place: new FormControl('', Validators.required),
-    fromDate: new FormControl(''),
-    fromHour: new FormControl(''),
-    endDate: new FormControl(''),
-    endHour: new FormControl('')
+    fromDate: new FormGroup({
+      date: new FormControl(''),
+      hour: new FormControl('')
+    }),
+    endDate: new FormGroup({
+      date: new FormControl(''),
+      hour: new FormControl('')
+    })
   });
 
   onSubmit(): void {
-    const { place, fromDate, fromHour, endDate, endHour } = this.searchForm.controls;
+    const { place, fromDate, endDate } = this.searchForm.controls;
+
+    console.log(this.searchForm.valid);
+    console.log(place.value, fromDate.value, endDate.value);
+
     if (place.valid) {
       this.store.dispatch(VehiclesActions.loadVehicles());
-      this.store.dispatch(VehiclesActions.searchVehicles({ query: place.value }));
+      this.store.dispatch(
+        VehiclesActions.searchVehicles({
+          query: {
+            place: place.value,
+            fromDate: this.dataConverter(fromDate.value),
+            endDate: this.dataConverter(endDate.value)
+          }
+        })
+      );
     }
+  }
+
+  private dataConverter(value: { date: string; hour: string }) {
+    const { date, hour } = value;
+    const convertedDate = new Date(date);
+    const day = convertedDate.getDate();
+    const month = convertedDate.getMonth() + 1;
+    return {
+      date: `${day}.${month < 10 ? `0${month}` : `${month}`}.${convertedDate.getFullYear()}`,
+      hour
+    };
   }
 }

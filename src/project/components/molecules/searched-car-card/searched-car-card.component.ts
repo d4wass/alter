@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { map, Observable, switchMap, tap } from 'rxjs';
-import { VehicleFacade } from 'src/+state/facade/vehicle.facade';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { map, Observable, of, switchMap, tap } from 'rxjs';
 import { Vehicle } from 'src/+state/models/vehicle.model';
 import {
   UnshplashService,
@@ -11,8 +10,16 @@ import {
   selector: 'app-searched-car-card',
   template: `
     <div class="wrapper">
-      <div class="card-image">
-        <img [src]="image$ | async" alt="car photo" />
+      <div
+        class="card-image"
+        [ngStyle]="{
+          'background-image': imageUrl$ | async,
+          'background-size': 'cover',
+          'background-repeat': 'no-repeat',
+          'background-position': '50%, 50%'
+        }"
+      >
+        <!-- <img [src]="image$ | async" alt="car photo" /> -->
       </div>
       <div class="card-content">
         <div class="card-info">
@@ -29,17 +36,20 @@ import {
       </div>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./searched-car-card.component.scss']
 })
 export class SearchedCarCardComponent implements OnInit {
   @Input() vehicle!: Vehicle;
   @Input() vehicleIndex!: number;
   @Input() image$!: Observable<string>;
+  imageUrl$!: Observable<string>;
 
   constructor(private unsplashService: UnshplashService) {}
 
   ngOnInit(): void {
     this.image$ = this.getVehicleImg(this.vehicle);
+    this.imageUrl$ = this.createBackgroundUrl();
   }
 
   private getVehicleImg(vehicle: Vehicle): Observable<string> {
@@ -50,5 +60,9 @@ export class SearchedCarCardComponent implements OnInit {
           return x.results[this.vehicleIndex - 1].urls.small;
         })
       );
+  }
+
+  private createBackgroundUrl() {
+    return this.image$.pipe(map((image) => `url(${image})`));
   }
 }

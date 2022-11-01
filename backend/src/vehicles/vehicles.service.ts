@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 // import { Vehicle } from '../models/vehicle.model';
 import { Model } from 'mongoose';
+import { VehicleQuery } from 'src/models/vehicle.model';
 import { Vehicle, VehicleDocument } from 'src/schemas/vehicle/vehicle.schema';
 
 @Injectable()
@@ -54,16 +55,22 @@ export class VehiclesService {
     return vehiclesByBrand as Vehicle[];
   }
 
-  async getVehiclesByQuery(query: any) {
+  async getVehiclesByQuery(query: VehicleQuery) {
     let vehiclesByQuery: Vehicle[];
     try {
-      vehiclesByQuery = await this.vehicleModel.find(query).exec();
+      vehiclesByQuery = await this.vehicleModel
+        .find({
+          'place': query.place,
+          'avalibility.from': { $not: { $eq: query.fromDate } },
+          'avalibility.until': { $not: { $eq: query.endDate } }
+        })
+        .exec();
     } catch (error) {
-      throw new NotFoundException('Cannot find vehicles by brand');
+      throw new NotFoundException('Cannot find vehicles by query');
     }
 
     if (!vehiclesByQuery) {
-      throw new NotFoundException('Cannot find vehicles by brand');
+      throw new NotFoundException('Cannot find vehicles by query');
     }
 
     return vehiclesByQuery as Vehicle[];

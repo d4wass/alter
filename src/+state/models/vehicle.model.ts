@@ -14,6 +14,12 @@ export interface Vehicle {
   isCancelFree: boolean;
 }
 
+export interface VehicleQuery {
+  place: string;
+  fromDate: { date: string; hour: string };
+  endDate: { date: string; hour: string };
+}
+
 interface Feature {
   engine: { capacity: number; power: number };
   gearbox: { manual: boolean; automatic: boolean };

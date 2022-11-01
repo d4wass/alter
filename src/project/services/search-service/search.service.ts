@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Vehicle } from 'src/+state/models/vehicle.model';
+import { VehicleQuery } from 'src/+state/models/vehicle.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +10,18 @@ import { Vehicle } from 'src/+state/models/vehicle.model';
 export class SearchService {
   constructor(private http: HttpClient) {}
 
-  searchVehicles(place: string): Observable<Vehicle[]> {
-    return this.http.get<Vehicle[]>('http://localhost:3000/search', {
-      params: { place }
+  searchVehicles(query: VehicleQuery): Observable<Vehicle[]> {
+    const { place, fromDate, endDate } = query;
+    let params = new HttpParams({
+      fromObject: {
+        place,
+        fromDate: fromDate.date,
+        endDate: endDate.date
+        // startTime: fromDate.hour,
+        // endTime: endDate.hour
+      }
     });
+
+    return this.http.get<Vehicle[]>('http://localhost:3000/search', { params });
   }
 }
