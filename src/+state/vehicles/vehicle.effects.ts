@@ -12,8 +12,16 @@ export class VehicleEffects {
       ofType(VehiclesActions.searchVehicles),
       switchMap(({ query }) =>
         this.searchService.searchVehicles(query).pipe(
+          tap(() =>
+            this.router.navigate(['/search'], {
+              queryParams: {
+                place: query.place,
+                fromDate: query.fromDate.date,
+                endDate: query.endDate.date
+              }
+            })
+          ),
           map((vehicles) => VehiclesActions.loadVehiclesSuccess({ vehicles })),
-          tap(() => this.router.navigate(['/search'], { queryParams: { place: query } })),
           catchError((error) => of(VehiclesActions.loadVehiclesError({ error })))
         )
       )

@@ -16,8 +16,3 @@ export class Specification {
 }
 
 export const SpecificationSchema = SchemaFactory.createForClass(Specification);
-
-interface FuelConsumption {
-  units: string;
-  quantity: number;
-}

@@ -11,7 +11,7 @@ const selectAllVehicles = createSelector(
   fromVehicles.vehicleSelector.selectAll
 );
 const selectIsLoading = createSelector(vehicleFeatureSelector, (state) => state.isLoading);
-const selectIsVehicleFound = createSelector(
+const selectIsVehiclesFound = createSelector(
   vehicleFeatureSelector,
   fromVehicles.vehicleSelector.selectIds
 );
@@ -20,5 +20,5 @@ export const VehicleSelectors = {
   selectIsLoading,
   selectVehiclesState,
   selectAllVehicles,
-  selectIsVehicleFound
+  selectIsVehiclesFound
 };

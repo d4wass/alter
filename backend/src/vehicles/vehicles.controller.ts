@@ -47,6 +47,7 @@ export class VehiclesController {
 
   @Get('search')
   async getVehiclesByQuery(@Query() query) {
+    console.log(query);
     const vehiclesByQuery = await this.vehicleService.getVehiclesByQuery(query);
     return vehiclesByQuery;
   }

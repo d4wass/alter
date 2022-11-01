@@ -1,11 +1,15 @@
 import * as mongoose from 'mongoose';
 
-export const ReviewSchema = new mongoose.Schema({});
-export const ExtrasSchema = new mongoose.Schema({});
 export const AvalibilitySchema = new mongoose.Schema({
   from: { type: String },
   until: { type: String }
 });
+
+export interface VehicleQuery {
+  place: string;
+  fromDate: { date: string; hour: string };
+  endDate: { date: string; hour: string };
+}
 
 export const VehicleSchema = new mongoose.Schema({
   id: { type: String },
