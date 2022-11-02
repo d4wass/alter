@@ -9,7 +9,7 @@ import {
 @Component({
   selector: 'app-searched-car-card',
   template: `
-    <div class="wrapper">
+    <div class="wrapper" (click)="goDetails($event)">
       <div
         class="card-image"
         [ngStyle]="{
@@ -18,9 +18,7 @@ import {
           'background-repeat': 'no-repeat',
           'background-position': '50%, 50%'
         }"
-      >
-        <!-- <img [src]="image$ | async" alt="car photo" /> -->
-      </div>
+      ></div>
       <div class="card-content">
         <div class="card-info">
           <h3>{{ vehicle.brand }} {{ vehicle.model }}</h3>
@@ -50,6 +48,11 @@ export class SearchedCarCardComponent implements OnInit {
   ngOnInit(): void {
     this.image$ = this.getVehicleImg(this.vehicle);
     this.imageUrl$ = this.createBackgroundUrl();
+  }
+
+  goDetails(event: Event) {
+    console.log(event, 'clicking');
+    console.log(this.vehicle._id);
   }
 
   private getVehicleImg(vehicle: Vehicle): Observable<string> {

@@ -44,8 +44,8 @@ import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
             [control]="searchForm.controls.endDate.controls.hour"
           ></app-search-header-input>
         </div>
+        <button (click)="onSubmit($event)">search</button>
       </form>
-      <button (click)="onSubmit()">search</button>
     </div>
   `,
   styleUrls: ['./main-search-form.component.scss']
@@ -56,22 +56,20 @@ export class MainSearchFormComponent {
   searchForm = new FormGroup({
     place: new FormControl('', Validators.required),
     fromDate: new FormGroup({
-      date: new FormControl(''),
+      date: new FormControl('', Validators.required),
       hour: new FormControl('')
     }),
     endDate: new FormGroup({
-      date: new FormControl(''),
+      date: new FormControl('', Validators.required),
       hour: new FormControl('')
     })
   });
 
-  onSubmit(): void {
+  onSubmit(event: Event): void {
+    event.preventDefault();
     const { place, fromDate, endDate } = this.searchForm.controls;
 
-    console.log(this.searchForm.valid);
-    console.log(place.value, fromDate.value, endDate.value);
-
-    if (place.valid) {
+    if (place.valid && fromDate.controls.date.valid && endDate.controls.date.valid) {
       this.store.dispatch(VehiclesActions.loadVehicles());
       this.store.dispatch(
         VehiclesActions.searchVehicles({
