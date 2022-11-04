@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
-
+import { FormControl } from '@ngneat/reactive-forms';
 @Component({
   selector: 'app-search-header-input',
   template: `
@@ -23,5 +22,5 @@ export class SearchHeaderInputComponent {
   @Input() labelValue!: string;
   @Input() placeholderValue!: string;
   @Input() typeValue: string = 'text';
-  @Input() control!: FormControl;
+  @Input() control!: FormControl<string | unknown>;
 }

@@ -1,12 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-  AbstractControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators
-} from '@angular/forms';
-import { FormControl } from '@ngneat/reactive-forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
 import {
   combineLatestWith,
@@ -206,7 +200,7 @@ export class AccountEditFormComponent {
 
   private controlEqualityValidator(type?: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const formGroup = control as FormGroup;
+      const formGroup = control as FormGroup<any>;
       const { oldValue, newValue, confirmValue } = formGroup.value;
       // make from string to enum
       if (type === 'password') {
