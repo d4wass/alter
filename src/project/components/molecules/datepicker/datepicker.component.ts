@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { FormControl } from '@ngneat/reactive-forms';
 
 @Component({
   selector: 'app-datepicker',
@@ -15,6 +15,6 @@ import { UntypedFormControl } from '@angular/forms';
   styleUrls: ['./datepicker.component.scss']
 })
 export class DatepickerComponent {
-  @Input() control!: UntypedFormControl;
+  @Input() control!: FormControl<string | unknown>;
   constructor() {}
 }

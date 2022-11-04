@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, UntypedFormGroup } from '@angular/forms';
+import { FormGroup } from '@ngneat/reactive-forms';
 
 @Component({
   selector: 'app-update-user-modal',
@@ -30,7 +30,7 @@ import { FormControl, UntypedFormGroup } from '@angular/forms';
   styleUrls: ['./update-user-modal.component.scss']
 })
 export class UpdateUserModalComponent {
-  @Input() formGroupCtrl!: UntypedFormGroup;
+  @Input() formGroupCtrl!: FormGroup<any>;
   @Input() isConfirm?: boolean;
   @Input() title!: string;
   @Input() labelContent!: string;

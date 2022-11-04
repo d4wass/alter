@@ -1,12 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-  AbstractControl,
-  UntypedFormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators
-} from '@angular/forms';
-import { FormControl } from '@ngneat/reactive-forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
 import {
   combineLatestWith,
@@ -112,7 +106,7 @@ export class AccountEditFormComponent {
   emailCtrl = new FormControl('', {
     validators: Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')
   });
-  passwordForm = new UntypedFormGroup(
+  passwordForm = new FormGroup(
     {
       newValue: new FormControl(''),
       oldValue: new FormControl(''),
@@ -127,7 +121,7 @@ export class AccountEditFormComponent {
     }
   );
 
-  mobileForm = new UntypedFormGroup(
+  mobileForm = new FormGroup(
     {
       newValue: new FormControl('', Validators.required),
       oldValue: new FormControl(''),
@@ -206,7 +200,7 @@ export class AccountEditFormComponent {
 
   private controlEqualityValidator(type?: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const formGroup = control as UntypedFormGroup;
+      const formGroup = control as FormGroup<any>;
       const { oldValue, newValue, confirmValue } = formGroup.value;
       // make from string to enum
       if (type === 'password') {
