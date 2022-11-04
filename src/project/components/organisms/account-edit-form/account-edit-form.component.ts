@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   AbstractControl,
-  FormGroup,
+  UntypedFormGroup,
   ValidationErrors,
   ValidatorFn,
   Validators
@@ -112,7 +112,7 @@ export class AccountEditFormComponent {
   emailCtrl = new FormControl('', {
     validators: Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')
   });
-  passwordForm = new FormGroup(
+  passwordForm = new UntypedFormGroup(
     {
       newValue: new FormControl(''),
       oldValue: new FormControl(''),
@@ -127,7 +127,7 @@ export class AccountEditFormComponent {
     }
   );
 
-  mobileForm = new FormGroup(
+  mobileForm = new UntypedFormGroup(
     {
       newValue: new FormControl('', Validators.required),
       oldValue: new FormControl(''),
@@ -206,7 +206,7 @@ export class AccountEditFormComponent {
 
   private controlEqualityValidator(type?: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const formGroup = control as FormGroup;
+      const formGroup = control as UntypedFormGroup;
       const { oldValue, newValue, confirmValue } = formGroup.value;
       // make from string to enum
       if (type === 'password') {

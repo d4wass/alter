@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-search-header-input',
@@ -23,5 +23,5 @@ export class SearchHeaderInputComponent {
   @Input() labelValue!: string;
   @Input() placeholderValue!: string;
   @Input() typeValue: string = 'text';
-  @Input() control!: FormControl;
+  @Input() control!: UntypedFormControl;
 }
