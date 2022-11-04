@@ -31,7 +31,7 @@
     "@angular/router": "^14.2.9",
     "@auth0/angular-jwt": "^5.0.2",
     "@nestjs/jwt": "^8.0.1",
-    "@ngneat/reactive-forms": "^4.1.0",
+    "@ngneat/reactive-forms": "^5.0.1",
     "@ngrx/effects": "^14.3.2",
     "@ngrx/entity": "^14.3.2",
     "@ngrx/store": "^14.3.2",
