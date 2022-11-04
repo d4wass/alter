@@ -1,0 +1,28 @@
+$gridGap: 2em;
+$mainSidePadding: 6.3em;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: $gridGap $mainSidePadding;
+}
+
+.content-column-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.content-row-container {
+  display: flex;
+  width: 50%;
+}
+
+.column-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.row-container {
+  display: flex;
+}

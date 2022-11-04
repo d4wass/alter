@@ -16,6 +16,17 @@ export class VehiclesService {
     return result.id as string;
   }
 
+  async getVehicleById(id: string) {
+    let vehicle;
+
+    try {
+      vehicle = await this.vehicleModel.findById(id);
+    } catch (error) {
+      throw new Error(`Cannot find vehicle with ${id}`);
+    }
+    return vehicle;
+  }
+
   // async removeVehicle() { }
   // async updateVehicle() { }
 

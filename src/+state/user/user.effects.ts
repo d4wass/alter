@@ -12,9 +12,9 @@ import {
   tap,
   withLatestFrom
 } from 'rxjs';
-import { AuthService } from 'src/project/services/auth-service/auth.service';
-import { ModalLoginService } from 'src/project/services/modal-login/modal-login-service.service';
-import { UserService } from 'src/project/services/user-service/user.service';
+import { AuthService } from 'src/services/auth-service/auth.service';
+import { ModalLoginService } from 'src/services/modal-login/modal-login-service.service';
+import { UserService } from 'src/services/user-service/user.service';
 import { AppActions } from '../app-state/app-state.actions';
 import { UserFacade } from '../facade/user.facade';
 import { UserActions } from './user.actions';

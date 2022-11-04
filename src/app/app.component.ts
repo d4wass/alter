@@ -3,14 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `
-    <div class="grid">
-      <app-navigation></app-navigation>
-    </div>
-    <router-outlet></router-outlet>
-    <div class="grid">
-      <app-footer></app-footer>
-    </div>
     <app-login-modal></app-login-modal>
+    <router-outlet></router-outlet>
   `,
   styleUrls: ['./app.component.scss']
 })

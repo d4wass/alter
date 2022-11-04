@@ -57,4 +57,10 @@ export class VehiclesController {
     const vehicles = await this.vehicleService.getAllVehicles();
     return vehicles;
   }
+
+  @Get('vehicle/:id')
+  async getVehicleById(@Param('id') id: string) {
+    const vehicle = await this.vehicleService.getVehicleById(id);
+    return vehicle;
+  }
 }

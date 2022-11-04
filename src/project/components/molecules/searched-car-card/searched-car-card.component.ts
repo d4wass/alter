@@ -1,15 +1,13 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { map, Observable, of, switchMap, tap } from 'rxjs';
 import { Vehicle } from 'src/+state/models/vehicle.model';
-import {
-  UnshplashService,
-  UnsplashImg
-} from 'src/project/services/search-service/unshplash.service';
+import { UnshplashService, UnsplashImg } from 'src/services/unsplash-service/unshplash.service';
 
 @Component({
   selector: 'app-searched-car-card',
   template: `
-    <div class="wrapper">
+    <div class="wrapper" (click)="showVehicleDetails($event)">
       <div
         class="card-image"
         [ngStyle]="{
@@ -18,9 +16,7 @@ import {
           'background-repeat': 'no-repeat',
           'background-position': '50%, 50%'
         }"
-      >
-        <!-- <img [src]="image$ | async" alt="car photo" /> -->
-      </div>
+      ></div>
       <div class="card-content">
         <div class="card-info">
           <h3>{{ vehicle.brand }} {{ vehicle.model }}</h3>
@@ -45,11 +41,21 @@ export class SearchedCarCardComponent implements OnInit {
   @Input() image$!: Observable<string>;
   imageUrl$!: Observable<string>;
 
-  constructor(private unsplashService: UnshplashService) {}
+  constructor(
+    private readonly unsplashService: UnshplashService,
+    private readonly router: Router
+  ) {}
 
   ngOnInit(): void {
     this.image$ = this.getVehicleImg(this.vehicle);
     this.imageUrl$ = this.createBackgroundUrl();
+  }
+
+  showVehicleDetails(event: Event) {
+    console.log(event, 'clicking');
+    console.log(this.vehicle._id);
+    this.image$.pipe(tap((x) => console.log(x)));
+    this.router.navigate([`vehicle/${this.vehicle._id}`]);
   }
 
   private getVehicleImg(vehicle: Vehicle): Observable<string> {

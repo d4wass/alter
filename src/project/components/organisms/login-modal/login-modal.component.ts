@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalLoginService } from '../../../services/modal-login/modal-login-service.service';
+import { ModalLoginService } from '../../../../services/modal-login/modal-login-service.service';
 import { FormControl } from '@ngneat/reactive-forms';
 import { Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
