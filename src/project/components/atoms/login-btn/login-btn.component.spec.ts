@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MockComponent, MockProvider } from 'ng-mocks';
 import { BehaviorSubject } from 'rxjs';
-import { ModalLoginService } from '../../../services/modal-login/modal-login-service.service';
+import { ModalLoginService } from '../../../../services/modal-login/modal-login-service.service';
 import { LoginBtnComponent } from './login-btn.component';
 
 describe('LoginBtnComponent', () => {

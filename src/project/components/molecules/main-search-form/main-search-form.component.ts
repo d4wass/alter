@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { Validators } from '@angular/forms';
 import { FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
@@ -21,26 +22,18 @@ import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
           <app-search-header-input
             typeValue="date"
             labelValue="Until"
-            placeholderValue="ex: 11/03/21"
             [control]="searchForm.controls.fromDate.controls.date"
           ></app-search-header-input>
           <app-search-header-input
             typeValue="time"
-            placeholderValue="10:00 am"
             [control]="searchForm.controls.fromDate.controls.hour"
           ></app-search-header-input>
         </div>
         <span></span>
         <div class="input-data" fromGroup="endDate">
-          <app-search-header-input
-            typeValue="date"
-            labelValue="From"
-            placeholderValue="ex: 12/03/21"
-            [control]="searchForm.controls.endDate.controls.date"
-          ></app-search-header-input>
+          <!-- <app-datepicker [control]="searchForm.controls.endDate.controls.date"></app-datepicker> -->
           <app-search-header-input
             typeValue="time"
-            placeholderValue="11:00 am"
             [control]="searchForm.controls.endDate.controls.hour"
           ></app-search-header-input>
         </div>
@@ -51,16 +44,21 @@ import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
   styleUrls: ['./main-search-form.component.scss']
 })
 export class MainSearchFormComponent {
+  private currentDate = this.dataConverter({
+    date: formatDate(new Date(), 'dd-MM-YYYY', 'en'),
+    hour: ''
+  }).date;
+
   constructor(private store: Store) {}
 
   searchForm = new FormGroup({
     place: new FormControl('', Validators.required),
     fromDate: new FormGroup({
-      date: new FormControl('', Validators.required),
+      date: new FormControl(this.currentDate, Validators.required),
       hour: new FormControl('')
     }),
     endDate: new FormGroup({
-      date: new FormControl('', Validators.required),
+      date: new FormControl(this.currentDate, Validators.required),
       hour: new FormControl('')
     })
   });

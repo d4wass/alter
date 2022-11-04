@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { urlList } from '../../../../utils/routes';
+import { urlList } from '../../../../router/routes';
 
 @Component({
   selector: 'app-navigation-bar',

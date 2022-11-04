@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppActions } from 'src/+state/app-state/app-state.actions';
 import { UserFacade } from 'src/+state/facade/user.facade';
-import { ModalLoginService } from 'src/project/services/modal-login/modal-login-service.service';
+import { ModalLoginService } from 'src/services/modal-login/modal-login-service.service';
 
 @Component({
   selector: 'app-navigation',

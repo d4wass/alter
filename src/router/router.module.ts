@@ -9,6 +9,8 @@ import { NotFoundViewComponent } from 'src/project/views/not-found-view/not-foun
 import { ProfileViewComponent } from 'src/project/views/profile-view/profile-view.component';
 import { SearchResultViewComponent } from 'src/project/views/search-result-view/search-result-view.component';
 import { ShellComponent } from 'src/project/views/shell/shell.component';
+import { VehicleResolver } from './resolvers/vehicle.resolver';
+import { VehicleViewComponent } from 'src/project/views/vehicle-view/vehicle-view.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,11 @@ const routes: Routes = [
       { path: 'faq', component: FaqViewComponent },
       { path: 'new-user', component: NewUserViewComponent },
       { path: 'profile', component: ProfileViewComponent, canActivate: [UserProfileGuard] },
+      {
+        path: 'vehicle/:id',
+        resolve: { vehicle: VehicleResolver },
+        component: VehicleViewComponent
+      },
       { path: '**', component: NotFoundViewComponent }
     ]
   }

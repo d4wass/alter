@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LanguageSelectService } from 'src/project/services/language-select/language-select.service';
+import { LanguageSelectService } from 'src/services/language-select/language-select.service';
 
 @Component({
   selector: 'app-language-select',

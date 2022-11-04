@@ -12,12 +12,14 @@ import { FormControl } from '@angular/forms';
         placeholder="{{ placeholderValue }}"
         [ngClass]="{ 'search-input': labelValue, 'search-input-noLabel': !labelValue }"
         [formControl]="control"
+        [value]="control.value"
       />
     </div>
   `,
   styleUrls: ['./search-header-input.component.scss']
 })
 export class SearchHeaderInputComponent {
+  date = new Date();
   @Input() labelValue!: string;
   @Input() placeholderValue!: string;
   @Input() typeValue: string = 'text';

@@ -1,0 +1,39 @@
+<div>
+  <p>vehicle-image</p>
+</div>
+<div class="wrapper">
+  <div class="column-container">
+    <div class="column-container">
+      <div class="content-container">
+        <h1>{{ vehicle?.brand }} {{ vehicle?.model }} year</h1>
+        <p>vehicle rate</p>
+      </div>
+      <div class="content-row-container">
+        <div>
+          <p>
+            {{ vehicle?.specification.fuelConsumption.quantity }}
+            {{ vehicle?.specification.fuelConsumption.units }}
+          </p>
+          <p>{{ vehicle?.specification.doors }} doors</p>
+        </div>
+        <div>
+          <p>{{ vehicle?.specification.fuelType }}</p>
+          <p>{{ vehicle?.specification.seats }} seats</p>
+        </div>
+      </div>
+    </div>
+    <div class="row-container">
+      <div class="container">
+        <h3>$ {{ vehicle?.price }}</h3>
+        <p>/ day</p>
+      </div>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+    </div>
+    <div>
+      <h3>Features</h3>
+    </div>
+  </div>
+</div>
