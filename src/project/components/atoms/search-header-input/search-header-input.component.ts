@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { FormControl } from '@ngneat/reactive-forms';
 @Component({
   selector: 'app-search-header-input',
   template: `
-    <div class="search">
+    <form class="search">
       <label for="where" class="search-label" *ngIf="labelValue">{{ labelValue }}</label>
       <input
         type="{{ typeValue }}"
@@ -11,14 +12,12 @@ import { FormControl } from '@ngneat/reactive-forms';
         placeholder="{{ placeholderValue }}"
         [ngClass]="{ 'search-input': labelValue, 'search-input-noLabel': !labelValue }"
         [formControl]="control"
-        [value]="control.value"
       />
-    </div>
+    </form>
   `,
   styleUrls: ['./search-header-input.component.scss']
 })
 export class SearchHeaderInputComponent {
-  date = new Date();
   @Input() labelValue!: string;
   @Input() placeholderValue!: string;
   @Input() typeValue: string = 'text';

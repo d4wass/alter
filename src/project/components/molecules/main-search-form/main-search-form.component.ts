@@ -9,7 +9,7 @@ import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
   selector: 'app-main-search-form',
   template: `
     <div class="wrapper">
-      <form formGroup="[searchForm]" class="input-wrapper">
+      <form [formGroup]="searchForm" class="input-wrapper">
         <div>
           <app-search-header-input
             labelValue="Where"
@@ -18,24 +18,19 @@ import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
           ></app-search-header-input>
         </div>
         <span></span>
-        <div class="input-data" formGroup="fromDate">
-          <app-search-header-input
-            typeValue="date"
-            labelValue="Until"
+        <div class="input-data">
+          <app-datepicker
             [control]="searchForm.controls.fromDate.controls.date"
-          ></app-search-header-input>
-          <app-search-header-input
-            typeValue="time"
-            [control]="searchForm.controls.fromDate.controls.hour"
-          ></app-search-header-input>
+            [label]="'From'"
+          ></app-datepicker>
         </div>
         <span></span>
-        <div class="input-data" fromGroup="endDate">
-          <!-- <app-datepicker [control]="searchForm.controls.endDate.controls.date"></app-datepicker> -->
-          <app-search-header-input
-            typeValue="time"
-            [control]="searchForm.controls.endDate.controls.hour"
-          ></app-search-header-input>
+        <div class="input-data">
+          <app-datepicker
+            [control]="searchForm.controls.endDate.controls.date"
+            [details]=""
+            [label]="'Until'"
+          ></app-datepicker>
         </div>
         <button (click)="onSubmit($event)">search</button>
       </form>
@@ -54,11 +49,11 @@ export class MainSearchFormComponent {
   searchForm = new FormGroup({
     place: new FormControl('', Validators.required),
     fromDate: new FormGroup({
-      date: new FormControl(this.currentDate, Validators.required),
+      date: new FormControl(new Date().toISOString(), Validators.required),
       hour: new FormControl('')
     }),
     endDate: new FormGroup({
-      date: new FormControl(this.currentDate, Validators.required),
+      date: new FormControl(new Date().toISOString(), Validators.required),
       hour: new FormControl('')
     })
   });

@@ -23,8 +23,6 @@ import { AppEffects } from '../+state/app-state/app-state.effects';
 import { UserProfileGuard } from 'src/guards/userProfile.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VehicleResolver } from 'src/router/resolvers/vehicle.resolver';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DatepickerModule } from 'src/project/components/molecules/datepicker/datepicker.module';
 
 @NgModule({
@@ -41,8 +39,6 @@ import { DatepickerModule } from 'src/project/components/molecules/datepicker/da
     RouterModule,
     LoginModalModule,
     DatepickerModule,
-    // MatDatepickerModule,
-    // MatFormFieldModule,
     HttpClientModule,
     StoreModule.forRoot({ user: userReducer, vehicles: vehiclesReducer, app: AppReducer }),
     EffectsModule.forRoot([VehicleEffects, UserEffects, AppEffects]),

@@ -8,7 +8,7 @@ import { DatepickerModule } from '../datepicker/datepicker.module';
 
 @NgModule({
   declarations: [MainSearchFormComponent],
-  imports: [CommonModule, SearchHeaderInputModule, DatepickerModule],
+  imports: [CommonModule, SearchHeaderInputModule, DatepickerModule, ReactiveFormsModule],
   exports: [MainSearchFormComponent]
 })
 export class MainSearchFormModule {}
