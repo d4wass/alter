@@ -1,13 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { FormControl } from '@ngneat/reactive-forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@ngneat/reactive-forms';
 
 @Component({
   selector: 'app-datepicker',
   template: `
     <mat-form-field appearance="fill">
-      <mat-label>Angular forms</mat-label>
+      <mat-label>{{ label }}</mat-label>
       <input matInput [matDatepicker]="picker1" [formControl]="control" />
-      <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
       <mat-datepicker #picker1></mat-datepicker>
     </mat-form-field>
@@ -15,6 +14,8 @@ import { FormControl } from '@ngneat/reactive-forms';
   styleUrls: ['./datepicker.component.scss']
 })
 export class DatepickerComponent {
-  @Input() control!: FormControl<string | unknown>;
-  constructor() {}
+  @Input() label!: string;
+  @Input() parentForm!: any;
+  @Input() details!: any;
+  @Input() control!: FormControl<any>;
 }
