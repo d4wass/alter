@@ -7,10 +7,12 @@ import { Reservation } from 'src/models/reservation.model';
 export class ReservationService {
   constructor(@InjectModel('Reservation') private readonly reservationModel: Model<Reservation>) {}
 
-  async addReservation(reservation: Partial<Reservation>) {
+  async addReservation(reservation: Reservation) {
+    console.log(reservation);
     const newReservation = new this.reservationModel({ ...reservation });
     const result = await newReservation.save();
 
+    console.log(result);
     return result.id as string;
   }
 

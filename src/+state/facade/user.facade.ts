@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { UserSelectors } from '../user/user.selectors';
 
 @Injectable({ providedIn: 'root' })
@@ -17,6 +17,10 @@ export class UserFacade {
   userMobile$: Observable<string | undefined> = this.store.pipe(
     select(UserSelectors.selectUserMobile)
   );
+
+  isUserAuthorized(): Observable<boolean> {
+    return this.store.pipe(select(UserSelectors.selectIsAuthorized));
+  }
 
   constructor(private store: Store) {}
 }

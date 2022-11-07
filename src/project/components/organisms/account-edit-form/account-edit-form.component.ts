@@ -2,18 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
-import {
-  combineLatestWith,
-  debounceTime,
-  distinctUntilChanged,
-  filter,
-  map,
-  Observable,
-  pairwise,
-  startWith,
-  tap,
-  withLatestFrom
-} from 'rxjs';
+import { debounceTime, distinctUntilChanged, Observable } from 'rxjs';
 import { UserFacade } from 'src/+state/facade/user.facade';
 import { UserActions } from 'src/+state/user/user.actions';
 
@@ -103,7 +92,7 @@ export class AccountEditFormComponent {
   isPasswordModal = false;
   isMobileModal = false;
 
-  emailCtrl = new FormControl('', {
+  emailCtrl = new FormControl<string>('', {
     validators: Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')
   });
   passwordForm = new FormGroup(

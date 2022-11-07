@@ -24,6 +24,7 @@ import { UserProfileGuard } from 'src/guards/userProfile.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VehicleResolver } from 'src/router/resolvers/vehicle.resolver';
 import { DatepickerModule } from 'src/project/components/molecules/datepicker/datepicker.module';
+import { VehicleViewModule } from '../project/views/vehicle-view/vehicle-view.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +33,7 @@ import { DatepickerModule } from 'src/project/components/molecules/datepicker/da
     BrowserModule,
     AppRoutingModule,
     HomeViewModule,
+    VehicleViewModule,
     NotFoundViewModule,
     SearchResultViewModule,
     HostViewModule,
