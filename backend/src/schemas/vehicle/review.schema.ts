@@ -1,9 +1,9 @@
 import { Schema, Prop } from '@nestjs/mongoose';
-import * as mongoose from 'mongoose';
+import { Types } from 'mongoose';
 
 @Schema()
 export class Review {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  @Prop({ type: Types.ObjectId, ref: 'User' })
   userId: string;
   // userName will be getting by userId from reference to user Schema
   @Prop()

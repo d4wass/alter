@@ -1,4 +1,6 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Types } from 'mongoose';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { Avalibility } from 'src/schemas/vehicle/avalibility.schema';
 import { Review } from 'src/schemas/vehicle/review.schema';
 import { Extras, Feature, Specification } from '../models/vehicle.model';
@@ -8,8 +10,10 @@ import { VehiclesService } from './vehicles.service';
 export class VehiclesController {
   constructor(private readonly vehicleService: VehiclesService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post('host/addVehicle')
   async addVehicle(
+    @Body('owner') owner: any,
     @Body('brand') brand: string,
     @Body('model') model: string,
     @Body('place') place: string,
@@ -24,6 +28,7 @@ export class VehiclesController {
   ) {
     //add guard that prevents from adding vehicle when user is host and is login
     await this.vehicleService.addVehicle({
+      owner,
       brand,
       model,
       place,
