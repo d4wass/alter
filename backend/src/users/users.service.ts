@@ -95,6 +95,10 @@ export class UsersService {
     return user as User;
   }
 
+  async checkIsHost(id: string): Promise<boolean> {
+    return (await this.userModel.findById(id)).isHost;
+  }
+
   private async isUserExist(email: string): Promise<boolean> {
     const user = await this.userModel.findOne({ email });
 
