@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 // import { Vehicle } from '../models/vehicle.model';
 import { Model } from 'mongoose';
 import { VehicleQuery } from 'src/models/vehicle.model';
+import { User, UserDocument } from 'src/schemas/users/users.schema';
 import { Vehicle, VehicleDocument } from 'src/schemas/vehicle/vehicle.schema';
 
 @Injectable()

@@ -26,9 +26,9 @@ export class User {
   @Prop({ type: String })
   description?: string;
   @Prop([{ type: Types.ObjectId, ref: 'Vehicle' }])
-  vehicles: Vehicle[];
+  vehicles?: Vehicle[];
   @Prop([{ type: Types.ObjectId, ref: 'Reservation' }])
-  reservation: Reservation[];
+  reservation?: Reservation[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

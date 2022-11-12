@@ -11,7 +11,7 @@ export type VehicleDocument = Vehicle & Document;
 
 @Schema()
 export class Vehicle {
-  @Prop([{ type: Types.ObjectId, ref: 'User' }])
+  @Prop({ type: Types.ObjectId, ref: 'User' })
   owner: User;
   @Prop({ type: String })
   brand: string;
@@ -23,7 +23,7 @@ export class Vehicle {
   price: number;
   @Prop({ type: String })
   rate: number;
-  @Prop({ type: String })
+  @Prop()
   specification: Specification;
   @Prop()
   features: Feature;

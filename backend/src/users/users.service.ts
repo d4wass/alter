@@ -1,12 +1,13 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User, UserDataToUpdate } from '../models/user.model';
+import { UserDataToUpdate } from '../models/user.model';
 import * as bcrypt from 'bcrypt';
+import { User, UserDocument } from 'src/schemas/users/users.schema';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
+  constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
 
   async create(userData: User): Promise<Partial<User>> {
     let user;
@@ -22,8 +23,7 @@ export class UsersService {
         password: hashedPassword,
         description: '',
         profilePhoto: '',
-        mobile: '',
-        reviews: []
+        mobile: ''
       });
       await newUser.save();
       user = { id: newUser.id, email: newUser.email };
@@ -34,7 +34,7 @@ export class UsersService {
     return user as Partial<User>;
   }
 
-  async getUserByEmail(email: string): Promise<User | undefined> {
+  async getUserByEmail(email: string): Promise<UserDocument | undefined> {
     let user;
     try {
       user = await this.userModel.findOne({ email }).exec();
@@ -45,7 +45,7 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException('Cannot find user');
     }
-    return user as User;
+    return user as UserDocument;
   }
 
   async getUserById(id: string): Promise<User | undefined> {
@@ -76,7 +76,7 @@ export class UsersService {
     return user as User;
   }
 
-  async updateUser(dataRequest: UserDataToUpdate, userId: string): Promise<User> {
+  async updateUserCredentials(dataRequest: UserDataToUpdate, userId: string): Promise<User> {
     const updateUser = await this.updateUserConverter(dataRequest);
 
     let update;
@@ -95,6 +95,20 @@ export class UsersService {
     return user as User;
   }
 
+  async updateUserVehicles(id: string, vehicle: string): Promise<UserDocument> {
+    let user;
+    try {
+      user = await this.userModel.findById(id).exec();
+      await this.userModel.findByIdAndUpdate(
+        { _id: id },
+        { vehicles: [...user.vehicles, vehicle] }
+      );
+    } catch (error) {
+      throw new Error('Cannot update user vehicle');
+    }
+    return user as UserDocument;
+  }
+
   async checkIsHost(id: string): Promise<boolean> {
     return (await this.userModel.findById(id)).isHost;
   }
@@ -106,14 +120,12 @@ export class UsersService {
   }
 
   private async updateUserConverter(updatedData: UserDataToUpdate) {
-    const { updateUser } = updatedData;
+    const { emailUpdate, passwordUpdate, descriptionUpdate, mobileUpdate } = updatedData;
     const data = {
-      email: updateUser.emailUpdate,
-      password: updateUser.passwordUpdate.newValue
-        ? await this.hashPassword(updateUser.passwordUpdate?.newValue)
-        : '',
-      description: updateUser.descriptionUpdate,
-      mobile: updateUser.mobileUpdate.newValue
+      email: emailUpdate,
+      password: passwordUpdate.newValue ? await this.hashPassword(passwordUpdate?.newValue) : '',
+      description: descriptionUpdate,
+      mobile: mobileUpdate.newValue
     };
 
     const filteredData = Object.fromEntries(Object.entries(data).filter((value) => value[1]));
