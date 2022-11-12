@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .wrapper {
+    width: 60%;
+  }
+}
+
+.fuelTypeForm {
+  display: flex;
+  justify-content: space-between;
+
+  .mat-form-field {
+    width: 47%;
+  }
+}
+
+.mat-form-field {
+  width: 100%;
+}

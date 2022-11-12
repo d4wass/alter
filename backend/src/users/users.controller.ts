@@ -39,7 +39,7 @@ export class UsersController {
   async updateUser(@Request() req) {
     const userId = this.authService.getUserIdFromToken(req.headers.authorization);
     return {
-      user: this.userService.updateUser(req.body, userId),
+      user: this.userService.updateUserCredentials(req.body, userId),
       token: req.headers.authorization.replace('Bearer ', '')
     };
   }

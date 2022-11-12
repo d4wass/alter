@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose';
 
 export const ReservationSchema = new mongoose.Schema({
-  id: { type: String },
   hostId: { type: String },
   userId: { type: String },
   vehicleId: { type: String },

@@ -7,7 +7,7 @@ export type FeatureDocument = Feature & Document;
 export class Feature {
   @Prop({ type: raw({ capacity: { type: String }, power: { type: Number } }) })
   engine: Record<string, any>;
-  @Prop({ type: raw({ manual: { type: Boolean }, powautomaticer: { type: Boolean } }) })
+  @Prop({ type: raw({ manual: { type: Boolean }, automatic: { type: Boolean } }) })
   gearbox: Record<string, any>;
   @Prop({
     type: raw({ rear: { type: Boolean }, front: { type: Boolean }, all: { type: Boolean } })
@@ -26,7 +26,8 @@ export class Feature {
       cruiseControl: {
         standard: { type: Boolean },
         active: { type: Boolean },
-        adaptive: { type: Boolean }
+        adaptive: { type: Boolean },
+        autonomic: { type: Boolean }
       },
       lights: {
         led: { type: Boolean },

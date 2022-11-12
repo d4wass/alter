@@ -11,19 +11,19 @@ export type VehicleDocument = Vehicle & Document;
 
 @Schema()
 export class Vehicle {
-  @Prop([{ type: Types.ObjectId, ref: 'User' }])
+  @Prop({ type: Types.ObjectId, ref: 'User' })
   owner: User;
-  @Prop({ type: String })
+  @Prop({ type: String, required: true })
   brand: string;
-  @Prop({ type: String })
+  @Prop({ type: String, required: true })
   model: string;
-  @Prop({ type: String })
+  @Prop({ type: String, required: true })
   place: string;
-  @Prop({ type: String })
+  @Prop({ type: String, required: true })
   price: number;
   @Prop({ type: String })
-  rate: number;
-  @Prop({ type: String })
+  rate?: number;
+  @Prop()
   specification: Specification;
   @Prop()
   features: Feature;

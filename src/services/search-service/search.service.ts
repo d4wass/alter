@@ -15,10 +15,8 @@ export class SearchService {
     let params = new HttpParams({
       fromObject: {
         place,
-        fromDate: fromDate.date,
-        endDate: endDate.date
-        // startTime: fromDate.hour,
-        // endTime: endDate.hour
+        fromDate,
+        endDate
       }
     });
 

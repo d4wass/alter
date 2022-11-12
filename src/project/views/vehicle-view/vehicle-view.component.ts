@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { concatMap, filter, map, Observable, of, switchMap, tap } from 'rxjs';
-import { AppActions } from 'src/+state/app-state/app-state.actions';
+import { Observable } from 'rxjs';
 import { UserFacade } from 'src/+state/facade/user.facade';
-import { Vehicle } from 'src/+state/models/vehicle.model';
-import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
+import { VehicleFacade } from 'src/+state/facade/vehicle.facade';
+import { Vehicle, VehicleQuery } from 'src/+state/models/vehicle.model';
+import { ReservationActions } from 'src/+state/reservation/reservation.actions';
 
 @Component({
   selector: 'app-vehicle-view',
@@ -15,28 +15,36 @@ import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
 })
 export class VehicleViewComponent implements OnInit {
   vehicle?: Vehicle;
-  isAuthorized$!: Observable<boolean>;
+  isAuthorized?: boolean;
+  userId?: string;
+  query?: VehicleQuery;
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly store: Store,
-    private readonly userFacade: UserFacade
+    private readonly userFacade: UserFacade,
+    private readonly vehicleFacade: VehicleFacade
   ) {}
 
   ngOnInit(): void {
-    this.isAuthorized$ = this.userFacade.isUserAuthorized();
+    this.userFacade.isAuthorized$.subscribe((isAuthorized) => (this.isAuthorized = isAuthorized));
     this.vehicle = this.route.snapshot.data['vehicle'];
+    this.userFacade.userId$.subscribe((id) => (this.userId = id));
+    this.vehicleFacade.vehicleSearchQuery$.subscribe((query) => (this.query = query));
   }
 
   bookVehicle() {
-    //filter this dispatch and execute it only if user is authorized
     const reservation = {
-      vehicleId: '',
-      userId: '',
-      hostId: '',
-      fromDate: '',
-      endDate: ''
+      vehicleId: this.vehicle?._id,
+      userId: this.userId,
+      hostId: this.vehicle?.owner,
+      fromDate: this.query?.fromDate,
+      endDate: this.query?.endDate
     };
-    this.store.dispatch(VehiclesActions.vehicleReservation({ reservation }));
+
+    if (this.isAuthorized) {
+      console.log(reservation);
+      this.store.dispatch(ReservationActions.createReservation({ reservation }));
+    }
   }
 }

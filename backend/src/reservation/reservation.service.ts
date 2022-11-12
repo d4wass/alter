@@ -1,19 +1,24 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Reservation } from 'src/models/reservation.model';
+import { Reservation } from 'src/schemas/reservation/reservation.schema';
 
 @Injectable()
 export class ReservationService {
   constructor(@InjectModel('Reservation') private readonly reservationModel: Model<Reservation>) {}
 
-  async addReservation(reservation: Reservation) {
-    console.log(reservation);
-    const newReservation = new this.reservationModel({ ...reservation });
-    const result = await newReservation.save();
+  async addReservation(reservationData: Reservation): Promise<string> {
+    let reservation;
 
-    console.log(result);
-    return result.id as string;
+    try {
+      const newReservation = new this.reservationModel({ ...reservationData });
+      reservation = await newReservation.save();
+    } catch (error) {
+      console.log(error);
+      throw new HttpException('Cannot create reservation', HttpStatus.BAD_REQUEST);
+    }
+
+    return reservation.id;
   }
 
   async getReservation(id: string) {
@@ -23,7 +28,7 @@ export class ReservationService {
     } catch (error) {
       throw new NotFoundException('Cannot find reservation');
     }
-
+    console.log(result);
     return result;
   }
 }

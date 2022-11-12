@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-// import { Vehicle } from '../models/vehicle.model';
 import { Model } from 'mongoose';
 import { VehicleQuery } from 'src/models/vehicle.model';
 import { Vehicle, VehicleDocument } from 'src/schemas/vehicle/vehicle.schema';

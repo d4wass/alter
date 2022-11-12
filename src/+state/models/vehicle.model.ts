@@ -1,6 +1,6 @@
 export interface Vehicle {
   _id: string;
-  hostId: string;
+  owner: string;
   brand: string;
   model: string;
   place: string;
@@ -16,8 +16,8 @@ export interface Vehicle {
 
 export interface VehicleQuery {
   place: string;
-  fromDate: { date: string; hour: string };
-  endDate: { date: string; hour: string };
+  fromDate: string;
+  endDate: string;
 }
 
 interface Feature {

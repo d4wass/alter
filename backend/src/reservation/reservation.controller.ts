@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { Reservation } from 'src/models/reservation.model';
+import { Reservation } from 'src/schemas/reservation/reservation.schema';
 import { ReservationService } from './reservation.service';
 
 @Controller('reservation')
@@ -10,12 +10,13 @@ export class ReservationController {
   async addReservation(@Body('reservation') reservation: Reservation) {
     console.log(reservation);
     const createdReservation = await this.reservationService.addReservation(reservation);
+    console.log('controller', createdReservation);
     return createdReservation;
   }
 
-  @Get('user/reservations/:id')
-  async getReservation(@Param('id') id: string) {
-    const reservation = this.reservationService.getReservation(id);
+  @Get('/confirm-reservation/:id')
+  async confirmReservation(@Param('id') reservationId: string) {
+    const reservation = this.reservationService.getReservation(reservationId);
     return reservation;
   }
 }

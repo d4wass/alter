@@ -20,14 +20,14 @@ import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
         <span></span>
         <div class="input-data">
           <app-datepicker
-            [control]="searchForm.controls.fromDate.controls.date"
+            [control]="searchForm.controls.fromDate"
             [label]="'From'"
           ></app-datepicker>
         </div>
         <span></span>
         <div class="input-data">
           <app-datepicker
-            [control]="searchForm.controls.endDate.controls.date"
+            [control]="searchForm.controls.endDate"
             [details]=""
             [label]="'Until'"
           ></app-datepicker>
@@ -39,51 +39,44 @@ import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
   styleUrls: ['./main-search-form.component.scss']
 })
 export class MainSearchFormComponent {
-  private currentDate = this.dataConverter({
-    date: formatDate(new Date(), 'dd-MM-YYYY', 'en'),
-    hour: ''
-  }).date;
+  // private currentDate = this.dataConverter({
+  //   date: formatDate(new Date(), 'dd-MM-YYYY', 'en')
+  // }).date;
 
   constructor(private store: Store) {}
 
   searchForm = new FormGroup({
     place: new FormControl('', Validators.required),
-    fromDate: new FormGroup({
-      date: new FormControl(new Date().toISOString(), Validators.required),
-      hour: new FormControl('')
-    }),
-    endDate: new FormGroup({
-      date: new FormControl(new Date().toISOString(), Validators.required),
-      hour: new FormControl('')
-    })
+    fromDate: new FormControl(new Date().toISOString(), Validators.required),
+    endDate: new FormControl(new Date().toISOString(), Validators.required)
   });
 
   onSubmit(event: Event): void {
     event.preventDefault();
     const { place, fromDate, endDate } = this.searchForm.controls;
 
-    if (place.valid && fromDate.controls.date.valid && endDate.controls.date.valid) {
+    if (place.valid && fromDate.valid && endDate.valid) {
       this.store.dispatch(VehiclesActions.loadVehicles());
       this.store.dispatch(
         VehiclesActions.searchVehicles({
           query: {
             place: place.value,
-            fromDate: this.dataConverter(fromDate.value),
-            endDate: this.dataConverter(endDate.value)
+            fromDate: this.dataConverter(fromDate.value).date,
+            endDate: this.dataConverter(endDate.value).date
           }
         })
       );
     }
   }
 
-  private dataConverter(value: { date: string; hour: string }) {
-    const { date, hour } = value;
+  private dataConverter(date: string) {
+    // const { date, hour } = value;
     const convertedDate = new Date(date);
     const day = convertedDate.getDate();
     const month = convertedDate.getMonth() + 1;
+
     return {
-      date: `${day}.${month < 10 ? `0${month}` : `${month}`}.${convertedDate.getFullYear()}`,
-      hour
+      date: `${day}.${month < 10 ? `0${month}` : `${month}`}.${convertedDate.getFullYear()}`
     };
   }
 }

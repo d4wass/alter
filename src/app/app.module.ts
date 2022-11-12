@@ -25,6 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VehicleResolver } from 'src/router/resolvers/vehicle.resolver';
 import { DatepickerModule } from 'src/project/components/molecules/datepicker/datepicker.module';
 import { VehicleViewModule } from '../project/views/vehicle-view/vehicle-view.module';
+import { ReservationEffects } from 'src/+state/reservation/reservation.effects';
+import { VehicleFormModule } from 'src/project/components/organisms/vehicle-form/vehicle-form.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,8 +44,9 @@ import { VehicleViewModule } from '../project/views/vehicle-view/vehicle-view.mo
     LoginModalModule,
     DatepickerModule,
     HttpClientModule,
+    VehicleFormModule,
     StoreModule.forRoot({ user: userReducer, vehicles: vehiclesReducer, app: AppReducer }),
-    EffectsModule.forRoot([VehicleEffects, UserEffects, AppEffects]),
+    EffectsModule.forRoot([VehicleEffects, UserEffects, AppEffects, ReservationEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 500
     }),

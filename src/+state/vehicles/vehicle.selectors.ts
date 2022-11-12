@@ -1,5 +1,4 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { Vehicle } from '../models/vehicle.model';
 import { VEHICLE_FEATURE, VehicleState } from './vehicle.reducer';
 import * as fromVehicles from './vehicle.reducer';
 
@@ -16,9 +15,12 @@ const selectIsVehiclesFound = createSelector(
   fromVehicles.vehicleSelector.selectIds
 );
 
+const selectVehicleQuery = createSelector(vehicleFeatureSelector, (state) => state.query);
+
 export const VehicleSelectors = {
   selectIsLoading,
   selectVehiclesState,
   selectAllVehicles,
-  selectIsVehiclesFound
+  selectIsVehiclesFound,
+  selectVehicleQuery
 };

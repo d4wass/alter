@@ -17,6 +17,7 @@ export class UserFacade {
   userMobile$: Observable<string | undefined> = this.store.pipe(
     select(UserSelectors.selectUserMobile)
   );
+  userId$: Observable<string | undefined> = this.store.pipe(select(UserSelectors.selectUserId));
 
   isUserAuthorized(): Observable<boolean> {
     return this.store.pipe(select(UserSelectors.selectIsAuthorized));

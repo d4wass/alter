@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { User, UserDataToValidate } from '../models/user.model';
+import { UserDataToValidate } from '../models/user.model';
 import * as bcrypt from 'bcrypt';
+import { UserDocument } from 'src/schemas/users/users.schema';
 
 @Injectable()
 export class AuthService {
   constructor(private usersService: UsersService, private jwtService: JwtService) {}
 
-  async register(userData: User): Promise<any> {
+  async register(userData: UserDocument): Promise<any> {
     const user = await this.usersService.create(userData);
     return user;
   }
@@ -73,13 +74,4 @@ export class AuthService {
 
     return tokenizedUser;
   }
-
-  // getUserIdFromToken(token: string): string {
-  //   const tokenizedUser = this.jwtService.decode(token.replace('Bearer ', ''), {
-  //     complete: true,
-  //     json: true
-  //   }) as any;
-
-  //   return tokenizedUser.payload.id;
-  // }
 }
