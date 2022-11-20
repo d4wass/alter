@@ -14,6 +14,7 @@ export const vehicleSelector = adapter.getSelectors();
 
 export interface VehicleState extends EntityState<Vehicle> {
   isLoading: boolean;
+  query?: { place: string; fromDate: string; endDate: string };
 }
 
 export const initialState: VehicleState = adapter.getInitialState({
@@ -22,13 +23,11 @@ export const initialState: VehicleState = adapter.getInitialState({
 
 const reducer = createReducer(
   initialState,
-  // on(VehiclesActions.getVehiclesByQuerySuccess, (state, { vehicles }) => {
-  //   return adapter.addMany(vehicles, state);
-  // })
   on(VehiclesActions.loadVehicles, (state) => ({ ...state, isLoading: true })),
   on(VehiclesActions.loadVehiclesSuccess, (state, { vehicles }) => {
     return adapter.setAll(vehicles, { ...state, isLoading: false });
-  })
+  }),
+  on(VehiclesActions.searchVehicles, (state, { query }) => ({ ...state, query }))
 );
 
 export function vehiclesReducer(state: VehicleState | undefined, actions: Action): VehicleState {

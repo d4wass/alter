@@ -1,5 +1,4 @@
-import { Controller, UseGuards, Post, Get, Request, Put, Patch } from '@nestjs/common';
-import { AuthUser } from 'src/auth/auth.decorator';
+import { Controller, UseGuards, Post, Get, Request, Put } from '@nestjs/common';
 import { AuthService } from '../auth/auth.service';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
@@ -40,7 +39,7 @@ export class UsersController {
   async updateUser(@Request() req) {
     const userId = this.authService.getUserIdFromToken(req.headers.authorization);
     return {
-      user: this.userService.updateUser(req.body, userId),
+      user: this.userService.updateUserCredentials(req.body, userId),
       token: req.headers.authorization.replace('Bearer ', '')
     };
   }

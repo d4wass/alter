@@ -52,9 +52,6 @@ export class SearchedCarCardComponent implements OnInit {
   }
 
   showVehicleDetails(event: Event) {
-    console.log(event, 'clicking');
-    console.log(this.vehicle._id);
-    this.image$.pipe(tap((x) => console.log(x)));
     this.router.navigate([`vehicle/${this.vehicle._id}`]);
   }
 

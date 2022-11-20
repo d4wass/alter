@@ -1,35 +1,22 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Reservation } from 'src/schemas/reservation/reservation.schema';
 import { ReservationService } from './reservation.service';
 
 @Controller('reservation')
 export class ReservationController {
   constructor(private readonly reservationService: ReservationService) {}
 
-  @Post('user/addReservation')
-  async addReservation(
-    @Body('hostId') hostId: string,
-    @Body('hostId') userId: string,
-    @Body('hostId') vehicleId: string,
-    @Body('hostId') fromDate: Date,
-    @Body('hostId') fromHour: string,
-    @Body('hostId') endDate: Date,
-    @Body('hostId') endHour: string
-  ) {
-    await this,
-      this.reservationService.addReservation({
-        hostId,
-        userId,
-        vehicleId,
-        fromDate,
-        fromHour,
-        endDate,
-        endHour
-      });
+  @Post('/create-reservation')
+  async addReservation(@Body('reservation') reservation: Reservation) {
+    console.log(reservation);
+    const createdReservation = await this.reservationService.addReservation(reservation);
+    console.log('controller', createdReservation);
+    return createdReservation;
   }
 
-  @Get('user/reservations/:id')
-  async getReservation(@Param('id') id: string) {
-    const reservation = this.reservationService.getReservation(id);
+  @Get('/confirm-reservation/:id')
+  async confirmReservation(@Param('id') reservationId: string) {
+    const reservation = this.reservationService.getReservation(reservationId);
     return reservation;
   }
 }

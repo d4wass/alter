@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { FormControl } from '@ngneat/reactive-forms';
 @Component({
   selector: 'app-search-header-input',

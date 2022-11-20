@@ -24,6 +24,9 @@ import { UserProfileGuard } from 'src/guards/userProfile.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VehicleResolver } from 'src/router/resolvers/vehicle.resolver';
 import { DatepickerModule } from 'src/project/components/molecules/datepicker/datepicker.module';
+import { VehicleViewModule } from '../project/views/vehicle-view/vehicle-view.module';
+import { ReservationEffects } from 'src/+state/reservation/reservation.effects';
+import { VehicleFormModule } from 'src/project/components/organisms/vehicle-form/vehicle-form.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +35,7 @@ import { DatepickerModule } from 'src/project/components/molecules/datepicker/da
     BrowserModule,
     AppRoutingModule,
     HomeViewModule,
+    VehicleViewModule,
     NotFoundViewModule,
     SearchResultViewModule,
     HostViewModule,
@@ -40,8 +44,9 @@ import { DatepickerModule } from 'src/project/components/molecules/datepicker/da
     LoginModalModule,
     DatepickerModule,
     HttpClientModule,
+    VehicleFormModule,
     StoreModule.forRoot({ user: userReducer, vehicles: vehiclesReducer, app: AppReducer }),
-    EffectsModule.forRoot([VehicleEffects, UserEffects, AppEffects]),
+    EffectsModule.forRoot([VehicleEffects, UserEffects, AppEffects, ReservationEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 500
     }),

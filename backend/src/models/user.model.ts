@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import { Vehicle } from 'src/schemas/vehicle/vehicle.schema';
 
 export const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
@@ -14,14 +15,9 @@ export const UserSchema = new mongoose.Schema({
   isMobileNotification: { type: Boolean }
 });
 
-UserSchema.virtual('id').get(function () {
-  return this._id.toHexString();
-});
-
 UserSchema.set('toObject', { virtuals: true });
 
 export interface User extends mongoose.Document {
-  id: string;
   email: string;
   firstName: string;
   lastName: string;
@@ -39,12 +35,11 @@ export interface UserDataToValidate {
 }
 
 export interface UserDataToUpdate {
-  updateUser: {
-    emailUpdate?: string;
-    descriptionUpdate?: string;
-    mobileUpdate?: UpdateCredentials;
-    passwordUpdate?: UpdateCredentials;
-  };
+  emailUpdate?: string;
+  descriptionUpdate?: string;
+  mobileUpdate?: UpdateCredentials;
+  passwordUpdate?: UpdateCredentials;
+  vehicles?: (string | Vehicle)[];
 }
 
 interface UpdateCredentials {

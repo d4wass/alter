@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormControl } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
 import {
@@ -52,7 +53,8 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
   constructor(
     private userFacade: UserFacade,
     private appSettingFacade: AppSettingFacade,
-    private readonly store: Store
+    private readonly store: Store,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -112,6 +114,10 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
 
   onLogoutClick(): void {
     this.store.dispatch(UserActions.logoutUser());
+  }
+
+  handleAddVehicle() {
+    this.router.navigateByUrl('/addVehicle');
   }
 
   private lastnameShortened(): Observable<string | undefined> {

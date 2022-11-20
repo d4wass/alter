@@ -5,25 +5,24 @@ import { Specification } from './specification.schema';
 import { Avalibility } from './avalibility.schema';
 import { Review } from './review.schema';
 import { Extras } from './extras.schema';
+import { User } from '../users/users.schema';
 
 export type VehicleDocument = Vehicle & Document;
 
 @Schema()
 export class Vehicle {
-  @Prop()
-  id: string;
-  @Prop()
-  hostId: string;
-  @Prop()
+  @Prop({ type: Types.ObjectId, ref: 'User' })
+  owner: User;
+  @Prop({ type: String, required: true })
   brand: string;
-  @Prop()
+  @Prop({ type: String, required: true })
   model: string;
-  @Prop()
+  @Prop({ type: String, required: true })
   place: string;
-  @Prop()
+  @Prop({ type: String, required: true })
   price: number;
-  @Prop()
-  rate: number;
+  @Prop({ type: String })
+  rate?: number;
   @Prop()
   specification: Specification;
   @Prop()
@@ -32,9 +31,9 @@ export class Vehicle {
   reviews: Review[];
   @Prop()
   extras: Extras[];
-  @Prop()
+  @Prop({ type: String })
   description: string;
-  @Prop()
+  @Prop({ type: Boolean })
   isCancelFree: boolean;
   @Prop()
   avalibility: Avalibility[];

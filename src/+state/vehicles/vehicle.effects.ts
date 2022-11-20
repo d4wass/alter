@@ -16,8 +16,8 @@ export class VehicleEffects {
             this.router.navigate(['/search'], {
               queryParams: {
                 place: query.place,
-                fromDate: query.fromDate.date,
-                endDate: query.endDate.date
+                fromDate: query.fromDate,
+                endDate: query.endDate
               }
             })
           ),
@@ -27,6 +27,7 @@ export class VehicleEffects {
       )
     )
   );
+
   constructor(
     private actions$: Actions,
     private searchService: SearchService,
