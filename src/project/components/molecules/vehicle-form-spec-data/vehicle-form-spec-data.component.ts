@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ControlsOf, FormGroup } from '@ngneat/reactive-forms';
 import { IVehicleSpecificationData } from 'src/project/model/vehicle-form-models/vehicle-forms.model';
 
@@ -16,10 +16,10 @@ import { IVehicleSpecificationData } from 'src/project/model/vehicle-form-models
           <mat-option value="Gas/LPG">Gas/LPG</mat-option>
         </mat-select>
       </mat-form-field>
-      <form [formGroup]="fuelConsumptionGroupCtrl" class="fuelTypeForm">
+      <form class="fuelTypeForm" formGroupName="fuelConsumption">
         <mat-form-field>
           <mat-label>Units</mat-label>
-          <mat-select formControlName="units" (valueChange)="handleChange($event)">
+          <mat-select formControlName="units">
             <mat-option value="l/100km">l/100km</mat-option>
             <mat-option value="galons">galons</mat-option>
             <mat-option value="kW/100km">kW/100km</mat-option>
@@ -55,19 +55,7 @@ import { IVehicleSpecificationData } from 'src/project/model/vehicle-form-models
   `,
   styleUrls: ['./vehicle-form-spec-data.component.scss']
 })
-export class VehicleFormSpecDataComponent implements OnInit {
+export class VehicleFormSpecDataComponent {
   @Input() formGroupCtrl!: FormGroup<ControlsOf<IVehicleSpecificationData>>;
-  fuelConsumptionGroupCtrl: any;
   constructor() {}
-
-  ngOnInit(): void {
-    console.log(this.formGroupCtrl);
-    const { fuelConsumption } = this.formGroupCtrl.controls;
-    this.fuelConsumptionGroupCtrl = fuelConsumption;
-  }
-
-  handleChange($event: any) {
-    console.log($event);
-    console.log(this.fuelConsumptionGroupCtrl);
-  }
 }

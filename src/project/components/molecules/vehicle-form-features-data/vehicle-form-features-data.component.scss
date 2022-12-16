@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  justify-content: center;
+
+  form {
+    width: 60%;
+  }
+
+  .mat-radio-button,
+  .mat-checkbox {
+    margin-right: 20px;
+  }
+}

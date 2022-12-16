@@ -15,6 +15,7 @@ import {
 import { AuthService } from 'src/services/auth-service/auth.service';
 import { ModalLoginService } from 'src/services/modal-login/modal-login-service.service';
 import { UserService } from 'src/services/user-service/user.service';
+import { VehicleService } from 'src/services/vehicle-service/vehicle.service';
 import { AppActions } from '../app-state/app-state.actions';
 import { UserFacade } from '../facade/user.facade';
 import { UserActions } from './user.actions';
@@ -25,6 +26,7 @@ export class UserEffects {
     private actions$: Actions,
     private authService: AuthService,
     private userService: UserService,
+    private vehicleService: VehicleService,
     private modalService: ModalLoginService,
     private router: Router,
     private userFacade: UserFacade
@@ -141,6 +143,19 @@ export class UserEffects {
               UserActions.getUserProfileSuccess({ user: { firstName, lastName, email, id } })
             ),
             catchError(async (error) => UserActions.getUserProfileError({ error }))
+          );
+        })
+      )
+  );
+
+  addUserVehicle = createEffect(
+    () => () =>
+      this.actions$.pipe(
+        ofType(UserActions.addUserVehicle),
+        switchMap(({ userId, vehicle, token }) => {
+          return this.vehicleService.addVehicle(userId, vehicle, token).pipe(
+            map(({ vehicleId }) => UserActions.addUserVehicleSuccess({ vehicleId })),
+            catchError(async (error) => UserActions.addUserVehicleError({ error }))
           );
         })
       )
