@@ -65,6 +65,19 @@ const validateUserDataUpdateError = createAction(
   props<{ error: string }>()
 );
 
+const addUserVehicle = createAction(
+  '[Vehicle Form] Add user vehicle',
+  props<{ userId: string; vehicle: any; token: string }>()
+);
+const addUserVehicleSuccess = createAction(
+  '[Vehicle Form] Add user vehicle success',
+  props<{ vehicleId: string }>()
+);
+const addUserVehicleError = createAction(
+  '[Vehicle Form] Add user vehicle error',
+  props<{ error: string }>()
+);
+
 export const UserActions = {
   login,
   loginSuccess,
@@ -83,5 +96,8 @@ export const UserActions = {
   updateUserProfileError,
   validateUserDataUpdate,
   validateUserDataUpdateSuccess,
-  validateUserDataUpdateError
+  validateUserDataUpdateError,
+  addUserVehicle,
+  addUserVehicleSuccess,
+  addUserVehicleError
 };

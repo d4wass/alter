@@ -10,12 +10,9 @@ export class ReservationEffects {
     () => () =>
       this.actions$.pipe(
         ofType(ReservationActions.createReservation),
-        tap((x) => console.log(x)),
         switchMap(({ reservation }) => {
-          console.log('switch map', reservation);
           return this.reservationService.createVehicleReservation(reservation).pipe(
             map(({ reservationId }) => {
-              console.log('map after service', reservation);
               return ReservationActions.createReservationSuccess({ reservationId });
             }),
             catchError(async (error) => ReservationActions.createReservationError({ error }))

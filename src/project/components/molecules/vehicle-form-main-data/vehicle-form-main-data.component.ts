@@ -42,10 +42,6 @@ import { IVehicleBasicData } from 'src/project/model/vehicle-form-models/vehicle
   styleUrls: ['./vehicle-form-main-data.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VehicleFormMainDataComponent implements OnInit {
+export class VehicleFormMainDataComponent {
   @Input() formGroupCtrl!: FormGroup<ControlsOf<IVehicleBasicData>>;
-
-  ngOnInit(): void {
-    console.log(this.formGroupCtrl);
-  }
 }
