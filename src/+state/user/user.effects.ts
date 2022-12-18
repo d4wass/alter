@@ -148,12 +148,15 @@ export class UserEffects {
       )
   );
 
+  //TODO: add user token in effect don't pass it in action
+  //! it is unesseccary to pass userId is it already in token
   addUserVehicle = createEffect(
     () => () =>
       this.actions$.pipe(
         ofType(UserActions.addUserVehicle),
         switchMap(({ userId, vehicle, token }) => {
           return this.vehicleService.addVehicle(userId, vehicle, token).pipe(
+            tap((x) => console.log('dksjaldskajlakdj', x)),
             map(({ vehicleId }) => UserActions.addUserVehicleSuccess({ vehicleId })),
             catchError(async (error) => UserActions.addUserVehicleError({ error }))
           );

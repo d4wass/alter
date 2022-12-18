@@ -40,6 +40,7 @@ export class AuthService {
     }>('http://localhost:3000/profile', {
       headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
     });
+
     return userProfile;
   }
 
@@ -65,7 +66,7 @@ export class AuthService {
   ): Observable<{ user: Partial<User>; token: string }> {
     const updateUserData = this.http.put<{ user: Partial<User>; token: string }>(
       'http://localhost:3000/update',
-      { updateUser },
+      { ...updateUser },
       { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) }
     );
     return updateUserData;
