@@ -11,6 +11,7 @@ export interface UserState {
   token: string;
   errorMsg: string;
   isCredentialsAreValid: boolean;
+  userVehicle: { id: string; isSuccessfullCreated: boolean };
   userProfile: UserDataProfile;
 }
 
@@ -21,6 +22,7 @@ export const initialState: UserState = {
   isHost: false,
   errorMsg: '',
   isCredentialsAreValid: false,
+  userVehicle: { id: '', isSuccessfullCreated: false },
   userProfile: {
     id: '',
     email: '',
@@ -52,5 +54,13 @@ export const userReducer = createReducer(
     isAuthorized: false,
     userProfile: { id: '', email: '', firstName: '', lastName: '' }
   })),
-  on(UserActions.validateUserDataUpdateSuccess, (state) => state)
+  on(UserActions.validateUserDataUpdateSuccess, (state) => state),
+  on(UserActions.addUserVehicleSuccess, (state, { vehicleId }) => ({
+    ...state,
+    userVehicle: { id: vehicleId, isSuccessfullCreated: true }
+  })),
+  on(UserActions.vehicleResetForm, (state) => ({
+    ...state,
+    userVehicle: { id: '', isSuccessfullCreated: false }
+  }))
 );

@@ -23,5 +23,12 @@ export class UserFacade {
     return this.store.pipe(select(UserSelectors.selectIsAuthorized));
   }
 
+  isVehicleCreated(): Observable<boolean> {
+    return this.store.pipe(
+      select(UserSelectors.selectUserVehicleCreationInfo),
+      map(({ isSuccessfullCreated }) => isSuccessfullCreated)
+    );
+  }
+
   constructor(private store: Store) {}
 }

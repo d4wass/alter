@@ -75,6 +75,8 @@ const addUserVehicleError = createAction(
   props<{ error: string }>()
 );
 
+const vehicleResetForm = createAction('[Vehicle Form] Clear vehicle form');
+
 export const UserActions = {
   login,
   loginSuccess,
@@ -96,5 +98,6 @@ export const UserActions = {
   validateUserDataUpdateError,
   addUserVehicle,
   addUserVehicleSuccess,
-  addUserVehicleError
+  addUserVehicleError,
+  vehicleResetForm
 };

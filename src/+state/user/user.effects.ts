@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
 import {
   catchError,
   concatMap,
