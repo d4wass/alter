@@ -10,9 +10,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { VehicleFormMainDataModule } from '../../molecules/vehicle-form-main-data/vehicle-form-main-data.module';
 import { VehicleFormSpecDataModule } from '../../molecules/vehicle-form-spec-data/vehicle-form-spec-data.module';
 import { VehicleFormFeaturesDataModule } from '../../molecules/vehicle-form-features-data/vehicle-form-features-data.module';
+import { VehicleSuccessCreateModalComponent } from '../../molecules/vehicle-success-create-modal/vehicle-success-create-modal.component';
 
 @NgModule({
-  declarations: [VehicleFormComponent],
+  declarations: [VehicleFormComponent, VehicleSuccessCreateModalComponent],
   imports: [
     CommonModule,
     MatFormFieldModule,

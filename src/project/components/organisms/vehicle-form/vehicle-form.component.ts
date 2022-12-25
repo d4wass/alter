@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ControlsOf, FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
-import { filter, map, take, withLatestFrom } from 'rxjs';
+import { filter, map, Observable, switchMap, take, withLatestFrom } from 'rxjs';
 import { UserActions } from 'src/+state/user/user.actions';
 import {
   IVehicleBasicData,
@@ -27,12 +28,17 @@ import { UserFacade } from '../../../../+state/facade/user.facade';
         ></app-vehicle-form-features-data>
         <button (click)="handleSubmitVehicle()">add vehicle</button>
       </form>
+      <app-vehicle-success-create-modal
+        [isCreated]="isCreated | async"
+        (handleClick)="resetFormAfterCreation()"
+      ></app-vehicle-success-create-modal>
     </div>
   `,
   styleUrls: ['./vehicle-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VehicleFormComponent {
+  isCreated: Observable<boolean> = this.userFacade.isVehicleCreated();
   vehicleForm: FormGroup<ControlsOf<any>> = new FormGroup<ControlsOf<any>>({
     vehicleMainInfo: new FormGroup<ControlsOf<IVehicleBasicData>>({
       brand: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -103,11 +109,29 @@ export class VehicleFormComponent {
     })
   });
 
-  constructor(private readonly store: Store, private readonly userFacade: UserFacade) {}
+  constructor(
+    private readonly store: Store,
+    private readonly userFacade: UserFacade,
+    private readonly router: Router
+  ) {}
 
   handleSubmitVehicle(): void {
     this.vehicleForm.value$
       .pipe(take(1))
       .subscribe((vehicle) => this.store.dispatch(UserActions.addUserVehicle({ vehicle })));
+  }
+
+  resetFormAfterCreation(): void {
+    this.userFacade
+      .isVehicleCreated()
+      .pipe(
+        filter((isCreated) => isCreated),
+        take(1)
+      )
+      .subscribe(() => {
+        this.store.dispatch(UserActions.vehicleResetForm());
+        this.router.navigate([`profile`]);
+        this.vehicleForm.reset();
+      });
   }
 }

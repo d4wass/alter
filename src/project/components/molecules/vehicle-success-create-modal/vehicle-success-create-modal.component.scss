@@ -1,0 +1,148 @@
+@use '../../../../base';
+
+.wrapper {
+  position: fixed;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(51, 51, 51, 0.6);
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.wrapper-modal {
+  border-radius: base.$main-border-rad;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  background-color: #fff;
+  width: 35%;
+}
+
+.wrapper-modal > * {
+  width: 100%;
+}
+
+.title {
+  text-align: center;
+}
+
+.buttons,
+.inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.standard-btn {
+  cursor: pointer;
+  width: 100%;
+  padding: 20px 0;
+  border-radius: base.$main-border-rad;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  font-weight: 700;
+  margin: 30px 0;
+}
+
+.cancel-btn {
+  text-decoration: underline;
+  font-weight: 700;
+  text-transform: capitalize;
+  border: none;
+  width: 100%;
+  padding: 20px 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 30px 0;
+  p {
+    color: base.$light-grey;
+    font-size: 25px;
+    font-weight: 700;
+    margin: 0 20px;
+  }
+  span {
+    content: '';
+    height: 2px;
+    width: 100%;
+    background-color: base.$light-grey;
+  }
+}
+
+.social-btn {
+  padding: 20px 20px;
+  margin-bottom: 15px;
+  border-radius: base.$main-border-rad;
+  border: solid 2px base.$light-grey;
+  background-color: transparent;
+  font-weight: 700;
+  text-align: start;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  img {
+    height: 25px;
+  }
+
+  p {
+    margin: 0;
+    margin-left: 10px;
+  }
+}
+
+.change-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    font-weight: 700;
+    margin-right: 20px;
+  }
+  button {
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: transparent;
+    border: 1px #000 solid;
+    font-size: 13px;
+    border-radius: base.$main-border-rad;
+  }
+}
+
+input {
+  width: 100%;
+  padding: 15px 20px;
+  border-radius: base.$main-border-rad;
+  border: solid 2px base.$light-grey;
+  margin-bottom: 20px;
+
+  &::placeholder {
+    color: base.$light-grey;
+  }
+}
+
+.personal {
+  padding: 15px 20px;
+  border-radius: base.$main-border-rad;
+  border: solid 2px base.$light-grey;
+  width: 100%;
+
+  &::placeholder {
+    color: base.$light-grey;
+  }
+}
+
+.invalid {
+  border: solid 2px red;
+}

@@ -2,6 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { UserState, USER_FEATURE } from './user.reducer';
 
 const userFeatureSelector = createFeatureSelector<UserState>(USER_FEATURE);
+//! did we use that selector to something? check selectors proper construction
 const selectUserState = createSelector(userFeatureSelector, (state) => state);
 
 const selectIsAuthorized = createSelector(userFeatureSelector, (state) => state.isAuthorized);
@@ -14,6 +15,10 @@ const selectUserEmail = createSelector(userFeatureSelector, (state) => state.use
 const selectUserToken = createSelector(userFeatureSelector, (state) => state.token);
 const selectUserMobile = createSelector(userFeatureSelector, (state) => state.userProfile.mobile);
 const selectUserId = createSelector(userFeatureSelector, (state) => state.userProfile.id);
+const selectUserVehicleCreationInfo = createSelector(
+  userFeatureSelector,
+  (state) => state.userVehicle
+);
 
 export const UserSelectors = {
   selectIsAuthorized,
@@ -22,5 +27,6 @@ export const UserSelectors = {
   selectUserEmail,
   selectUserToken,
   selectUserMobile,
-  selectUserId
+  selectUserId,
+  selectUserVehicleCreationInfo
 };
