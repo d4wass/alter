@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { User } from '../models/user.model';
+import { User, UserDataProfile } from '../models/user.model';
 import { UserActions } from './user.actions';
 
 export const USER_FEATURE = 'user';
@@ -11,7 +11,7 @@ export interface UserState {
   token: string;
   errorMsg: string;
   isCredentialsAreValid: boolean;
-  userProfile: Partial<User>;
+  userProfile: UserDataProfile;
 }
 
 export const initialState: UserState = {
@@ -21,7 +21,12 @@ export const initialState: UserState = {
   isHost: false,
   errorMsg: '',
   isCredentialsAreValid: false,
-  userProfile: {}
+  userProfile: {
+    id: '',
+    email: '',
+    firstName: '',
+    lastName: ''
+  }
 };
 
 export const userReducer = createReducer(
@@ -42,6 +47,10 @@ export const userReducer = createReducer(
     ...state,
     errorMsg: error
   })),
-  on(UserActions.logoutUser, (state) => ({ ...state, isAuthorized: false, userProfile: {} })),
+  on(UserActions.logoutUser, (state) => ({
+    ...state,
+    isAuthorized: false,
+    userProfile: { id: '', email: '', firstName: '', lastName: '' }
+  })),
   on(UserActions.validateUserDataUpdateSuccess, (state) => state)
 );

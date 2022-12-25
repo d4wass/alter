@@ -60,20 +60,21 @@ export class UsersService {
   async updateUserCredentials(dataRequest: UserDataToUpdate, userId: string): Promise<User> {
     const updateUser = await this.updateUserConverter(dataRequest);
 
-    let update;
-    let user;
+    let updatedUser;
 
     try {
-      update = await this.userModel.findByIdAndUpdate(userId, { $set: { ...updateUser } });
+      updatedUser = await this.userModel.findByIdAndUpdate(userId, { $set: { ...updateUser } });
     } catch (error) {
       throw new NotFoundException('User Not Found');
     }
 
-    if (!update) {
+    if (!updatedUser) {
       throw new NotFoundException('Cannot find user');
     }
 
-    return user as User;
+    console.log(updatedUser);
+
+    return updatedUser as User;
   }
 
   async updateUserVehicles(id: string, vehicle: string): Promise<UserDocument> {
@@ -90,10 +91,6 @@ export class UsersService {
     return user as UserDocument;
   }
 
-  async checkIsHost(id: string): Promise<boolean> {
-    return (await this.userModel.findById(id)).isHost;
-  }
-
   private async isUserExist(email: string): Promise<boolean> {
     const user = await this.userModel.findOne({ email });
 
@@ -102,9 +99,10 @@ export class UsersService {
 
   private async updateUserConverter(updatedData: UserDataToUpdate) {
     const { emailUpdate, passwordUpdate, descriptionUpdate, mobileUpdate } = updatedData;
+
     const data = {
       email: emailUpdate,
-      password: passwordUpdate.newValue ? await this.hashPassword(passwordUpdate?.newValue) : '',
+      password: !!passwordUpdate.newValue ? await this.hashPassword(passwordUpdate?.newValue) : '',
       description: descriptionUpdate,
       mobile: mobileUpdate.newValue
     };

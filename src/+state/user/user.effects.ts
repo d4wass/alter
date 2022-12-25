@@ -152,9 +152,10 @@ export class UserEffects {
     () => () =>
       this.actions$.pipe(
         ofType(UserActions.addUserVehicle),
-        switchMap(({ userId, vehicle, token }) => {
+        withLatestFrom(this.userFacade.userToken$, this.userFacade.userId$),
+        switchMap(([{ vehicle }, token, userId]) => {
           return this.vehicleService.addVehicle(userId, vehicle, token).pipe(
-            map(({ vehicleId }) => UserActions.addUserVehicleSuccess({ vehicleId })),
+            map((vehicleId) => UserActions.addUserVehicleSuccess({ vehicleId: vehicleId })),
             catchError(async (error) => UserActions.addUserVehicleError({ error }))
           );
         })

@@ -1,21 +1,49 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { ICrud } from 'interface/crud.interface';
 import { Model } from 'mongoose';
-import { VehicleQuery } from 'src/models/vehicle.model';
+import { VehicleDto, VehicleQuery } from 'src/models/vehicle.model';
 import { Vehicle, VehicleDocument } from 'src/schemas/vehicle/vehicle.schema';
 
 @Injectable()
-export class VehiclesService {
+export class VehiclesService implements ICrud<Vehicle, VehicleDto, string> {
   constructor(@InjectModel(Vehicle.name) private readonly vehicleModel: Model<VehicleDocument>) {}
-  //host request
-  async addVehicle(vehicle: Partial<Vehicle>) {
-    const newVehicle = new this.vehicleModel({ ...vehicle });
-    const result = await newVehicle.save();
 
-    return result.id as string;
+  async create(createVehicleDto: VehicleDto, userId: string): Promise<{ vehicleId: string }> {
+    let result;
+
+    try {
+      const newVehicle = new this.vehicleModel({ ...createVehicleDto, owner: userId });
+      result = await newVehicle.save();
+    } catch (error) {
+      throw new Error(`Cannot create vehicle ${error}`);
+    }
+
+    return { vehicleId: result._id };
   }
 
-  async getVehicleById(id: string) {
+  //TODO: implement on UI site this actions
+  async update(id: string, updateVehicleDto: Partial<VehicleDto>): Promise<Vehicle> {
+    throw new Error('Method not implemented.');
+  }
+  async delete(id: string): Promise<Vehicle> {
+    throw new Error('Method not implemented.');
+  }
+
+  //Search Vehicle Actions
+  async findAll(): Promise<Vehicle[]> {
+    let vehicles;
+
+    try {
+      vehicles = await this.vehicleModel.find().exec();
+    } catch (error) {
+      throw new Error(`Cannot find any vehicles`);
+    }
+
+    return vehicles;
+  }
+
+  async findOne(id: string): Promise<Vehicle> {
     let vehicle;
 
     try {
@@ -26,6 +54,24 @@ export class VehiclesService {
     return vehicle;
   }
 
+  async findByQuery(query: VehicleQuery): Promise<Vehicle[]> {
+    let vehiclesByQuery: Vehicle[];
+
+    try {
+      vehiclesByQuery = await this.vehicleModel
+        .find({
+          'place': { $regex: `^${query.place}$`, $options: 'i' },
+          'avalibility.from': { $not: { $eq: query.fromDate } },
+          'avalibility.until': { $not: { $eq: query.endDate } }
+        })
+        .exec();
+    } catch (error) {
+      throw new NotFoundException(`Cannot find vehicles by query: ${query}`);
+    }
+
+    return vehiclesByQuery;
+  }
+
   // async removeVehicle() { }
   // async updateVehicle() { }
 
@@ -34,7 +80,6 @@ export class VehiclesService {
   // async reviewVehicle() { }
 
   //search request
-  // async getAllVehicles() {}
   async getVehiclesByModel(model: string) {
     let vehiclesByModel: Promise<Vehicle[]>;
     try {
@@ -65,27 +110,6 @@ export class VehiclesService {
     return vehiclesByBrand as Vehicle[];
   }
 
-  async getVehiclesByQuery(query: VehicleQuery) {
-    let vehiclesByQuery: Vehicle[];
-    try {
-      vehiclesByQuery = await this.vehicleModel
-        .find({
-          'place': query.place,
-          'avalibility.from': { $not: { $eq: query.fromDate } },
-          'avalibility.until': { $not: { $eq: query.endDate } }
-        })
-        .exec();
-    } catch (error) {
-      throw new NotFoundException('Cannot find vehicles by query');
-    }
-
-    if (!vehiclesByQuery) {
-      throw new NotFoundException('Cannot find vehicles by query');
-    }
-
-    return vehiclesByQuery as Vehicle[];
-  }
-
   async getVehiclesByPlace(place: string) {
     let vehiclesByPlace: Vehicle[];
     try {
@@ -99,15 +123,5 @@ export class VehiclesService {
     }
 
     return vehiclesByPlace as Vehicle[];
-  }
-
-  async getAllVehicles() {
-    const vehicles = await this.vehicleModel.find().exec();
-    return vehicles;
-  }
-
-  stringFormatter(value: string): string {
-    const formattedParam = value.charAt(0).toUpperCase() + value.toLowerCase().slice(1);
-    return formattedParam;
   }
 }

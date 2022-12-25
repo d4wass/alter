@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Vehicle } from 'src/+state/models/vehicle.model';
 
 @Injectable({
@@ -13,15 +13,18 @@ export class VehicleService {
     return this.http.get<Vehicle>(`http://localhost:3000/vehicle/${id}`);
   }
 
-  addVehicle(userId: string, vehicle: any, token: string): Observable<{ vehicleId: string }> {
+  addVehicle(userId: string, vehicle: any, token: string): Observable<string> {
     const convertedVehicle = this.vehicleDataConverter(vehicle);
-    console.log('vehicle service converter', convertedVehicle);
-    const vehicleId = this.http.post<{ vehicleId: string }>(
+
+    const vehicleId = this.http.post<string>(
       `http://localhost:3000/host/addVehicle`,
       {
-        vehicle: convertedVehicle
+        vehicle: convertedVehicle,
+        userId
       },
-      { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) }
+      {
+        headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
+      }
     );
 
     return vehicleId;
@@ -34,8 +37,11 @@ export class VehicleService {
     let convertedVehicle;
 
     convertedVehicle = {
-      ...value,
-      vehicleFeaturesInfo: {
+      ...value.vehicleMainInfo,
+      specification: {
+        ...value.vehicleSpecInfo
+      },
+      features: {
         ...value.vehicleFeaturesInfo,
         drive: { ...this.stringToVehicleObjConverter(drive) },
         gearbox: { ...this.stringToVehicleObjConverter(gearbox) }

@@ -38,8 +38,10 @@ export class UsersController {
   @Put('update')
   async updateUser(@Request() req) {
     const userId = this.authService.getUserIdFromToken(req.headers.authorization);
+    const updatedUser = await this.userService.updateUserCredentials(req.body, userId);
+
     return {
-      user: this.userService.updateUserCredentials(req.body, userId),
+      user: updatedUser,
       token: req.headers.authorization.replace('Bearer ', '')
     };
   }
