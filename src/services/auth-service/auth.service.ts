@@ -31,13 +31,8 @@ export class AuthService {
     return auth_token;
   }
 
-  getUserProfile(token: string): Observable<Partial<User>> {
-    const userProfile = this.http.get<{
-      email: string;
-      firstName: string;
-      lastName: string;
-      id: string;
-    }>('http://localhost:3000/profile', {
+  getUserProfile(token: string): Observable<User> {
+    const userProfile = this.http.get<User>('http://localhost:3000/profile', {
       headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
     });
 

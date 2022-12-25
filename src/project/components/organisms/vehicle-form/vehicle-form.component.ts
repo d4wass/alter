@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ControlsOf, FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
-import { filter, map, withLatestFrom } from 'rxjs';
+import { filter, map, take, withLatestFrom } from 'rxjs';
 import { UserActions } from 'src/+state/user/user.actions';
 import {
   IVehicleBasicData,
@@ -107,19 +107,7 @@ export class VehicleFormComponent {
 
   handleSubmitVehicle(): void {
     this.vehicleForm.value$
-      .pipe(
-        withLatestFrom(
-          this.userFacade.userId$,
-          this.userFacade.userToken$,
-          this.vehicleForm.valid$
-        ),
-        filter(([, userId]) => !!userId),
-        map(([vehicle, userId, token, isFormValid]) => ({ userId, vehicle, token, isFormValid }))
-      )
-      .subscribe(({ userId, vehicle, token, isFormValid }) => {
-        if (userId && isFormValid) {
-          this.store.dispatch(UserActions.addUserVehicle({ userId, vehicle, token }));
-        }
-      });
+      .pipe(take(1))
+      .subscribe((vehicle) => this.store.dispatch(UserActions.addUserVehicle({ vehicle })));
   }
 }

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Credentials, UserDataUpdate, User, UserDataToUpdate } from '../models/user.model';
+import { UserDataUpdate, User, UserDataToUpdate, UserDataProfile } from '../models/user.model';
 
 const login = createAction(
   '[User Login Modal] Login user',
@@ -32,7 +32,7 @@ const getUserProfile = createAction(
 
 const getUserProfileSuccess = createAction(
   '[User Login Modal] Get User Profile success',
-  props<{ user: Partial<User> }>()
+  props<{ user: UserDataProfile }>()
 );
 const getUserProfileError = createAction(
   '[User Login Modal] Get User Profile error',
@@ -65,10 +65,7 @@ const validateUserDataUpdateError = createAction(
   props<{ error: string }>()
 );
 
-const addUserVehicle = createAction(
-  '[Vehicle Form] Add user vehicle',
-  props<{ userId: string; vehicle: any; token: string }>()
-);
+const addUserVehicle = createAction('[Vehicle Form] Add user vehicle', props<{ vehicle: any }>());
 const addUserVehicleSuccess = createAction(
   '[Vehicle Form] Add user vehicle success',
   props<{ vehicleId: string }>()

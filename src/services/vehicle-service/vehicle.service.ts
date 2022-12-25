@@ -13,10 +13,10 @@ export class VehicleService {
     return this.http.get<Vehicle>(`http://localhost:3000/vehicle/${id}`);
   }
 
-  addVehicle(userId: string, vehicle: any, token: string): Observable<{ vehicleId: string }> {
+  addVehicle(userId: string, vehicle: any, token: string): Observable<string> {
     const convertedVehicle = this.vehicleDataConverter(vehicle);
 
-    const vehicleId = this.http.post<{ vehicleId: string }>(
+    const vehicleId = this.http.post<string>(
       `http://localhost:3000/host/addVehicle`,
       {
         vehicle: convertedVehicle,

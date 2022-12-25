@@ -4,7 +4,18 @@ export interface User {
   firstName: string;
   lastName: string;
   password: string;
-  isTerms: boolean;
+  isTerms?: boolean;
+  isNewsletter?: boolean;
+  mobile?: string;
+  description?: string;
+}
+
+export interface UserDataProfile {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  isTerms?: boolean;
   isNewsletter?: boolean;
   mobile?: string;
   description?: string;
