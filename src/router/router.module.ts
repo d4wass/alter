@@ -12,6 +12,8 @@ import { ShellComponent } from 'src/project/views/shell/shell.component';
 import { VehicleResolver } from './resolvers/vehicle.resolver';
 import { VehicleViewComponent } from 'src/project/views/vehicle-view/vehicle-view.component';
 import { VehicleFormComponent } from 'src/project/components/organisms/vehicle-form/vehicle-form.component';
+import { ReservationVehicleViewComponent } from 'src/project/views/reservation-confirm-view/reservation-vehicle-view.component';
+import { ReservationResolver } from './resolvers/reservation.resolver';
 
 const routes: Routes = [
   {
@@ -30,6 +32,12 @@ const routes: Routes = [
         component: VehicleViewComponent
       },
       { path: 'addVehicle', component: VehicleFormComponent, canActivate: [UserProfileGuard] },
+      {
+        path: 'confirm-reservation/:id',
+        resolve: { reservation: ReservationResolver },
+        component: ReservationVehicleViewComponent,
+        canActivate: [UserProfileGuard]
+      },
       { path: '**', component: NotFoundViewComponent }
     ]
   }

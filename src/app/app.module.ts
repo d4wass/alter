@@ -27,6 +27,7 @@ import { DatepickerModule } from 'src/project/components/molecules/datepicker/da
 import { VehicleViewModule } from '../project/views/vehicle-view/vehicle-view.module';
 import { ReservationEffects } from 'src/+state/reservation/reservation.effects';
 import { VehicleFormModule } from 'src/project/components/organisms/vehicle-form/vehicle-form.module';
+import { ReservationResolver } from 'src/router/resolvers/reservation.resolver';
 
 @NgModule({
   declarations: [AppComponent],
@@ -52,7 +53,7 @@ import { VehicleFormModule } from 'src/project/components/organisms/vehicle-form
     }),
     BrowserAnimationsModule
   ],
-  providers: [UserProfileGuard, VehicleResolver],
+  providers: [UserProfileGuard, VehicleResolver, ReservationResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

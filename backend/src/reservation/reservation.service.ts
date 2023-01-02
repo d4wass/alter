@@ -1,34 +1,62 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { ICrud } from 'interface/crud.interface';
 import { Model } from 'mongoose';
-import { Reservation } from 'src/schemas/reservation/reservation.schema';
+import { ReservationDto } from 'src/models/reservation.model';
+import { Reservation, ReservationDocument } from 'src/schemas/reservation/reservation.schema';
 
 @Injectable()
-export class ReservationService {
-  constructor(@InjectModel('Reservation') private readonly reservationModel: Model<Reservation>) {}
+export class ReservationService implements ICrud<Reservation, ReservationDto, string> {
+  constructor(
+    @InjectModel(Reservation.name) private readonly reservationModel: Model<ReservationDocument>
+  ) {}
 
-  async addReservation(reservationData: Reservation): Promise<string> {
+  //TODO: create a way for calculating cost of reservation number of days multiple by cost per day of rental
+  async create(reservationData: ReservationDto): Promise<{ reservationId: string }> {
     let reservation;
+    const { hostId, userId, vehicleId } = reservationData;
 
     try {
-      const newReservation = new this.reservationModel({ ...reservationData });
-      reservation = await newReservation.save();
+      if (reservationData.hostId !== reservationData.userId) {
+        const newReservation = new this.reservationModel({
+          host: hostId,
+          user: userId,
+          vehicle: vehicleId,
+          ...reservationData
+        });
+        reservation = await newReservation.save();
+      }
     } catch (error) {
       console.log(error);
       throw new HttpException('Cannot create reservation', HttpStatus.BAD_REQUEST);
     }
 
-    return reservation.id;
+    return { reservationId: reservation._id };
   }
 
-  async getReservation(id: string) {
-    let result: Reservation;
+  async findOne(id: string): Promise<Reservation> {
+    let result;
     try {
-      result = await this.reservationModel.findById(id).exec();
+      result = await this.reservationModel
+        .findById(id)
+        .populate({ path: 'user', select: ['firstName', 'lastName', '_id'] })
+        .populate({ path: 'host', select: ['firstName', 'lastName', '_id'] })
+        .populate('vehicle');
     } catch (error) {
       throw new NotFoundException('Cannot find reservation');
     }
-    console.log(result);
+    console.log('BACKEND reservation service', result);
     return result;
+  }
+
+  //TODO: implement rest of CRUD method
+  findAll(): Promise<Reservation[]> {
+    throw new Error('Method not implemented.');
+  }
+  update(id: unknown, updateDto: ReservationDto): Promise<Reservation> {
+    throw new Error('Method not implemented.');
+  }
+  delete(id: unknown): Promise<Reservation> {
+    throw new Error('Method not implemented.');
   }
 }

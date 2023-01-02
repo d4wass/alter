@@ -35,8 +35,8 @@
     <div>
       <h3>Features</h3>
     </div>
-    <div>
-      <button (click)="bookVehicle()">Continue</button>
-    </div>
+    <ng-container *ngIf="(isOwner | async) === false">
+      <button (click)="bookVehicle()">Book a vehicle</button>
+    </ng-container>
   </div>
 </div>

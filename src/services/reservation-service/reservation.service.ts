@@ -1,6 +1,6 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Reservation } from 'src/+state/models/reservation.model';
+import { PopulatedReservation, Reservation } from 'src/+state/models/reservation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +19,9 @@ export class ReservationService {
     return response;
   }
 
-  appendReservation(reservationId: string) {
-    const params = new HttpParams().set('id', reservationId);
-    return this.http.get<{ populateReservation: any }>(
-      `http://localhost:3000/reservation/confirm-reservation`,
-      { params }
+  getReservation(reservationId: string | null) {
+    return this.http.get<{ populateReservation: PopulatedReservation }>(
+      `http://localhost:3000/reservation/confirm-reservation/${reservationId}`
     );
   }
 }
