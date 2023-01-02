@@ -5,3 +5,11 @@ export interface Reservation {
   hostId: string | undefined;
   vehicleId: string | undefined;
 }
+
+export interface PopulatedReservation {
+  fromDate: string;
+  endDate: string;
+  user: any;
+  host: any;
+  vehicle: any;
+}

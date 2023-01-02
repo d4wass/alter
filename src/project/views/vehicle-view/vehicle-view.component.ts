@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
+import { AppActions } from 'src/+state/app-state/app-state.actions';
 import { UserFacade } from 'src/+state/facade/user.facade';
 import { VehicleFacade } from 'src/+state/facade/vehicle.facade';
 import { Vehicle, VehicleQuery } from 'src/+state/models/vehicle.model';
@@ -18,6 +19,7 @@ export class VehicleViewComponent implements OnInit {
   isAuthorized?: boolean;
   userId?: string;
   query?: VehicleQuery;
+  isOwner?: Observable<boolean>;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -31,6 +33,7 @@ export class VehicleViewComponent implements OnInit {
     this.vehicle = this.route.snapshot.data['vehicle'];
     this.userFacade.userId$.subscribe((id) => (this.userId = id));
     this.vehicleFacade.vehicleSearchQuery$.subscribe((query) => (this.query = query));
+    this.setIsOwner();
   }
 
   bookVehicle() {
@@ -43,8 +46,16 @@ export class VehicleViewComponent implements OnInit {
     };
 
     if (this.isAuthorized) {
-      console.log(reservation);
       this.store.dispatch(ReservationActions.createReservation({ reservation }));
+    } else {
+      this.store.dispatch(AppActions.openModal({ isLoginModalOpen: true }));
     }
+  }
+
+  private setIsOwner(): void {
+    this.isOwner = this.userFacade.userId$.pipe(
+      take(1),
+      map((userId) => userId === this.vehicle?.owner)
+    );
   }
 }

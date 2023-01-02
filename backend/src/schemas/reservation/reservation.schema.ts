@@ -8,16 +8,16 @@ export type ReservationDocument = Reservation & Document;
 @Schema()
 export class Reservation {
   @Prop({ type: Types.ObjectId, ref: 'User' })
-  userId: User;
+  user: User;
   @Prop({ type: Types.ObjectId, ref: 'Vehicle' })
-  vehicleId: Vehicle;
+  vehicle: Vehicle;
   @Prop({ type: Types.ObjectId, ref: 'User' })
-  hostId: User;
+  host: User;
   @Prop({ type: String, required: true })
   fromDate: string;
   @Prop({ type: String, required: true })
   endDate: string;
-  @Prop({ type: String, required: true })
+  @Prop({ type: String })
   cost: string;
 }
 
