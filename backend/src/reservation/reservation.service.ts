@@ -45,8 +45,15 @@ export class ReservationService implements ICrud<Reservation, ReservationDto, st
     } catch (error) {
       throw new NotFoundException('Cannot find reservation');
     }
-    console.log('BACKEND reservation service', result);
     return result;
+  }
+
+  async delete(reservationId: string): Promise<void> {
+    try {
+      await this.reservationModel.findByIdAndDelete(reservationId);
+    } catch (error) {
+      throw new NotFoundException('Cannot delete reservation');
+    }
   }
 
   //TODO: implement rest of CRUD method
@@ -54,9 +61,6 @@ export class ReservationService implements ICrud<Reservation, ReservationDto, st
     throw new Error('Method not implemented.');
   }
   update(id: unknown, updateDto: ReservationDto): Promise<Reservation> {
-    throw new Error('Method not implemented.');
-  }
-  delete(id: unknown): Promise<Reservation> {
     throw new Error('Method not implemented.');
   }
 }

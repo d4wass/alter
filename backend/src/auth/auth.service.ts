@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { UserDataToValidate } from '../models/user.model';
+import { UserDataToValidate, UserDto } from '../models/user.model';
 import * as bcrypt from 'bcrypt';
-import { UserDocument } from 'src/schemas/users/users.schema';
 
 @Injectable()
 export class AuthService {
   constructor(private usersService: UsersService, private jwtService: JwtService) {}
 
-  async register(userData: UserDocument): Promise<any> {
+  async register(userData: UserDto): Promise<string | undefined> {
     const user = await this.usersService.create(userData);
+
     return user;
   }
 

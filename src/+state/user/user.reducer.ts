@@ -13,6 +13,8 @@ export interface UserState {
   isCredentialsAreValid: boolean;
   userVehicle: { id: string; isSuccessfullCreated: boolean };
   userProfile: UserDataProfile;
+  reservations: any[];
+  vehicles: any[];
 }
 
 export const initialState: UserState = {
@@ -28,7 +30,9 @@ export const initialState: UserState = {
     email: '',
     firstName: '',
     lastName: ''
-  }
+  },
+  reservations: [],
+  vehicles: []
 };
 
 export const userReducer = createReducer(
@@ -49,11 +53,7 @@ export const userReducer = createReducer(
     ...state,
     errorMsg: error
   })),
-  on(UserActions.logoutUser, (state) => ({
-    ...state,
-    isAuthorized: false,
-    userProfile: { id: '', email: '', firstName: '', lastName: '' }
-  })),
+  on(UserActions.logoutUser, () => initialState),
   on(UserActions.validateUserDataUpdateSuccess, (state) => state),
   on(UserActions.addUserVehicleSuccess, (state, { vehicleId }) => ({
     ...state,

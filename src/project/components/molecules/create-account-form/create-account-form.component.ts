@@ -93,13 +93,8 @@ export class CreateAccountFormComponent {
   constructor(private store: Store) {}
 
   onSubmit() {
-    const { firstName, lastName, email, password } = this.form.controls;
-    const user = {
-      firstName: firstName.value,
-      lastName: lastName.value,
-      email: email.value,
-      password: password.value
-    };
+    console.log(this.form.value);
+    const user = this.form.value;
     this.store.dispatch(UserActions.createUser({ user }));
   }
 }

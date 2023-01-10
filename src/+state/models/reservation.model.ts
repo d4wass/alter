@@ -12,4 +12,5 @@ export interface PopulatedReservation {
   user: any;
   host: any;
   vehicle: any;
+  _id: any;
 }

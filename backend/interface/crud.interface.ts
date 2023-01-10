@@ -3,5 +3,5 @@ export interface ICrud<T, K, S> {
   findOne(id: S): Promise<T>;
   create(createDto: K, id?: S): Promise<{ [key: string]: S }>;
   update(id: S, updateDto: K): Promise<T>;
-  delete(id: S): Promise<T>;
+  delete(id: S): Promise<T | void>;
 }

@@ -13,6 +13,7 @@ import {
 } from 'rxjs';
 import { AuthService } from 'src/services/auth-service/auth.service';
 import { ModalLoginService } from 'src/services/modal-login/modal-login-service.service';
+import { ReservationService } from 'src/services/reservation-service/reservation.service';
 import { UserService } from 'src/services/user-service/user.service';
 import { VehicleService } from 'src/services/vehicle-service/vehicle.service';
 import { AppActions } from '../app-state/app-state.actions';
@@ -27,6 +28,7 @@ export class UserEffects {
     private userService: UserService,
     private vehicleService: VehicleService,
     private modalService: ModalLoginService,
+    private reservationService: ReservationService,
     private router: Router,
     private userFacade: UserFacade
   ) {}
