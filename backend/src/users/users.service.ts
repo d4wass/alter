@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserDataToUpdate } from '../models/user.model';
+import { UserDataToUpdate, UserDto } from '../models/user.model';
 import * as bcrypt from 'bcrypt';
 import { User, UserDocument } from 'src/schemas/users/users.schema';
 
@@ -9,25 +9,34 @@ import { User, UserDocument } from 'src/schemas/users/users.schema';
 export class UsersService {
   constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
 
-  async create(userData: User): Promise<string> {
+  async create(userData: UserDto): Promise<string | undefined> {
     let user;
     const { email, firstName, lastName, password } = userData;
     const hashedPassword = await this.hashPassword(password);
     const isUser = await this.isUserExist(email);
 
-    if (!isUser) {
-      const newUser = new this.userModel({
-        email,
-        firstName,
-        lastName,
-        password: hashedPassword
-      });
-      user = await newUser.save();
-    } else {
-      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+    try {
+      if (!isUser) {
+        const newUser = new this.userModel({
+          email,
+          firstName,
+          lastName,
+          password: hashedPassword
+        });
+        user = await newUser.save();
+      }
+    } catch (error) {
+      if (isUser) {
+        throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+      }
+      throw new Error(error);
     }
 
-    return user.id;
+    if (user) {
+      return user._id;
+    } else {
+      return undefined;
+    }
   }
 
   async getUserByEmail(email: string): Promise<UserDocument | undefined> {
@@ -89,6 +98,57 @@ export class UsersService {
       throw new Error('Cannot update user vehicle');
     }
     return user as UserDocument;
+  }
+
+  async updateUserReservation(id: string, reservationId: string): Promise<UserDocument> {
+    let user;
+    try {
+      user = await this.userModel.findById(id).exec();
+
+      if (user.reservation.some((id) => id !== reservationId)) {
+        await this.userModel.findByIdAndUpdate(id, {
+          reservation: [...user.reservation, reservationId]
+        });
+      }
+    } catch (error) {
+      throw new Error('Cannot update user reservation');
+    }
+
+    return user as UserDocument;
+  }
+
+  async updateHostReservation(hostId: string, reservationId: string): Promise<void> {
+    const host = await this.userModel.findById(hostId).exec();
+
+    await this.userModel.findByIdAndUpdate(hostId, {
+      reservation: [...host.reservation, reservationId]
+    });
+  }
+
+  async deleteUserReservation(userId: string, reservationId: string): Promise<void> {
+    const user = await this.userModel.findById(userId).exec();
+    await this.userModel.updateOne(
+      { _id: userId },
+      {
+        $pull: {
+          reservation: [reservationId]
+        }
+      }
+    );
+    console.log(user);
+  }
+
+  async deleteHostReservation(hostId: string, reservationId: string): Promise<void> {
+    const user = await this.userModel.findById(hostId).exec();
+    await this.userModel.updateOne(
+      { _id: hostId },
+      {
+        $pull: {
+          reservation: [reservationId]
+        }
+      }
+    );
+    console.log(user);
   }
 
   private async isUserExist(email: string): Promise<boolean> {
