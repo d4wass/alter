@@ -28,7 +28,7 @@ const cancelUserReservationError = createAction(
 
 const confirmUserReservation = createAction(
   '[Reservation Summary] Confirm User Reservation',
-  props<{ reservationId: string }>()
+  props<{ reservationId: string; hostId: string }>()
 );
 const confirmUserReservationSuccess = createAction(
   '[Reservation Summary] Confirm User Reservation Success',

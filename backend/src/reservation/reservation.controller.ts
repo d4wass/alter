@@ -25,14 +25,19 @@ export class ReservationController {
 
   @UseGuards(JwtAuthGuard)
   @Put('/confirm-reservation/:id')
-  async confirmReservation(@Param('id') reservationId: string, @Body('userId') userId: string) {
+  async confirmReservation(
+    @Param('id') reservationId: string,
+    @Body('userId') userId: string,
+    @Body('hostId') hostId: string
+  ) {
     //TODO: check that reservation exist then add update user doc
 
     let reservation;
     try {
       reservation = await this.reservationService.findOne(reservationId);
       if (reservation) {
-        this.usersService.updateUserReservation(userId, reservationId);
+        await this.usersService.updateUserReservation(userId, reservationId);
+        await this.usersService.updateUserReservation(hostId, reservationId);
       }
       // reservation && this.usersService.updateUserReservation(userId, reservationId)
     } catch (error) {

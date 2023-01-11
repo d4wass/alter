@@ -102,10 +102,11 @@ export class UsersService {
 
   async updateUserReservation(id: string, reservationId: string): Promise<UserDocument> {
     let user;
+    console.log('reservation user service');
     try {
       user = await this.userModel.findById(id).exec();
 
-      if (user.reservation.some((id) => id !== reservationId)) {
+      if (!user.reservation.includes(reservationId)) {
         await this.userModel.findByIdAndUpdate(id, {
           reservation: [...user.reservation, reservationId]
         });
@@ -117,37 +118,41 @@ export class UsersService {
     return user as UserDocument;
   }
 
-  async updateHostReservation(hostId: string, reservationId: string): Promise<void> {
-    const host = await this.userModel.findById(hostId).exec();
-
-    await this.userModel.findByIdAndUpdate(hostId, {
-      reservation: [...host.reservation, reservationId]
-    });
-  }
-
   async deleteUserReservation(userId: string, reservationId: string): Promise<void> {
-    const user = await this.userModel.findById(userId).exec();
-    await this.userModel.updateOne(
-      { _id: userId },
-      {
-        $pull: {
-          reservation: [reservationId]
+    let user;
+    try {
+      await this.userModel.updateOne(
+        { _id: userId },
+        {
+          $pull: {
+            reservation: [reservationId]
+          }
         }
-      }
-    );
+      );
+      user = await this.userModel.findById(userId).exec();
+    } catch (error) {
+      console.log('user error');
+      throw new Error(error);
+    }
     console.log(user);
   }
 
   async deleteHostReservation(hostId: string, reservationId: string): Promise<void> {
-    const user = await this.userModel.findById(hostId).exec();
-    await this.userModel.updateOne(
-      { _id: hostId },
-      {
-        $pull: {
-          reservation: [reservationId]
+    let user;
+    try {
+      await this.userModel.updateOne(
+        { _id: hostId },
+        {
+          $pull: {
+            reservation: [reservationId]
+          }
         }
-      }
-    );
+      );
+      user = await this.userModel.findById(hostId).exec();
+    } catch (error) {
+      console.log('host error');
+      throw new Error(error);
+    }
     console.log(user);
   }
 

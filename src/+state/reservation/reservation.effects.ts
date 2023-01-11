@@ -37,14 +37,23 @@ export class ReservationEffects {
       this.actions$.pipe(
         ofType(ReservationActions.confirmUserReservation),
         withLatestFrom(this.userFacade.userToken$, this.userFacade.userId$),
-        switchMap(([{ reservationId }, token, userId]) => {
-          return this.reservationService.confirmReservation(reservationId, token, userId).pipe(
-            map((reservation) => ReservationActions.confirmUserReservationSuccess({ reservation })),
-            catchError(async (error) => ReservationActions.confirmUserReservationError({ error }))
-          );
+        switchMap(([{ reservationId, hostId }, token, userId]) => {
+          return this.reservationService
+            .confirmReservation(reservationId, token, userId, hostId)
+            .pipe(
+              map((reservation) =>
+                ReservationActions.confirmUserReservationSuccess({ reservation })
+              ),
+              catchError(async (error) => ReservationActions.confirmUserReservationError({ error }))
+            );
         })
       )
   );
+
+  // redirectAfterUserConfirmReservation = createEffect(() => () => this.actions$.pipe(
+  //   ofType(ReservationActions.confirmUserReservationSuccess)
+
+  // ))
 
   cancelReservation = createEffect(
     () => () =>

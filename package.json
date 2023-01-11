@@ -33,6 +33,7 @@
     "@auth0/angular-jwt": "^5.0.2",
     "@nestjs/jwt": "^8.0.1",
     "@ngneat/reactive-forms": "^5.0.1",
+    "@ngneat/until-destroy": "^9.2.2",
     "@ngrx/effects": "^14.3.2",
     "@ngrx/entity": "^14.3.2",
     "@ngrx/store": "^14.3.2",
