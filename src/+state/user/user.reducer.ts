@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { User, UserDataProfile } from '../models/user.model';
+import { ReservationActions } from '../reservation/reservation.actions';
 import { UserActions } from './user.actions';
 
 export const USER_FEATURE = 'user';
@@ -14,6 +15,7 @@ export interface UserState {
   userVehicle: { id: string; isSuccessfullCreated: boolean };
   userProfile: UserDataProfile;
   reservations: any[];
+  populatedReservations: any[];
   vehicles: any[];
 }
 
@@ -32,6 +34,7 @@ export const initialState: UserState = {
     lastName: ''
   },
   reservations: [],
+  populatedReservations: [],
   vehicles: []
 };
 
@@ -49,6 +52,24 @@ export const userReducer = createReducer(
     ...state,
     userProfile: { ...user }
   })),
+
+  on(UserActions.getUserProfileSuccess, (state, { user }) => {
+    const { firstName, lastName, email, id, reservations, vehicles } = user;
+
+    if (reservations?.length && vehicles?.length) {
+      return {
+        ...state,
+        reservations: [...reservations],
+        vehicles: [...vehicles]
+      };
+    }
+    return {
+      ...state,
+      userProfile: { firstName, lastName, email, id },
+      reservations,
+      vehicles
+    };
+  }),
   on(UserActions.getUserProfileError, (state, { error }) => ({
     ...state,
     errorMsg: error
@@ -62,5 +83,9 @@ export const userReducer = createReducer(
   on(UserActions.vehicleResetForm, (state) => ({
     ...state,
     userVehicle: { id: '', isSuccessfullCreated: false }
+  })),
+  on(ReservationActions.populateUserReservationsSuccess, (state, { populatedReservations }) => ({
+    ...state,
+    populatedReservations: [...state.populatedReservations, populatedReservations]
   }))
 );

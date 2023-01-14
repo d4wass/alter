@@ -8,6 +8,8 @@ export interface User {
   isNewsletter?: boolean;
   mobile?: string;
   description?: string;
+  reservation?: any;
+  vehicles?: any;
 }
 
 export interface UserDataProfile {
@@ -19,6 +21,8 @@ export interface UserDataProfile {
   isNewsletter?: boolean;
   mobile?: string;
   description?: string;
+  reservations?: any;
+  vehicles?: any;
 }
 
 export interface UserDataToUpdate {

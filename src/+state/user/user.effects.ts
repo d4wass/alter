@@ -62,8 +62,10 @@ export class UserEffects {
         ofType(UserActions.getUserProfile),
         switchMap(({ token }) => {
           return this.authService.getUserProfile(token).pipe(
-            map(({ firstName, lastName, email, id }) =>
-              UserActions.getUserProfileSuccess({ user: { firstName, lastName, email, id } })
+            map(({ firstName, lastName, email, id, reservation, vehicles }) =>
+              UserActions.getUserProfileSuccess({
+                user: { firstName, lastName, email, id, reservations: reservation, vehicles }
+              })
             ),
             catchError(async (error) => UserActions.getUserProfileError({ error }))
           );

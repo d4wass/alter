@@ -18,6 +18,10 @@ export class UserFacade {
     select(UserSelectors.selectUserMobile)
   );
   userId$: Observable<string> = this.store.pipe(select(UserSelectors.selectUserId));
+  userReservations$: Observable<any> = this.store.pipe(
+    select(UserSelectors.selectUserReservations)
+  );
+  userVehicles$: Observable<any> = this.store.pipe(select(UserSelectors.selectUserVehicles));
 
   isUserAuthorized(): Observable<boolean> {
     return this.store.pipe(select(UserSelectors.selectIsAuthorized));

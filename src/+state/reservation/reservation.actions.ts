@@ -28,7 +28,7 @@ const cancelUserReservationError = createAction(
 
 const confirmUserReservation = createAction(
   '[Reservation Summary] Confirm User Reservation',
-  props<{ reservationId: string }>()
+  props<{ reservationId: string; hostId: string }>()
 );
 const confirmUserReservationSuccess = createAction(
   '[Reservation Summary] Confirm User Reservation Success',
@@ -36,6 +36,19 @@ const confirmUserReservationSuccess = createAction(
 );
 const confirmUserReservationError = createAction(
   '[Reservation Summary] Confirm User Reservation Error',
+  props<{ error: any }>()
+);
+
+const populateUserReservations = createAction(
+  '[Reservation User List] Populate user reservations',
+  props<{ reservations: any[] }>()
+);
+const populateUserReservationsSuccess = createAction(
+  '[Reservation User List] Populate user reservations success',
+  props<{ populatedReservations: any }>()
+);
+const populateUserReservationsError = createAction(
+  '[Reservation User List] Populate user reservations error',
   props<{ error: any }>()
 );
 
@@ -48,5 +61,8 @@ export const ReservationActions = {
   cancelUserReservationError,
   confirmUserReservation,
   confirmUserReservationSuccess,
-  confirmUserReservationError
+  confirmUserReservationError,
+  populateUserReservations,
+  populateUserReservationsSuccess,
+  populateUserReservationsError
 };

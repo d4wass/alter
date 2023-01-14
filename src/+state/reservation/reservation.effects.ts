@@ -1,7 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap, tap, withLatestFrom } from 'rxjs';
+import {
+  catchError,
+  exhaustMap,
+  map,
+  merge,
+  mergeMap,
+  of,
+  switchMap,
+  tap,
+  withLatestFrom
+} from 'rxjs';
 import { ReservationService } from 'src/services/reservation-service/reservation.service';
 import { UserFacade } from '../facade/user.facade';
 import { ReservationActions } from './reservation.actions';
@@ -37,13 +47,28 @@ export class ReservationEffects {
       this.actions$.pipe(
         ofType(ReservationActions.confirmUserReservation),
         withLatestFrom(this.userFacade.userToken$, this.userFacade.userId$),
-        switchMap(([{ reservationId }, token, userId]) => {
-          return this.reservationService.confirmReservation(reservationId, token, userId).pipe(
-            map((reservation) => ReservationActions.confirmUserReservationSuccess({ reservation })),
-            catchError(async (error) => ReservationActions.confirmUserReservationError({ error }))
-          );
+        switchMap(([{ reservationId, hostId }, token, userId]) => {
+          return this.reservationService
+            .confirmReservation(reservationId, token, userId, hostId)
+            .pipe(
+              map((reservation) =>
+                ReservationActions.confirmUserReservationSuccess({ reservation })
+              ),
+              catchError(async (error) => ReservationActions.confirmUserReservationError({ error }))
+            );
         })
       )
+  );
+
+  redirectConfirmReservationSuccess = createEffect(
+    () => () =>
+      this.actions$.pipe(
+        ofType(ReservationActions.confirmUserReservationSuccess),
+        tap(() => {
+          this.router.navigate(['/', 'profile']);
+        })
+      ),
+    { dispatch: false }
   );
 
   cancelReservation = createEffect(
@@ -59,6 +84,29 @@ export class ReservationEffects {
               catchError(async (error) => ReservationActions.cancelUserReservationError({ error }))
             );
         })
+      )
+  );
+
+  populateReservations = createEffect(
+    () => () =>
+      this.actions$.pipe(
+        ofType(ReservationActions.populateUserReservations),
+        exhaustMap(({ reservations }) =>
+          merge(
+            ...reservations.map((id) =>
+              this.reservationService.getReservation(id).pipe(
+                map((populateReservation) =>
+                  ReservationActions.populateUserReservationsSuccess({
+                    populatedReservations: populateReservation
+                  })
+                ),
+                catchError((error) =>
+                  of(ReservationActions.populateUserReservationsError({ error }))
+                )
+              )
+            )
+          )
+        )
       )
   );
 

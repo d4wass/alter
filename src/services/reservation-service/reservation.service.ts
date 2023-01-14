@@ -25,10 +25,10 @@ export class ReservationService {
     );
   }
 
-  confirmReservation(reservationId: string, token: string, userId: string) {
+  confirmReservation(reservationId: string, token: string, userId: string, hostId: string) {
     return this.http.put<{ reservation: any }>(
       `http://localhost:3000/reservation/confirm-reservation/${reservationId}`,
-      { userId },
+      { userId, hostId },
       {
         headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
       }

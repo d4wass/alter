@@ -78,5 +78,9 @@
     <div>
       <button (click)="handleAddVehicle()">Add Vehicle</button>
     </div>
+
+    <div>
+      <app-reservation-user-list [reservations]="reservations$ | async"></app-reservation-user-list>
+    </div>
   </div>
 </div>
