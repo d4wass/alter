@@ -10,8 +10,7 @@ import {
   Observable,
   Subject,
   take,
-  takeUntil,
-  tap
+  takeUntil
 } from 'rxjs';
 import { AppActions } from 'src/+state/app-state/app-state.actions';
 import { AppSettingFacade } from 'src/+state/facade/app-settings.facade';
@@ -47,6 +46,8 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
     }
   };
   descriptionCtrl = new FormControl('');
+  reservations$!: Observable<any>;
+  vehicles$!: Observable<any>;
 
   private readonly unsubscribe$ = new Subject();
 
@@ -63,8 +64,12 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
     this.userLastName$ = this.lastnameShortened();
     this.isEditView$ = this.appSettingFacade.isEditProfile$;
     this.token$ = this.userFacade.userToken$;
+    this.reservations$ = this.userFacade.userReservations$;
+    this.vehicles$ = this.userFacade.userVehicles$;
+    this.getUser();
   }
 
+  // TODO: remove ngOnDestroy and unsubscribe thing, replace it by UnitlDestroyed(this) from @UntilDestroy()
   ngOnDestroy(): void {
     this.unsubscribe$.complete();
   }
@@ -118,6 +123,13 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
 
   handleAddVehicle() {
     this.router.navigateByUrl('/addVehicle');
+  }
+
+  private getUser(): void {
+    this.token$.pipe(take(1)).subscribe((token) => {
+      console.log(token);
+      this.store.dispatch(UserActions.getUserProfile({ token }));
+    });
   }
 
   private lastnameShortened(): Observable<string | undefined> {
