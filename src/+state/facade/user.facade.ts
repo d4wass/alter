@@ -22,6 +22,9 @@ export class UserFacade {
     select(UserSelectors.selectUserReservations)
   );
   userVehicles$: Observable<any> = this.store.pipe(select(UserSelectors.selectUserVehicles));
+  userPopulatedReservations$: Observable<any> = this.store.pipe(
+    select(UserSelectors.selectUserPopulatedReservations)
+  );
 
   isUserAuthorized(): Observable<boolean> {
     return this.store.pipe(select(UserSelectors.selectIsAuthorized));

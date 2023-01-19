@@ -1,5 +1,25 @@
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 65%;
   height: 100vh;
+}
+
+.greating-content {
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 70px;
+    margin-bottom: 10px;
+    color: #212529;
+  }
+  padding-bottom: 20px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
 }
 
 .profile-section {
@@ -20,7 +40,64 @@
 }
 
 .profile-info-wrapper {
+  margin-right: 40px;
   width: 50vw;
+}
+.profile-info-header,
+.vehicle-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+//TODO: move to some different stylesheet file for defaults styles
+.card {
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  padding: 20px;
+  border: solid 1px #ced4da;
+
+  h3 {
+    color: #212529;
+  }
+}
+//TODO: move to some different stylesheet file for defaults styles
+.divider {
+  height: 1px;
+  background-color: #ced4da;
+  margin: 10px 0;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .title {
+      color: #212529;
+      font-weight: 900;
+      margin-right: 3px;
+    }
+    div {
+      display: flex;
+    }
+
+    p {
+      margin: 0;
+      color: #6c757d;
+      line-height: 1.5;
+    }
+
+    a {
+      color: #6c757d;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: 900;
+    }
+  }
 }
 
 .profile-section {
@@ -35,4 +112,9 @@
   display: flex;
   flex-direction: column;
   width: 50%;
+}
+
+.vehicle-list-wrapper,
+.reservation-list-wrapper {
+  margin-top: 20px;
 }
