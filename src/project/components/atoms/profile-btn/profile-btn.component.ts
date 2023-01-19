@@ -4,7 +4,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
   selector: 'app-profile-btn',
   template: `
     <ng-container>
-      <button (click)="handleClick()"><ng-content></ng-content></button>
+      <button (click)="handleClick()" class="btn-default"><ng-content></ng-content></button>
     </ng-container>
   `,
   styleUrls: ['./profile-btn.component.scss'],

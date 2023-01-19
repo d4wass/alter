@@ -1,33 +1,48 @@
-<div class="flex-wrapper wrapper">
+<div class="wrapper">
+  <div class="greating-content">
+    <h2>Hello, {{ userName$ | async }} {{ userLastName$ | async }}.</h2>
+  </div>
+
   <div class="bg-section">
-    <div>
+    <div class="btn-default">
       <app-profile-btn (handleClickEvent)="onLogoutClick()">Logout</app-profile-btn>
     </div>
-    <div>
-      <ng-container *ngIf="isEditView$ | async">
-        <app-profile-btn (handleClickEvent)="onSaveClick()">{{ profileBtn }}</app-profile-btn>
-        <app-profile-btn (handleClickEvent)="onCancelClick()">Cancel</app-profile-btn>
-      </ng-container>
-      <ng-container *ngIf="(isEditView$ | async) === false">
-        <app-profile-btn (handleClickEvent)="onEditClick()">{{ profileBtn }}</app-profile-btn>
-      </ng-container>
-    </div>
+    <ng-container *ngIf="isEditView$ | async">
+      <app-profile-btn (handleClickEvent)="onSaveClick()">{{ profileBtn }}</app-profile-btn>
+      <app-profile-btn (handleClickEvent)="onCancelClick()">Cancel</app-profile-btn>
+    </ng-container>
   </div>
-  <div class="flex-wrapper">
+
+  <div class="content">
     <div class="profile-section" *ngIf="(isEditView$ | async) === false">
-      <div class="profile-info-wrapper">
-        <div class="profile-title">
-          <h3>{{ userName$ | async }} {{ userLastName$ | async }}.</h3>
-          <p>Joined Jul 2022</p>
+      <div class="profile-info-wrapper card">
+        <div class="profile-info-header">
+          <h3>User Information</h3>
+          <ng-container *ngIf="(isEditView$ | async) === false">
+            <app-profile-btn (handleClickEvent)="onEditClick()">{{ profileBtn }}</app-profile-btn>
+          </ng-container>
         </div>
+        <div class="divider"></div>
         <div class="profile-info">
           <div class="profile-info-item">
-            <p>Approved to drive</p>
-            <a href="#">Verify ID</a>
+            <div>
+              <p class="title">Register:</p>
+              <p>Joined Jul 2022</p>
+            </div>
           </div>
           <div class="profile-info-item">
-            <p>{{ userEmail$ | async }}</p>
-            <a href="#">verified</a>
+            <div>
+              <p class="title">License:</p>
+              <p>not verified</p>
+            </div>
+            <a href="#">confirm</a>
+          </div>
+          <div class="profile-info-item">
+            <div>
+              <p class="title">Email:</p>
+              <p>{{ userEmail$ | async }}</p>
+            </div>
+            <a href="#">confirm</a>
           </div>
         </div>
       </div>
@@ -75,11 +90,18 @@
       </div>
     </div>
 
-    <div>
-      <button (click)="handleAddVehicle()">Add Vehicle</button>
+    <div class="vehicle-list-wrapper card">
+      <div class="vehicle-list-header">
+        <h3>User Vehicles</h3>
+        <app-profile-btn (handleClickEvent)="handleAddVehicle()">Add Vehicle</app-profile-btn>
+      </div>
+      <div class="divider"></div>
     </div>
-
-    <div>
+    <div class="reservation-list-wrapper card">
+      <div class="vehicle-list-header">
+        <h3>User Reservations</h3>
+      </div>
+      <div class="divider"></div>
       <app-reservation-user-list [reservations]="reservations$ | async"></app-reservation-user-list>
     </div>
   </div>

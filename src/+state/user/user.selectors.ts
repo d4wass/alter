@@ -21,6 +21,10 @@ const selectUserVehicleCreationInfo = createSelector(
 );
 const selectUserReservations = createSelector(userFeatureSelector, (state) => state.reservations);
 const selectUserVehicles = createSelector(userFeatureSelector, (state) => state.vehicles);
+const selectUserPopulatedReservations = createSelector(
+  userFeatureSelector,
+  (state) => state.populatedReservations
+);
 
 export const UserSelectors = {
   selectIsAuthorized,
@@ -32,5 +36,6 @@ export const UserSelectors = {
   selectUserId,
   selectUserVehicleCreationInfo,
   selectUserReservations,
-  selectUserVehicles
+  selectUserVehicles,
+  selectUserPopulatedReservations
 };
