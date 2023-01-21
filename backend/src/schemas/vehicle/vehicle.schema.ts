@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import mongoose, { Document, Types } from 'mongoose';
 import { Feature } from './feature.schema';
 import { Specification } from './specification.schema';
 import { Avalibility } from './avalibility.schema';
@@ -40,3 +40,11 @@ export class Vehicle {
 }
 
 export const VehicleSchema = SchemaFactory.createForClass(Vehicle);
+
+VehicleSchema.virtual('id').get(function (this: VehicleDocument) {
+  return this._id;
+});
+VehicleSchema.pre('deleteOne', function (next) {
+  // console.log(this), console.log(this.model);
+  // next();
+});

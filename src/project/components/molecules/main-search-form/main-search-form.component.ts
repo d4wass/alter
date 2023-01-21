@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { formatDate } from '@angular/common';
 import { Validators } from '@angular/forms';
 import { FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
@@ -28,7 +27,6 @@ import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
         <div class="input-data">
           <app-datepicker
             [control]="searchForm.controls.endDate"
-            [details]=""
             [label]="'Until'"
           ></app-datepicker>
         </div>
@@ -39,10 +37,6 @@ import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
   styleUrls: ['./main-search-form.component.scss']
 })
 export class MainSearchFormComponent {
-  // private currentDate = this.dataConverter({
-  //   date: formatDate(new Date(), 'dd-MM-YYYY', 'en')
-  // }).date;
-
   constructor(private store: Store) {}
 
   searchForm = new FormGroup({
@@ -70,7 +64,6 @@ export class MainSearchFormComponent {
   }
 
   private dataConverter(date: string) {
-    // const { date, hour } = value;
     const convertedDate = new Date(date);
     const day = convertedDate.getDate();
     const month = convertedDate.getMonth() + 1;

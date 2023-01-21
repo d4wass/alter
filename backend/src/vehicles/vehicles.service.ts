@@ -22,11 +22,12 @@ export class VehiclesService implements ICrud<Vehicle, VehicleDto, string> {
     return { vehicleId: result._id };
   }
 
+  async delete(id: string): Promise<void> {
+    await this.vehicleModel.deleteOne({ _id: id });
+  }
+
   //TODO: implement on UI site this actions
   async update(id: string, updateVehicleDto: Partial<VehicleDto>): Promise<Vehicle> {
-    throw new Error('Method not implemented.');
-  }
-  async delete(id: string): Promise<Vehicle> {
     throw new Error('Method not implemented.');
   }
 
@@ -47,7 +48,9 @@ export class VehiclesService implements ICrud<Vehicle, VehicleDto, string> {
     let vehicle;
 
     try {
-      vehicle = await this.vehicleModel.findById(id);
+      vehicle = await (
+        await this.vehicleModel.findById(id)
+      ).populate({ path: 'owner', select: ['firstName', 'lastName', '_id', 'email'] });
     } catch (error) {
       throw new Error(`Cannot find vehicle with ${id}`);
     }

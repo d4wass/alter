@@ -28,6 +28,9 @@ import { VehicleViewModule } from '../project/views/vehicle-view/vehicle-view.mo
 import { ReservationEffects } from 'src/+state/reservation/reservation.effects';
 import { VehicleFormModule } from 'src/project/components/organisms/vehicle-form/vehicle-form.module';
 import { ReservationResolver } from 'src/router/resolvers/reservation.resolver';
+import { userVehicleReducer } from 'src/+state/user-vehicles/user-vehicles.reducer';
+import { UserVehiclesEffects } from 'src/+state/user-vehicles/user-vehicles.effects';
+import { userReservationsReducer } from 'src/+state/user-reservations/user-reservations.reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,8 +49,20 @@ import { ReservationResolver } from 'src/router/resolvers/reservation.resolver';
     DatepickerModule,
     HttpClientModule,
     VehicleFormModule,
-    StoreModule.forRoot({ user: userReducer, vehicles: vehiclesReducer, app: AppReducer }),
-    EffectsModule.forRoot([VehicleEffects, UserEffects, AppEffects, ReservationEffects]),
+    StoreModule.forRoot({
+      user: userReducer,
+      vehicles: vehiclesReducer,
+      app: AppReducer,
+      userVehicles: userVehicleReducer,
+      userReservations: userReservationsReducer
+    }),
+    EffectsModule.forRoot([
+      VehicleEffects,
+      UserEffects,
+      AppEffects,
+      ReservationEffects,
+      UserVehiclesEffects
+    ]),
     StoreDevtoolsModule.instrument({
       maxAge: 500
     }),

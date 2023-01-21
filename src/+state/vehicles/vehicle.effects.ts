@@ -7,25 +7,26 @@ import { VehiclesActions } from './vehicle.actions';
 
 @Injectable()
 export class VehicleEffects {
-  getVehicles = createEffect(() =>
-    this.actions$.pipe(
-      ofType(VehiclesActions.searchVehicles),
-      switchMap(({ query }) =>
-        this.searchService.searchVehicles(query).pipe(
-          tap(() =>
-            this.router.navigate(['/search'], {
-              queryParams: {
-                place: query.place,
-                fromDate: query.fromDate,
-                endDate: query.endDate
-              }
-            })
-          ),
-          map((vehicles) => VehiclesActions.loadVehiclesSuccess({ vehicles })),
-          catchError((error) => of(VehiclesActions.loadVehiclesError({ error })))
+  getVehicles = createEffect(
+    () => () =>
+      this.actions$.pipe(
+        ofType(VehiclesActions.searchVehicles),
+        switchMap(({ query }) =>
+          this.searchService.searchVehicles(query).pipe(
+            tap(() =>
+              this.router.navigate(['/search'], {
+                queryParams: {
+                  place: query.place,
+                  fromDate: query.fromDate,
+                  endDate: query.endDate
+                }
+              })
+            ),
+            map((vehicles) => VehiclesActions.loadVehiclesSuccess({ vehicles })),
+            catchError((error) => of(VehiclesActions.loadVehiclesError({ error })))
+          )
         )
       )
-    )
   );
 
   constructor(

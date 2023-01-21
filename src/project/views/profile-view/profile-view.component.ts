@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl } from '@ngneat/reactive-forms';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Store } from '@ngrx/store';
 import {
   debounceTime,
@@ -16,8 +17,11 @@ import { AppActions } from 'src/+state/app-state/app-state.actions';
 import { AppSettingFacade } from 'src/+state/facade/app-settings.facade';
 import { UserFacade } from 'src/+state/facade/user.facade';
 import { UserDataToUpdate } from 'src/+state/models/user.model';
+import { UserReservationsActions } from 'src/+state/user-reservations/user-reservations.actions';
+import { UserVehiclesActions } from 'src/+state/user-vehicles/user-vehicles.actions';
 import { UserActions } from 'src/+state/user/user.actions';
 
+@UntilDestroy()
 @Component({
   selector: 'app-profile-view',
   templateUrl: './profile-view.component.html',
@@ -64,9 +68,9 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
     this.userLastName$ = this.lastnameShortened();
     this.isEditView$ = this.appSettingFacade.isEditProfile$;
     this.token$ = this.userFacade.userToken$;
-    this.reservations$ = this.userFacade.userReservations$;
-    this.vehicles$ = this.userFacade.userVehicles$;
     this.getUser();
+    this.getUserVehicles();
+    this.getUserReservations();
   }
 
   // TODO: remove ngOnDestroy and unsubscribe thing, replace it by UnitlDestroyed(this) from @UntilDestroy()
@@ -121,15 +125,32 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
     this.store.dispatch(UserActions.logoutUser());
   }
 
+  handleRemoveVehicle(vehicleId: string) {
+    this.store.dispatch(UserVehiclesActions.removeVehicle({ vehicleId }));
+  }
+
   handleAddVehicle() {
     this.router.navigateByUrl('/addVehicle');
   }
 
   private getUser(): void {
-    this.token$.pipe(take(1)).subscribe((token) => {
-      console.log(token);
-      this.store.dispatch(UserActions.getUserProfile({ token }));
-    });
+    this.token$
+      .pipe(untilDestroyed(this))
+      .subscribe((token) => this.store.dispatch(UserActions.getUserProfile({ token })));
+  }
+
+  private getUserVehicles() {
+    this.userFacade.userVehiclesId$
+      .pipe(take(1))
+      .subscribe((vehicles) => this.store.dispatch(UserVehiclesActions.getVehicles({ vehicles })));
+  }
+
+  private getUserReservations() {
+    this.userFacade.userReservationsIds$
+      .pipe(untilDestroyed(this))
+      .subscribe((reservations) =>
+        this.store.dispatch(UserReservationsActions.populateUserReservations({ reservations }))
+      );
   }
 
   private lastnameShortened(): Observable<string | undefined> {

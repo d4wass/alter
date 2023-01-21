@@ -13,13 +13,14 @@ export class ReservationController {
 
   @Post('/create-reservation')
   async addReservation(@Body('reservation') reservation: ReservationDto) {
+    console.log('ReservationDTO', reservation);
     const createdReservation = await this.reservationService.create(reservation);
     return createdReservation;
   }
 
   @Get('/:id')
-  async getReservatoin(@Param('id') reservationId: string) {
-    const reservation = this.reservationService.findOne(reservationId);
+  async getReservation(@Param('id') reservationId: string) {
+    const reservation = await this.reservationService.findOne(reservationId);
     return reservation;
   }
 
@@ -30,8 +31,6 @@ export class ReservationController {
     @Body('userId') userId: string,
     @Body('hostId') hostId: string
   ) {
-    //TODO: check that reservation exist then add update user doc
-
     let reservation;
     try {
       reservation = await this.reservationService.findOne(reservationId);
@@ -39,7 +38,6 @@ export class ReservationController {
         await this.usersService.updateUserReservation(userId, reservationId);
         await this.usersService.updateUserReservation(hostId, reservationId);
       }
-      // reservation && this.usersService.updateUserReservation(userId, reservationId)
     } catch (error) {
       console.log(error);
       throw new Error('Cannot update user resdervation reservation not exists');

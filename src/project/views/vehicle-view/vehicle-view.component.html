@@ -1,42 +1,77 @@
-<div>
-  <p>vehicle-image</p>
-</div>
+<div
+  class="image"
+  [ngStyle]="{
+    'background-image': imageUrl,
+    'background-size': 'cover',
+    'background-repeat': 'no-repeat',
+    'background-position': '50%, 50%'
+  }"
+></div>
 <div class="wrapper">
-  <div class="column-container">
-    <div class="column-container">
+  <div class="row-wrapper">
+    <div class="column-wrapper">
       <div class="content-container">
-        <h1>{{ vehicle?.brand }} {{ vehicle?.model }} year</h1>
-        <p>vehicle rate</p>
+        <h1>{{ vehicle?.brand }} {{ vehicle?.model }} 2015</h1>
+        <p>{{ vehicle?.reviews.length }}.0 rate</p>
       </div>
-      <div class="content-row-container">
-        <div>
-          <p>
-            {{ vehicle?.specification.fuelConsumption.quantity }}
-            {{ vehicle?.specification.fuelConsumption.units }}
-          </p>
-          <p>{{ vehicle?.specification.doors }} doors</p>
+      <div class="column-container">
+        <div class="row-container">
+          <div class="fuel-consumption">
+            <img src="assets/vehicle/gas-pump-solid.svg" />
+            <p>
+              {{ vehicle?.specification.fuelConsumption.quantity }}
+              {{ vehicle?.specification.fuelConsumption.units }}
+            </p>
+          </div>
+          <div class="fuel-type">
+            <img src="assets/vehicle/fire-flame-simple-solid.svg" />
+            <p>{{ vehicle?.specification.fuelType }}</p>
+          </div>
         </div>
-        <div>
-          <p>{{ vehicle?.specification.fuelType }}</p>
-          <p>{{ vehicle?.specification.seats }} seats</p>
+        <div class="row-container">
+          <div class="car-door">
+            <img src="assets/vehicle/car-door.svg" />
+            <p>{{ vehicle?.specification.doors }} doors</p>
+          </div>
+          <div class="car-seat">
+            <img src="assets/vehicle/car-seat.svg" />
+            <p>{{ vehicle?.specification.seats }} seats</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="row-container">
-      <div class="container">
-        <h3>$ {{ vehicle?.price }}</h3>
-        <p>/ day</p>
+    <div class="column-rental-container">
+      <div class="price-wrapper">
+        <div class="price-content">
+          <h3>$ {{ vehicle?.price }}</h3>
+          <p>/ day</p>
+        </div>
+        <div class="divider"></div>
+        <div>
+          <app-datepicker [label]="'Trip start'" [control]="fromDate"></app-datepicker>
+          <app-datepicker [label]="'Trip end'" [control]="endDate"></app-datepicker>
+        </div>
       </div>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
+      <ng-container *ngIf="(isOwner | async) === false">
+        <button (click)="bookVehicle()">Book a vehicle</button>
+      </ng-container>
     </div>
-    <div>
-      <h3>Features</h3>
-    </div>
-    <ng-container *ngIf="(isOwner | async) === false">
-      <button (click)="bookVehicle()">Book a vehicle</button>
+  </div>
+  <div>
+    <h3>Features</h3>
+    <p>wheel drive: {{ drive }}</p>
+    <p>gearbox: {{ gearbox }}</p>
+    <p>
+      Capacity:{{ vehicle?.features.engine.capacity }} Power:{{ vehicle?.features.engine.power }}
+    </p>
+  </div>
+  <div>
+    <h3>Equipment</h3>
+    <ng-container *ngIf="equipment?.length">
+      <p *ngFor="let item of equipment">{{ getEquipmentValue(item) }}</p>
+    </ng-container>
+    <ng-container *ngIf="!equipment?.length">
+      <p>not specified</p>
     </ng-container>
   </div>
 </div>

@@ -1,6 +1,8 @@
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 import { User, UserDataProfile } from '../models/user.model';
 import { ReservationActions } from '../reservation/reservation.actions';
+import { VehiclesActions } from '../vehicles/vehicle.actions';
 import { UserActions } from './user.actions';
 
 export const USER_FEATURE = 'user';
@@ -14,9 +16,6 @@ export interface UserState {
   isCredentialsAreValid: boolean;
   userVehicle: { id: string; isSuccessfullCreated: boolean };
   userProfile: UserDataProfile;
-  reservations: any[];
-  populatedReservations: any[];
-  vehicles: any[];
 }
 
 export const initialState: UserState = {
@@ -32,10 +31,7 @@ export const initialState: UserState = {
     email: '',
     firstName: '',
     lastName: ''
-  },
-  reservations: [],
-  populatedReservations: [],
-  vehicles: []
+  }
 };
 
 export const userReducer = createReducer(
@@ -54,20 +50,10 @@ export const userReducer = createReducer(
   })),
 
   on(UserActions.getUserProfileSuccess, (state, { user }) => {
-    const { firstName, lastName, email, id, reservations, vehicles } = user;
-
-    if (reservations?.length && vehicles?.length) {
-      return {
-        ...state,
-        reservations: [...reservations],
-        vehicles: [...vehicles]
-      };
-    }
+    const { firstName, lastName, email, id } = user;
     return {
       ...state,
-      userProfile: { firstName, lastName, email, id },
-      reservations,
-      vehicles
+      userProfile: { firstName, lastName, email, id }
     };
   }),
   on(UserActions.getUserProfileError, (state, { error }) => ({
@@ -83,9 +69,5 @@ export const userReducer = createReducer(
   on(UserActions.vehicleResetForm, (state) => ({
     ...state,
     userVehicle: { id: '', isSuccessfullCreated: false }
-  })),
-  on(ReservationActions.populateUserReservationsSuccess, (state, { populatedReservations }) => ({
-    ...state,
-    populatedReservations: [...state.populatedReservations, populatedReservations]
   }))
 );

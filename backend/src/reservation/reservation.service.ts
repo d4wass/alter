@@ -4,6 +4,7 @@ import { ICrud } from 'interface/crud.interface';
 import { Model } from 'mongoose';
 import { ReservationDto } from 'src/models/reservation.model';
 import { Reservation, ReservationDocument } from 'src/schemas/reservation/reservation.schema';
+import * as moment from 'moment';
 
 @Injectable()
 export class ReservationService implements ICrud<Reservation, ReservationDto, string> {
@@ -11,10 +12,10 @@ export class ReservationService implements ICrud<Reservation, ReservationDto, st
     @InjectModel(Reservation.name) private readonly reservationModel: Model<ReservationDocument>
   ) {}
 
-  //TODO: create a way for calculating cost of reservation number of days multiple by cost per day of rental
   async create(reservationData: ReservationDto): Promise<{ reservationId: string }> {
     let reservation;
-    const { hostId, userId, vehicleId } = reservationData;
+    const { hostId, userId, vehicleId, price, endDate, fromDate } = reservationData;
+    const numberOfDay = this.calculateRentalCost(fromDate, endDate);
 
     try {
       if (reservationData.hostId !== reservationData.userId) {
@@ -22,6 +23,7 @@ export class ReservationService implements ICrud<Reservation, ReservationDto, st
           host: hostId,
           user: userId,
           vehicle: vehicleId,
+          cost: Number(price) * numberOfDay,
           ...reservationData
         });
         reservation = await newReservation.save();
@@ -56,11 +58,23 @@ export class ReservationService implements ICrud<Reservation, ReservationDto, st
     }
   }
 
-  //TODO: implement rest of CRUD method
   findAll(): Promise<Reservation[]> {
     throw new Error('Method not implemented.');
   }
+
   update(id: unknown, updateDto: ReservationDto): Promise<Reservation> {
     throw new Error('Method not implemented.');
+  }
+
+  private calculateRentalCost(fromDate: string, endDate: string) {
+    const convertedFromDate = new Date(this.convertDate(fromDate));
+    const convertedEndDate = new Date(this.convertDate(endDate));
+    const differentTime = convertedEndDate.getTime() - convertedFromDate.getTime();
+
+    return differentTime / (1000 * 3600 * 24) + 1;
+  }
+
+  private convertDate(date: string): any {
+    return moment(date, 'DD.MM.YYYY');
   }
 }

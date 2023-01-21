@@ -1,10 +1,33 @@
+@use '../../../base';
 $gridGap: 2em;
 $mainSidePadding: 6.3em;
 
 .wrapper {
   display: flex;
   flex-direction: column;
-  padding: $gridGap $mainSidePadding;
+  margin: auto;
+  width: 65%;
+  height: 100vh;
+}
+
+.row-wrapper {
+  display: flex;
+  padding-top: 30px;
+}
+
+.column-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 68%;
+}
+
+.column-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.row-container {
+  display: flex;
 }
 
 .content-column-container {
@@ -18,11 +41,61 @@ $mainSidePadding: 6.3em;
   width: 50%;
 }
 
-.column-container {
+.column-rental-container {
   display: flex;
   flex-direction: column;
+  width: 32%;
+
+  .price-wrapper {
+    display: flex;
+    flex-direction: column;
+    .price-content {
+      display: flex;
+      align-items: center;
+      h3 {
+        margin-right: 5px;
+      }
+    }
+  }
+  button {
+    background-color: #fcc628;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: 700;
+    color: #000;
+    cursor: pointer;
+    border: 1px solid #fdd96e;
+  }
 }
 
-.row-container {
+.fuel-consumption,
+.fuel-type {
   display: flex;
+  align-items: center;
+  width: 50%;
+  img {
+    margin: 0 10px 0 5px;
+    height: 30px;
+  }
+}
+
+.car-seat,
+.car-door {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  img {
+    margin-right: 5px;
+    height: 30px;
+  }
+}
+
+.image {
+  height: 300px;
+}
+
+.divider {
+  height: 1px;
+  background-color: #ced4da;
+  margin: 10px 0 20px;
 }

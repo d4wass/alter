@@ -19,6 +19,8 @@ export class Reservation {
   endDate: string;
   @Prop({ type: String })
   cost: string;
+  @Prop({ type: String, enum: ['new', 'confirmed', 'canceled'], default: 'new' })
+  status: string;
 }
 
 export const ReservationSchema = SchemaFactory.createForClass(Reservation);
