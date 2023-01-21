@@ -1,0 +1,20 @@
+table {
+  width: 100%;
+  border-radius: 5px;
+  border: solid 1px #ced4da;
+  margin-top: 20px;
+
+  thead {
+    background-color: #f8f9fa;
+    th {
+      padding: 10px;
+    }
+  }
+  tbody {
+    background-color: #fff;
+    border: none;
+    td {
+      text-align: center;
+    }
+  }
+}

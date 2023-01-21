@@ -31,6 +31,7 @@ export class VehicleViewComponent implements OnInit {
   ngOnInit(): void {
     this.userFacade.isAuthorized$.subscribe((isAuthorized) => (this.isAuthorized = isAuthorized));
     this.vehicle = this.route.snapshot.data['vehicle'];
+    console.log(this.vehicle);
     this.userFacade.userId$.subscribe((id) => (this.userId = id));
     this.vehicleFacade.vehicleSearchQuery$.subscribe((query) => (this.query = query));
     this.setIsOwner();

@@ -9,7 +9,7 @@ import { Vehicle } from 'src/+state/models/vehicle.model';
 export class VehicleService {
   constructor(private readonly http: HttpClient) {}
 
-  getVehicle(id: string | null): Observable<Vehicle> {
+  getVehicle(id: string | null | number): Observable<Vehicle> {
     return this.http.get<Vehicle>(`http://localhost:3000/vehicle/${id}`);
   }
 

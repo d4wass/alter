@@ -19,7 +19,7 @@ export class ReservationController {
 
   @Get('/:id')
   async getReservatoin(@Param('id') reservationId: string) {
-    const reservation = this.reservationService.findOne(reservationId);
+    const reservation = await this.reservationService.findOne(reservationId);
     return reservation;
   }
 

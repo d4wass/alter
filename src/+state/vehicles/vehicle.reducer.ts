@@ -5,7 +5,6 @@ import { Vehicle } from '../models/vehicle.model';
 
 export const VEHICLE_FEATURE = 'vehicles';
 
-//w miejsce any dodac cos na interface ktory typuje nasz state dla Vehicle
 export const adapter: EntityAdapter<Vehicle> = createEntityAdapter({
   selectId: (vehicle) => vehicle._id
 });
@@ -17,7 +16,7 @@ export interface VehicleState extends EntityState<Vehicle> {
   query?: { place: string; fromDate: string; endDate: string };
 }
 
-export const initialState: VehicleState = adapter.getInitialState({
+const initialState: VehicleState = adapter.getInitialState({
   isLoading: false
 });
 

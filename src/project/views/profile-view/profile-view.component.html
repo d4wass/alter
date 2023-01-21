@@ -96,13 +96,14 @@
         <app-profile-btn (handleClickEvent)="handleAddVehicle()">Add Vehicle</app-profile-btn>
       </div>
       <div class="divider"></div>
+      <app-vehicle-user-list></app-vehicle-user-list>
     </div>
     <div class="reservation-list-wrapper card">
       <div class="vehicle-list-header">
         <h3>User Reservations</h3>
       </div>
       <div class="divider"></div>
-      <app-reservation-user-list [reservations]="reservations$ | async"></app-reservation-user-list>
+      <app-reservation-user-list></app-reservation-user-list>
     </div>
   </div>
 </div>
