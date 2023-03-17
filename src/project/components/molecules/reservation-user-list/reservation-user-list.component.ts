@@ -43,8 +43,12 @@ export class ReservationUserListComponent implements OnInit {
   // ngAfterViewInit(): void {
 
   // }
+  // ngAfterViewInit(): void {
+
+  // }
 
   ngOnInit(): void {
+    this.populatedReservations$ = this.createReservationsArrayFromEntity();
     this.populatedReservations$ = this.createReservationsArrayFromEntity();
   }
 
