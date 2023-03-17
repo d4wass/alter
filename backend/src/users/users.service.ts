@@ -100,6 +100,22 @@ export class UsersService {
     return user as UserDocument;
   }
 
+  async deleteUserVehicle(id: string, vehicleId: string): Promise<void> {
+    let user: UserDocument;
+    try {
+      await this.userModel
+        .findByIdAndUpdate({ _id: id }, { $pull: { vehicles: { id: vehicleId } } })
+        .exec();
+      user = await this.userModel.findById(id).exec();
+      // user.vehicles.filter((_id) => _id !== vehicleId);
+    } catch (error) {
+      console.log(error);
+      throw new Error('Cannot remove user vehicle');
+    }
+    console.log(vehicleId);
+    console.log(user);
+  }
+
   async updateUserReservation(id: string, reservationId: string): Promise<UserDocument> {
     let user;
     console.log('reservation user service');

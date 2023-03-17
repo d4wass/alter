@@ -12,18 +12,22 @@ import { ReservationActions } from 'src/+state/reservation/reservation.actions';
     <table>
       <thead>
         <tr>
+          <th>user</th>
           <th>host</th>
           <th>vehicle</th>
           <th>start</th>
           <th>end</th>
+          <th>cost</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of populatedReservations$ | async">
+          <td>{{ item.user.firstName }} {{ item.user.lastName }}</td>
           <td>{{ item.host.firstName }} {{ item.host.lastName }}</td>
           <td>{{ item.vehicle.brand }} {{ item.vehicle.model }}</td>
           <td>{{ item.fromDate }}</td>
           <td>{{ item.endDate }}</td>
+          <td>{{ item.cost }}$</td>
           <td><button>confirm</button><button>cancel</button></td>
         </tr>
       </tbody>
@@ -39,14 +43,19 @@ export class ReservationUserListComponent implements OnInit {
   // ngAfterViewInit(): void {
 
   // }
+  // ngAfterViewInit(): void {
+
+  // }
 
   ngOnInit(): void {
+    this.populatedReservations$ = this.createReservationsArrayFromEntity();
     this.populatedReservations$ = this.createReservationsArrayFromEntity();
   }
 
   private createReservationsArrayFromEntity(): Observable<Reservation[]> {
     return this.userFacade.userReservations$.pipe(
       map((x) => {
+        console.log(x);
         let arr: Reservation[] = [];
         for (const [, value] of Object.entries(x)) {
           arr.push(value as Reservation);

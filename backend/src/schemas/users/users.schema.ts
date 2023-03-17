@@ -36,6 +36,7 @@ export class User {
 }
 
 const UserSchema = SchemaFactory.createForClass(User);
+
 UserSchema.virtual('id').get(function (this: UserDocument) {
   return this._id;
 });

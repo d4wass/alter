@@ -4,4 +4,5 @@ export interface ReservationDto {
   vehicleId: string;
   fromDate: string;
   endDate: string;
+  price: string;
 }

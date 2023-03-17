@@ -30,6 +30,13 @@ export class VehicleService {
     return vehicleId;
   }
 
+  removeVehicle(vehicleId: string, userId: string, token: string): Observable<any> {
+    console.log('removed');
+    return this.http.delete<any>(`http://localhost:3000/host/removeVehicle`, {
+      body: { vehicleId, userId },
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
+    });
+  }
   // send entire vehicle and return it after convert
   // set proper types - create vehicle model on UI
   private vehicleDataConverter(value: VehicleForm) {

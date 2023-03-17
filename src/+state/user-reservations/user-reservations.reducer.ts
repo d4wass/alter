@@ -20,7 +20,8 @@ const reducer = createReducer(
   })),
   on(ReservationActions.populateUserReservationsSuccess, (state, { populatedReservations }) =>
     adapter.addOne(populatedReservations, state)
-  )
+  ),
+  on(UserActions.logoutUser, () => initialState)
 );
 
 export function userReservationsReducer(

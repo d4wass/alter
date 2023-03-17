@@ -15,8 +15,26 @@ const getVehiclesError = createAction(
   props<{ error: string }>()
 );
 
+const removeVehicle = createAction(
+  '[User Profile Vehicles] Remove User Vehicle',
+  props<{ vehicleId: string }>()
+);
+
+const removeVehicleSuccess = createAction(
+  '[User Profile Vehicles] Remove User Vehicle Success',
+  props<{ removed: any }>()
+);
+
+const removeVehicleError = createAction(
+  '[User Profile Vehicles] Remove User Vehicle',
+  props<{ error: string }>()
+);
+
 export const UserVehiclesActions = {
   getVehicles,
   getVehiclesSucces,
-  getVehiclesError
+  getVehiclesError,
+  removeVehicle,
+  removeVehicleSuccess,
+  removeVehicleError
 };

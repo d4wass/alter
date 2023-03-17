@@ -7,6 +7,7 @@ export interface Reservation {
 }
 
 export interface PopulatedReservation {
+  cost: string;
   fromDate: string;
   endDate: string;
   user: any;

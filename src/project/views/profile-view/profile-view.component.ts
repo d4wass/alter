@@ -125,6 +125,10 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
     this.store.dispatch(UserActions.logoutUser());
   }
 
+  handleRemoveVehicle(vehicleId: string) {
+    this.store.dispatch(UserVehiclesActions.removeVehicle({ vehicleId }));
+  }
+
   handleAddVehicle() {
     this.router.navigateByUrl('/addVehicle');
   }

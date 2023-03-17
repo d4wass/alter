@@ -18,7 +18,8 @@ const reducer = createReducer(
     ...state,
     ids: user.vehicles
   })),
-  on(UserVehiclesActions.getVehiclesSucces, (state, { vehicle }) => adapter.addOne(vehicle, state))
+  on(UserVehiclesActions.getVehiclesSucces, (state, { vehicle }) => adapter.addOne(vehicle, state)),
+  on(UserActions.logoutUser, () => initialState)
 );
 
 export function userVehicleReducer(

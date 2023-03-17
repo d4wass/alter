@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Query, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query, UseGuards, Request, Delete } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { UsersService } from 'src/users/users.service';
 import { VehiclesService } from './vehicles.service';
@@ -9,8 +9,6 @@ export class VehiclesController {
     private readonly vehicleService: VehiclesService,
     private readonly usersService: UsersService
   ) {}
-
-  //TODO: add update user document when user add a vehicle
 
   @UseGuards(JwtAuthGuard)
   @Post('host/addVehicle')
@@ -23,6 +21,16 @@ export class VehiclesController {
     await this.usersService.updateUserVehicles(userId, vehicleId);
 
     return vehicleId;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('host/removeVehicle')
+  async removeVehicle(@Request() req) {
+    const { userId, vehicleId } = req.body;
+    await this.usersService.deleteUserVehicle(userId, vehicleId);
+    await this.vehicleService.delete(vehicleId);
+
+    // return removedVehicleFromUser;
   }
 
   @Get('search/:brand')

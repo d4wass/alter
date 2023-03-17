@@ -96,7 +96,7 @@
         <app-profile-btn (handleClickEvent)="handleAddVehicle()">Add Vehicle</app-profile-btn>
       </div>
       <div class="divider"></div>
-      <app-vehicle-user-list></app-vehicle-user-list>
+      <app-vehicle-user-list (removeEmitter)="handleRemoveVehicle($event)"></app-vehicle-user-list>
     </div>
     <div class="reservation-list-wrapper card">
       <div class="vehicle-list-header">

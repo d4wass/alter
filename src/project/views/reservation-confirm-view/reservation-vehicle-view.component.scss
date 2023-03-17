@@ -1,2 +1,48 @@
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 65%;
+  height: 100vh;
+  padding-top: 30px;
+}
+
+.content {
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  padding: 20px;
+  border: solid 1px #ced4da;
+
+  h3 {
+    text-align: center;
+    color: #212529;
+  }
+}
+
+.divider {
+  height: 1px;
+  background-color: #ced4da;
+  margin: 10px 0;
+}
+
+.owner-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.paragraph-container {
+  display: flex;
+  p {
+    margin: 0;
+    line-height: 1.5;
+  }
+  .bold {
+    font-weight: 700;
+    margin-right: 5px;
+  }
+}
+
+.cta-container {
+  display: flex;
+  justify-content: space-evenly;
 }

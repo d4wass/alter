@@ -8,7 +8,7 @@ export interface Vehicle {
   rate: number;
   specification: Specification;
   features: Feature;
-  rewievs: Review[];
+  reviews: Review[];
   extras: Extras[];
   description: string;
   isCancelFree: boolean;

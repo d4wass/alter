@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
 import { UserFacade } from 'src/+state/facade/user.facade';
 import { Vehicle } from 'src/+state/models/vehicle.model';
@@ -21,7 +21,7 @@ import { Vehicle } from 'src/+state/models/vehicle.model';
           <td>{{ item.model }}</td>
           <td>{{ item.price }}</td>
           <td>{{ item.place }}</td>
-          <td><button>remove vehicle</button></td>
+          <td><button (click)="handleRemove(item._id)">remove vehicle</button></td>
         </tr>
       </tbody>
     </table>
@@ -29,13 +29,17 @@ import { Vehicle } from 'src/+state/models/vehicle.model';
   styleUrls: ['./vehicle-user-list.component.scss']
 })
 export class VehicleUserListComponent implements OnInit {
+  @Output() removeEmitter: EventEmitter<string> = new EventEmitter<string>();
   populatedVehicle$!: Observable<Vehicle[]>;
 
   constructor(private readonly userFacade: UserFacade) {}
 
   ngOnInit(): void {
     this.populatedVehicle$ = this.createVehicleArrayFromEntity();
-    this.populatedVehicle$.pipe(tap((x) => console.log(x))).subscribe();
+  }
+
+  handleRemove(id: string) {
+    this.removeEmitter.emit(id);
   }
 
   private createVehicleArrayFromEntity(): Observable<Vehicle[]> {
