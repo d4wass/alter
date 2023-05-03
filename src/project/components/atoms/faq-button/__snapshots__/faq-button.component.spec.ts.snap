@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FaqButtonComponent should match to snapshot 1`] = `
+FaqButtonComponent {
+  "__ngContext__": 0,
+  "isOpen": false,
+  "isOpenEvent": EventEmitter_ {
+    "__isAsync": false,
+    "closed": false,
+    "currentObservers": null,
+    "hasError": false,
+    "isStopped": false,
+    "observers": [],
+    "thrownError": null,
+  },
+}
+`;

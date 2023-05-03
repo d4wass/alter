@@ -5,9 +5,10 @@
     "outDir": "./out-tsc/spec",
     "types": ["jest", "node"],
     "module": "CommonJs",
-    "allowJs": true
+    "allowJs": true,
+    "emitDecoratorMetadata": true
   },
   "esModuleInterop": true,
-  "files": ["src/polyfills.ts"],
+  "files": ["src/polyfills.ts", "src/setupJest.ts"],
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }

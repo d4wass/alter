@@ -1,21 +1,26 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { createComponentFactory, Spectator } from '@ngneat/spectator';
+import { MockComponent } from 'ng-mocks';
+import { GuideItemComponent } from '../guide-item/guide-item.component';
 
 import { GuideSectionComponent } from './guide-section.component';
 
 describe('GuideSectionComponent', () => {
+  let spectator: Spectator<GuideSectionComponent>;
   let component: GuideSectionComponent;
-  let fixture: ComponentFixture<GuideSectionComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [GuideSectionComponent]
-    }).compileComponents();
+  const createComponent = createComponentFactory({
+    component: GuideSectionComponent,
+    declarations: [MockComponent(GuideItemComponent)]
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GuideSectionComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    spectator = createComponent();
+    component = spectator.component;
+  });
+
+  it('should match to snapshot', () => {
+    expect(component).toMatchSnapshot();
   });
 
   it('should create', () => {

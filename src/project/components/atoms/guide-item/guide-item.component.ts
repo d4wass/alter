@@ -5,10 +5,10 @@ import { Component, Input } from '@angular/core';
   template: `
     <div class="wrapper">
       <div class="img-container">
-        <img src="{{ graphic }}" *ngIf="graphic" />
+        <img src="{{ graphic }}" *ngIf="graphic" data-test="image" />
       </div>
-      <h3>{{ title }}</h3>
-      <p>{{ content }}</p>
+      <h3 data-test="title">{{ title }}</h3>
+      <p data-test="content">{{ content }}</p>
     </div>
   `,
   styleUrls: ['./guide-item.component.scss']
