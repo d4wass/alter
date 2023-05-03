@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GuideItemComponent should match to snapshot 1`] = `
+<app-guide-item>
+  <div
+    class="wrapper"
+  >
+    <div
+      class="img-container"
+    >
+    </div>
+    <h3
+      data-test="title"
+    >
+    </h3>
+    <p
+      data-test="content"
+    >
+    </p>
+  </div>
+</app-guide-item>
+`;

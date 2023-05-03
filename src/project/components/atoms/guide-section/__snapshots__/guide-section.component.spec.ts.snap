@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GuideSectionComponent should match to snapshot 1`] = `
+GuideSectionComponent {
+  "__ngContext__": 0,
+  "guidesItems": [
+    {
+      "content": "From getting to know the app to tweaking your settings to work for your schedule, get a comprehensive crash course in setting up and optimizing your listing.",
+      "graphic": "assets/host/graphic/car.svg",
+      "title": "Getting started guide",
+    },
+    {
+      "content": "Better pics mean more clicks — see how to take strong shots of your car to make your car sparkle and stand out in search results.",
+      "graphic": "assets/host/graphic/camera.svg",
+      "title": "Photographic guide",
+    },
+    {
+      "content": "See how to clean and disinfect your car thoroughly and effectively to safeguard yourself and your guests, and comply with the Turo enhanced cleaning policy.",
+      "graphic": "assets/host/graphic/clean.svg",
+      "title": "Cleaning & disnfection guide",
+    },
+    {
+      "content": "Maintain physical distance and promote peace of mind with these tips and best practices on how to check in your guests remotely.",
+      "graphic": "assets/host/graphic/contactless.svg",
+      "title": "Contactless check-in guide",
+    },
+    {
+      "content": "Explore your protection plan options, get to know the terminology, get your questions answered, and pick the plan that’s best for you.",
+      "graphic": "assets/host/graphic/protection.svg",
+      "title": "How it works: Vehicle protection for Turo hosts",
+    },
+  ],
+}
+`;
