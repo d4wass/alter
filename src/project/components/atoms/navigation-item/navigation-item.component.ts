@@ -4,9 +4,13 @@ import { urlItem } from 'src/router/routes';
 @Component({
   selector: 'app-navigation-item',
   template: `
-    <a [routerLink]="['/', item?.url]" routerLinkActive="router-link-active">{{
-      item?.description
-    }}</a>
+    <a
+      [routerLink]="['/', item?.url]"
+      routerLinkActive="active-link"
+      data-test="link"
+      class="link"
+      >{{ item?.description }}</a
+    >
   `,
   styleUrls: ['./navigation-item.component.scss']
 })

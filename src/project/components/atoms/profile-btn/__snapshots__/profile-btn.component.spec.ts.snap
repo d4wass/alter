@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProfileBtnComponent should match to snapshot 1`] = `
+<app-profile-btn
+  handleClickEvent={[Function EventEmitter_]}
+>
+  <button
+    class="btn-default"
+    data-test="btn-default"
+  />
+</app-profile-btn>
+`;

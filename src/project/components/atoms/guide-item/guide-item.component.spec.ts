@@ -8,8 +8,8 @@ describe('GuideItemComponent', () => {
 
   const createComponent = createComponentFactory(GuideItemComponent);
   const selectors = {
-    title: () => spectator.query(dataTest('title')),
-    content: () => spectator.query(dataTest('content')),
+    title: () => spectator.query(dataTest('title'))?.innerHTML,
+    content: () => spectator.query(dataTest('content'))?.innerHTML,
     image: () => spectator.query(dataTest('image'))
   };
 
@@ -21,10 +21,13 @@ describe('GuideItemComponent', () => {
   it('should match to snapshot', () => {
     expect(spectator.fixture).toMatchSnapshot();
   });
-  //TODO: check if elements of component recived proper value from inputs
   //TODO: check if <img> is displayed when @graphic when was setted and conversly
 
   describe('@Inputs', () => {
+    it('should set [graphic] to undefined when input not received any value', () => {
+      expect(component.graphic).toBeUndefined();
+    });
+
     describe('set input by value', () => {
       beforeEach(() => {
         component.title = 'Title';
@@ -35,20 +38,18 @@ describe('GuideItemComponent', () => {
       });
 
       it('should [title] setted with given value', () => {
-        expect(component.title).toEqual('Title');
+        const result = 'Title';
+        expect(component.title).toEqual(result);
+        expect(selectors.title()).toEqual(result);
       });
       it('should [content] setted with given value', () => {
+        const result = 'content';
         expect(component.content).toEqual('content');
+        expect(selectors.content()).toEqual(result);
       });
       it('should [graphic] setted with given value', () => {
         expect(component.graphic).toEqual('graphic');
       });
     });
-
-    it('should set [graphic] to indefined when input not received any value', () => {
-      expect(component.graphic).toBeUndefined();
-    });
   });
-
-  describe('Template', () => {});
 });

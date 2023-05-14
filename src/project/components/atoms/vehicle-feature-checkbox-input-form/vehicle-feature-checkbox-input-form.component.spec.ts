@@ -1,19 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import { VehicleFeatureCheckboxInputFormComponent } from './vehicle-feature-checkbox-input-form.component';
 
 describe('VehicleFeatureCheckboxInputFormComponent', () => {
   let component: VehicleFeatureCheckboxInputFormComponent;
-  let fixture: ComponentFixture<VehicleFeatureCheckboxInputFormComponent>;
+  let spectator: Spectator<VehicleFeatureCheckboxInputFormComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [VehicleFeatureCheckboxInputFormComponent]
-    }).compileComponents();
+  const createComponent = createComponentFactory({
+    component: VehicleFeatureCheckboxInputFormComponent,
+    imports: [ReactiveFormsModule, MatCheckboxModule]
+  });
 
-    fixture = TestBed.createComponent(VehicleFeatureCheckboxInputFormComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  beforeEach(() => {
+    spectator = createComponent();
+    component = spectator.component;
+  });
+
+  it('should match to snapshot', () => {
+    expect(spectator.fixture).toMatchSnapshot();
   });
 
   it('should create', () => {

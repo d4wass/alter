@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchHeaderInputComponent should match to snapshot 1`] = `
+<app-search-header-input
+  control={[Function FormControl]}
+  typeValue={[Function String]}
+>
+  <form
+    class="search"
+    novalidate=""
+  >
+    <input
+      class="search-input-noLabel ng-untouched ng-pristine ng-valid"
+      data-test="search-input"
+      id="where"
+      placeholder=""
+      type="text"
+    />
+  </form>
+</app-search-header-input>
+`;

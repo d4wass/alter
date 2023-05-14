@@ -61,7 +61,5 @@ import { ControlsOf, FormGroup } from '@ngneat/reactive-forms';
   styleUrls: ['./vehicle-feature-checkbox-input-form.component.scss']
 })
 export class VehicleFeatureCheckboxInputFormComponent {
-  @Input() equipmentCtrl!: FormGroup<ControlsOf<any>>;
-
-  constructor() {}
+  @Input() equipmentCtrl: FormGroup<ControlsOf<any>> = new FormGroup({});
 }
