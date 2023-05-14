@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResourceItemComponent should match to snapshot 1`] = `
+<app-resource-item>
+  <div
+    class="wrapper"
+  >
+    <img
+      src=""
+    />
+    <div
+      class="content"
+    >
+      <h2>
+      </h2>
+      <p>
+      </p>
+    </div>
+    <a
+      routerlink="#"
+    >
+    </a>
+  </div>
+</app-resource-item>
+`;

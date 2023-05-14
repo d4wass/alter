@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavigationItemComponent should match to snapshot 1`] = `
+<app-navigation-item>
+  <a
+    class="link"
+    data-test="link"
+    href="/null"
+    routerlinkactive="active-link"
+  >
+  </a>
+</app-navigation-item>
+`;

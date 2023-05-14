@@ -13,13 +13,13 @@ import {
   take,
   takeUntil
 } from 'rxjs';
-import { AppActions } from 'src/+state/app-state/app-state.actions';
-import { AppSettingFacade } from 'src/+state/facade/app-settings.facade';
-import { UserFacade } from 'src/+state/facade/user.facade';
-import { UserDataToUpdate } from 'src/+state/models/user.model';
-import { UserReservationsActions } from 'src/+state/user-reservations/user-reservations.actions';
-import { UserVehiclesActions } from 'src/+state/user-vehicles/user-vehicles.actions';
-import { UserActions } from 'src/+state/user/user.actions';
+import { AppActions } from '../../../+state/app-state/app-state.actions';
+import { AppSettingFacade } from '../../../+state/facade/app-settings.facade';
+import { UserFacade } from '../../../+state/facade/user.facade';
+import { UserDataToUpdate } from '../../../+state/models/user.model';
+import { UserReservationsActions } from '../../../+state/user-reservations/user-reservations.actions';
+import { UserVehiclesActions } from '../../../+state/user-vehicles/user-vehicles.actions';
+import { UserActions } from '../../../+state/user/user.actions';
 
 @UntilDestroy()
 @Component({

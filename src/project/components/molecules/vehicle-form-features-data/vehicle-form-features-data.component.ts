@@ -55,10 +55,6 @@ export class VehicleFormFeaturesDataComponent implements OnInit {
   driveTypes = ['rear', 'all', 'front'];
   gearboxTypes = ['automatic', 'manual'];
 
-  onChange?: ((value: any) => void) | undefined;
-  onTouched?: (() => void) | undefined;
-
-  constructor() {}
   ngOnInit(): void {
     this.equipmentCtrl = this.formGroupCtrl.controls.equipment;
     this.driveCtrl = this.formGroupCtrl.controls.drive;

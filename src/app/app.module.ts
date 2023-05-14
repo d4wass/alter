@@ -35,9 +35,9 @@ import { userReservationsReducer } from 'src/+state/user-reservations/user-reser
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    AppRoutingModule,
     TitleHeaderModule,
     BrowserModule,
-    AppRoutingModule,
     HomeViewModule,
     VehicleViewModule,
     NotFoundViewModule,

@@ -1,4 +1,3 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { createComponentFactory, Spectator } from '@ngneat/spectator';
 import { MockComponent } from 'ng-mocks';
 import { GuideItemComponent } from '../guide-item/guide-item.component';
@@ -20,7 +19,7 @@ describe('GuideSectionComponent', () => {
   });
 
   it('should match to snapshot', () => {
-    expect(component).toMatchSnapshot();
+    expect(spectator.fixture).toMatchSnapshot();
   });
 
   it('should create', () => {

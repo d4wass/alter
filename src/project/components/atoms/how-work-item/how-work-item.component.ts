@@ -5,9 +5,7 @@ import { Component, Input } from '@angular/core';
   template: `
     <div class="wrapper">
       <div class="indicator">
-        <p *ngIf="itemNumber">
-          {{ itemNumber }}
-        </p>
+        <p *ngIf="itemNumber" data-test="indicator">{{ itemNumber }}</p>
       </div>
       <div class="content">
         <h2>{{ itemTitle }}</h2>

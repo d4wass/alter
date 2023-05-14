@@ -135,6 +135,7 @@
     "schematicCollections": [
       "@angular-eslint/schematics"
     ],
+    "defaultCollection": "@ngneat/spectator~",
     "analytics": false
   }
 }

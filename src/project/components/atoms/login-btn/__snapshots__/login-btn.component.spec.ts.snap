@@ -1,14 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LoginBtnComponent should match to snapshot 1`] = `
+exports[`LoginBtnComponent should match to snapshot and button should have proper text when { isAuth: false, text: 'Log in' } 1`] = `
 <app-login-btn
-  __ngContext__={[Function LRootView]}
-  modalLoginService={[Function ModalLoginService]}
+  isAuthorized="false"
+  isClicked={[Function EventEmitter_]}
+  userName={[Function String]}
 >
   <button
     class="login-btn"
+    data-test="login-btn"
   >
-     Log in 
+    <span
+      data-test="login-btn-text"
+    >
+      Log in
+    </span>
+    <img
+      alt=""
+      src="assets/usericon.svg"
+    />
+  </button>
+</app-login-btn>
+`;
+
+exports[`LoginBtnComponent should match to snapshot and button should have proper text when { isAuth: true, text: 'userName' } 1`] = `
+<app-login-btn
+  isAuthorized={[Function Boolean]}
+  isClicked={[Function EventEmitter_]}
+  userName={[Function String]}
+>
+  <button
+    class="login-btn"
+    data-test="login-btn"
+    tabindex="0"
+  >
+    <span
+      data-test="login-btn-text"
+    >
+      userName
+    </span>
     <img
       alt=""
       src="assets/usericon.svg"

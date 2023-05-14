@@ -1,3 +1,3 @@
-export function dataTest(selector: string) {
-  return `[data-test="${selector}"]`;
+export function dataTest(selector: string): string {
+  return selector && `[data-test="${selector}"]`;
 }

@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LanguageOptionComponent } from './language-option.component';
 
+//TODO: unfinished translation service try to implement
+
 describe('LanguageOptionComponent', () => {
   let component: LanguageOptionComponent;
   let fixture: ComponentFixture<LanguageOptionComponent>;

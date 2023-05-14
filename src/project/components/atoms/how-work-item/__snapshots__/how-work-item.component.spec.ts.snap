@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HowWorkItemComponent should match to component 1`] = `
+<app-how-work-item>
+  <div
+    class="wrapper"
+  >
+    <div
+      class="indicator"
+    >
+    </div>
+    <div
+      class="content"
+    >
+      <h2>
+      </h2>
+      <p>
+      </p>
+    </div>
+  </div>
+</app-how-work-item>
+`;
