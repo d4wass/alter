@@ -21,19 +21,6 @@ export interface VehicleDto {
     engine: { capacity: number; power: number };
     gearbox: string;
     drive: string;
-    equipment: {
-      airConditioning: boolean;
-      androidAuto: boolean;
-      appleCarPlay: boolean;
-      bluetooth: boolean;
-      cruiseControl: { standard: boolean; active: boolean; adaptive: boolean; autonomic: boolean };
-      headUpDisplay: boolean;
-      isofix: boolean;
-      keyLess: boolean;
-      lights: { led: boolean; xenon: boolean; biXenon: boolean; laser: boolean };
-      navigation: boolean;
-      parkingAssist: { camera: boolean; camera360: boolean; autonomic: boolean };
-      usb: boolean;
-    };
+    equipment: string[];
   };
 }

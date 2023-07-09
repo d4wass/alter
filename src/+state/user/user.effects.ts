@@ -1,23 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import {
-  catchError,
-  concatMap,
-  exhaustMap,
-  map,
-  mergeMap,
-  switchMap,
-  tap,
-  withLatestFrom
-} from 'rxjs';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, concatMap, exhaustMap, map, switchMap, tap, withLatestFrom } from 'rxjs';
 import { AuthService } from 'src/services/auth-service/auth.service';
 import { ModalLoginService } from 'src/services/modal-login/modal-login-service.service';
-import { ReservationService } from 'src/services/reservation-service/reservation.service';
-import { UserService } from 'src/services/user-service/user.service';
 import { VehicleService } from 'src/services/vehicle-service/vehicle.service';
 import { AppActions } from '../app-state/app-state.actions';
-import { UserFacade } from '../facade/user.facade';
+import { UserFacade } from '../facade/user/user.facade';
 import { UserActions } from './user.actions';
 
 @Injectable()
@@ -25,10 +14,8 @@ export class UserEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private userService: UserService,
     private vehicleService: VehicleService,
     private modalService: ModalLoginService,
-    private reservationService: ReservationService,
     private router: Router,
     private userFacade: UserFacade
   ) {}
@@ -101,7 +88,7 @@ export class UserEffects {
     () => () =>
       this.actions$.pipe(
         ofType(UserActions.logoutUser),
-        tap((x) => this.router.navigateByUrl('/'))
+        tap(() => this.router.navigateByUrl('/'))
       ),
     { dispatch: false }
   );

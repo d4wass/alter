@@ -44,7 +44,3 @@ export const VehicleSchema = SchemaFactory.createForClass(Vehicle);
 VehicleSchema.virtual('id').get(function (this: VehicleDocument) {
   return this._id;
 });
-VehicleSchema.pre('deleteOne', function (next) {
-  // console.log(this), console.log(this.model);
-  // next();
-});

@@ -11,7 +11,7 @@ import { SearchResultViewComponent } from 'src/project/views/search-result-view/
 import { ShellComponent } from 'src/project/views/shell/shell.component';
 import { VehicleResolver } from './resolvers/vehicle.resolver';
 import { VehicleViewComponent } from 'src/project/views/vehicle-view/vehicle-view.component';
-import { VehicleFormComponent } from 'src/project/components/organisms/vehicle-form/vehicle-form.component';
+import { VehicleFormComponent } from 'src/project/components/organisms/vehicle-form/vehicle-form/vehicle-form.component';
 import { ReservationVehicleViewComponent } from 'src/project/views/reservation-confirm-view/reservation-vehicle-view.component';
 import { ReservationResolver } from './resolvers/reservation.resolver';
 

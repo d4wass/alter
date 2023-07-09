@@ -1,5 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ControlsOf, FormGroup } from '@ngneat/reactive-forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
+import { ControlsOf, FormControl, FormGroup } from '@ngneat/reactive-forms';
 
 @Component({
   selector: 'app-vehicle-form-features-data',
@@ -40,18 +47,20 @@ import { ControlsOf, FormGroup } from '@ngneat/reactive-forms';
         [types]="this.driveTypes"
       ></app-vehicle-feature-radio-input-form>
       <h4>Additional Equipment</h4>
-      <app-vehicle-feature-checkbox-input-form
-        [equipmentCtrl]="equipmentCtrl"
-      ></app-vehicle-feature-checkbox-input-form>
+      <app-vehicle-equipment-input-form
+        (vehicleEquipment)="handleEquipment($event)"
+      ></app-vehicle-equipment-input-form>
     </form>
   `,
-  styleUrls: ['./vehicle-form-features-data.component.scss']
+  styleUrls: ['./vehicle-form-features-data.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VehicleFormFeaturesDataComponent implements OnInit {
   @Input() formGroupCtrl!: FormGroup<ControlsOf<any>>;
+
   driveCtrl!: FormGroup<ControlsOf<any>>;
   gearboxCtrl!: FormGroup<ControlsOf<any>>;
-  equipmentCtrl!: FormGroup<ControlsOf<any>>;
+  equipmentCtrl!: FormControl<string[]>;
   driveTypes = ['rear', 'all', 'front'];
   gearboxTypes = ['automatic', 'manual'];
 
@@ -59,5 +68,9 @@ export class VehicleFormFeaturesDataComponent implements OnInit {
     this.equipmentCtrl = this.formGroupCtrl.controls.equipment;
     this.driveCtrl = this.formGroupCtrl.controls.drive;
     this.gearboxCtrl = this.formGroupCtrl.controls.gearbox;
+  }
+
+  handleEquipment($event: string[]) {
+    this.equipmentCtrl.setValue($event);
   }
 }

@@ -6,8 +6,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { VehicleFeatureCheckboxInputFormModule } from '../../atoms/vehicle-feature-checkbox-input-form/vehicle-feature-checkbox-input-form.module';
 import { VehicleFeatureRadioInputFormModule } from '../../atoms/vehicle-feature-radio-input-form/vehicle-feature-radio-input-form.module';
+import { VehicleEquipmentInputFormModule } from '../vehicle-equipment-input-form/vehicle-equipment-input-form.module';
 
 @NgModule({
   declarations: [VehicleFormFeaturesDataComponent],
@@ -18,7 +18,7 @@ import { VehicleFeatureRadioInputFormModule } from '../../atoms/vehicle-feature-
     MatCheckboxModule,
     MatInputModule,
     ReactiveFormsModule,
-    VehicleFeatureCheckboxInputFormModule,
+    VehicleEquipmentInputFormModule,
     VehicleFeatureRadioInputFormModule
   ],
   exports: [VehicleFormFeaturesDataComponent]

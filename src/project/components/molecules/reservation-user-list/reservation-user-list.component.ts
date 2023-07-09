@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/cor
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Store } from '@ngrx/store';
 import { debounceTime, map, Observable, of, Subject, take, takeUntil, tap } from 'rxjs';
-import { UserFacade } from 'src/+state/facade/user.facade';
+import { UserFacade } from 'src/+state/facade/user/user.facade';
 import { Reservation } from 'src/+state/models/reservation.model';
 import { ReservationActions } from 'src/+state/reservation/reservation.actions';
 

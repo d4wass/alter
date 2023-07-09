@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
-import { UserReservationsSelectors } from '../user-reservations/user-reservations.selectors';
-import { UserVehiclesSelectors } from '../user-vehicles/user-vehicles.selectors';
-import { UserSelectors } from '../user/user.selectors';
+import { UserReservationsSelectors } from '../../user-reservations/user-reservations.selectors';
+import { UserVehiclesSelectors } from '../../user-vehicles/user-vehicles.selectors';
+import { UserSelectors } from '../../user/user.selectors';
 
 @Injectable({ providedIn: 'root' })
 export class UserFacade {

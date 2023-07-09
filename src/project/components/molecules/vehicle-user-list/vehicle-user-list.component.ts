@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
-import { UserFacade } from 'src/+state/facade/user.facade';
+import { UserFacade } from 'src/+state/facade/user/user.facade';
 import { Vehicle } from 'src/+state/models/vehicle.model';
 
 @Component({
