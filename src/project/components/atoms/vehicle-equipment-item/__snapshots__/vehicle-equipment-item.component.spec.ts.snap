@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VehicleEquipmentItemComponent should match to snapshot 1`] = `
+<app-vehicle-equipment-item
+  handleClose={[Function EventEmitter_]}
+>
+  <mat-list-item
+    class="equipment-item"
+  >
+    <div
+      data-test="title"
+      matlistitemtitle=""
+    >
+    </div>
+    <button
+      class="remove-btn"
+      data-test="remove-btn"
+    >
+      <mat-icon
+        matlistitemicon=""
+      >
+        close
+      </mat-icon>
+    </button>
+  </mat-list-item>
+</app-vehicle-equipment-item>
+`;

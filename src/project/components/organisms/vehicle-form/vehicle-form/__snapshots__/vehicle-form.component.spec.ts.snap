@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VehicleFormComponent should match to snapshot 1`] = `
+<app-vehicle-form
+  brandCtrl={[Function FormControl]}
+  capacityCtrl={[Function FormControl]}
+  descriptionCtrl={[Function FormControl]}
+  doorsCtrl={[Function FormControl]}
+  driveCtrl={[Function FormControl]}
+  engine={[Function FormGroup]}
+  equipmentCtrl={[Function FormControl]}
+  form={[Function FormGroup]}
+  fuelConsumption={[Function FormGroup]}
+  fuelTypeCtrl={[Function FormControl]}
+  gearboxCtrl={[Function FormControl]}
+  isCreated$={[Function BehaviorSubject]}
+  modelCtrl={[Function FormControl]}
+  placeCtrl={[Function FormControl]}
+  powerCtrl={[Function FormControl]}
+  priceCtrl={[Function FormControl]}
+  quantityCtrl={[Function FormControl]}
+  router={[Function Router]}
+  seatsCtrl={[Function FormControl]}
+  store={[Function Object]}
+  unitsCtrl={[Function FormControl]}
+  userFacade={[Function UserFacadeMock]}
+  vehicleFeaturesInformation={[Function FormGroup]}
+  vehicleMainInformation={[Function FormGroup]}
+  vehicleSpecificationInformation={[Function FormGroup]}
+>
+  <div
+    class="wrapper"
+  >
+    <form>
+      <app-vehicle-form-main-data />
+      <app-vehicle-form-spec-data />
+      <app-vehicle-form-features-data />
+      <button
+        data-test="submit-btn"
+      >
+        add vehicle
+      </button>
+    </form>
+    <app-vehicle-success-create-modal />
+  </div>
+</app-vehicle-form>
+`;

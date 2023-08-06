@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, merge, of, switchMap, tap, withLatestFrom } from 'rxjs';
 import { VehicleService } from 'src/services/vehicle-service/vehicle.service';
-import { UserFacade } from '../facade/user.facade';
+import { UserFacade } from '../facade/user/user.facade';
 import { UserVehiclesActions } from './user-vehicles.actions';
 
 @Injectable()

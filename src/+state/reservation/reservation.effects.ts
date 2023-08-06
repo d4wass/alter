@@ -13,7 +13,7 @@ import {
   withLatestFrom
 } from 'rxjs';
 import { ReservationService } from 'src/services/reservation-service/reservation.service';
-import { UserFacade } from '../facade/user.facade';
+import { UserFacade } from '../facade/user/user.facade';
 import { ReservationActions } from './reservation.actions';
 
 @Injectable()

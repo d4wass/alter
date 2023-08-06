@@ -30,6 +30,8 @@
     "@nestjs/platform-express": "^8.0.0",
     "@ngrx/entity": "^13.2.0",
     "bcrypt": "^5.0.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
     "express-sessions": "^1.0.6",
     "mongoose": "^6.3.4",
     "normalize-mongoose": "^1.0.0",

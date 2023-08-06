@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { Vehicle } from 'src/+state/models/vehicle.model';
 
 @Injectable({
@@ -16,16 +16,23 @@ export class VehicleService {
   addVehicle(userId: string, vehicle: any, token: string): Observable<string> {
     const convertedVehicle = this.vehicleDataConverter(vehicle);
 
-    const vehicleId = this.http.post<string>(
-      `http://localhost:3000/host/addVehicle`,
-      {
-        vehicle: convertedVehicle,
-        userId
-      },
-      {
-        headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
-      }
-    );
+    const vehicleId = this.http
+      .post<string>(
+        `http://localhost:3000/host/addVehicle`,
+        {
+          vehicle: convertedVehicle,
+          userId
+        },
+        {
+          headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
+        }
+      )
+      .pipe(
+        catchError(({ error }) => {
+          console.log(error);
+          throw new Error(error.message);
+        })
+      );
 
     return vehicleId;
   }
@@ -77,6 +84,23 @@ export class VehicleService {
     }
 
     return !!convertedDrive ? convertedDrive : convertedGearbox;
+  }
+
+  private getServerErrorMessage(error: HttpErrorResponse): string {
+    switch (error.status) {
+      case 404: {
+        return `Not Found: ${error.message}`;
+      }
+      case 403: {
+        return `Access Denied: ${error.message}`;
+      }
+      case 500: {
+        return `Internal Server Error: ${error.message}`;
+      }
+      default: {
+        return `Unknown Server Error: ${error.message}`;
+      }
+    }
   }
 }
 

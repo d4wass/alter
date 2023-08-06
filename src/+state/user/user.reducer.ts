@@ -1,8 +1,5 @@
-import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
-import { User, UserDataProfile } from '../models/user.model';
-import { ReservationActions } from '../reservation/reservation.actions';
-import { VehiclesActions } from '../vehicles/vehicle.actions';
+import { UserDataProfile } from '../models/user.model';
 import { UserActions } from './user.actions';
 
 export const USER_FEATURE = 'user';
@@ -14,7 +11,10 @@ export interface UserState {
   token: string;
   errorMsg: string;
   isCredentialsAreValid: boolean;
-  userVehicle: { id: string; isSuccessfullCreated: boolean };
+  userVehicle: {
+    id: string;
+    isSuccessfullCreated: boolean;
+  };
   userProfile: UserDataProfile;
 }
 

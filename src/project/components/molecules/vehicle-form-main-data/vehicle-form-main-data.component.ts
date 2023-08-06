@@ -39,8 +39,7 @@ import { IVehicleBasicData } from 'src/project/model/vehicle-form-models/vehicle
       </mat-form-field>
     </form>
   `,
-  styleUrls: ['./vehicle-form-main-data.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./vehicle-form-main-data.component.scss']
 })
 export class VehicleFormMainDataComponent {
   @Input() formGroupCtrl!: FormGroup<ControlsOf<IVehicleBasicData>>;

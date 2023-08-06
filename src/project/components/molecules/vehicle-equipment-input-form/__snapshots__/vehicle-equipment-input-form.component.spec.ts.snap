@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VehicleFeatureCheckboxInputFormComponent should match to snapshot 1`] = `
+<app-vehicle-equipment-input-form
+  control={[Function FormControl]}
+  equipment={[Function Array]}
+  inputElement={[Function ElementRef]}
+  tooltip={[Function MatTooltip]}
+  vehicleEquipment={[Function EventEmitter_]}
+  whiteSpacesRegex={[Function RegExp]}
+>
+  <div>
+    <form
+      novalidate=""
+    >
+      <mat-form-field>
+        <mat-label>
+          Enter additional equipment
+        </mat-label>
+        <input
+          class="ng-untouched ng-pristine ng-valid"
+          data-test="input"
+          matinput=""
+        />
+      </mat-form-field>
+      <div
+        class="mat-tooltip-trigger"
+        data-test="tooltip"
+        mattooltip=""
+        mattooltipposition="right"
+      />
+      <button
+        class="add-btn"
+        color="primary"
+        data-test="add-btn"
+        mat-flat-button=""
+      >
+         Add 
+      </button>
+    </form>
+    <mat-list>
+    </mat-list>
+  </div>
+</app-vehicle-equipment-input-form>
+`;

@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VehicleFormFeaturesDataComponent should match to snapshot 1`] = `
+<app-vehicle-form-features-data
+  driveCtrl={[Function FormControl]}
+  driveTypes={[Function Array]}
+  equipmentCtrl={[Function FormControl]}
+  formGroupCtrl={[Function FormGroup]}
+  gearboxCtrl={[Function FormControl]}
+  gearboxTypes={[Function Array]}
+>
+  <form
+    class="ng-untouched ng-pristine ng-valid"
+    novalidate=""
+  >
+    <h2>
+      Features
+    </h2>
+    <form
+      class="ng-untouched ng-pristine ng-valid"
+      formgroupname="engine"
+      novalidate=""
+    >
+      <h4>
+        Engine
+      </h4>
+      <mat-form-field
+        appearance="fill"
+        floatlabel="always"
+      >
+        <mat-label>
+          capacity
+        </mat-label>
+        <input
+          class="example-right-align ng-untouched ng-pristine ng-valid"
+          formcontrolname="capacity"
+          matinput=""
+          placeholder="0"
+          type="number"
+        />
+      </mat-form-field>
+      <mat-form-field
+        appearance="fill"
+        floatlabel="always"
+      >
+        <mat-label>
+          power
+        </mat-label>
+        <input
+          class="example-right-align ng-untouched ng-pristine ng-valid"
+          formcontrolname="power"
+          matinput=""
+          placeholder="0"
+          type="number"
+        />
+      </mat-form-field>
+    </form>
+    <app-vehicle-feature-radio-input-form
+      title="Gearbox"
+    />
+    <app-vehicle-feature-radio-input-form
+      title="Drive"
+    />
+    <h4>
+      Additional Equipment
+    </h4>
+    <app-vehicle-equipment-input-form />
+  </form>
+</app-vehicle-form-features-data>
+`;

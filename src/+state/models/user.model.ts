@@ -55,3 +55,10 @@ export interface UserDataUpdate {
   passwordUpdate: UpdateCredentials;
   mobileUpdate: UpdateCredentials;
 }
+
+export type EquipmentValidationMsg = {
+  emptyValue: boolean;
+  whiteSpacesValue: boolean;
+  alreadyAddedValue: boolean;
+  tooShortValue: boolean;
+};

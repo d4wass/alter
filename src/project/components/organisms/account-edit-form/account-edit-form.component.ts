@@ -3,7 +3,7 @@ import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@ang
 import { FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
 import { debounceTime, distinctUntilChanged, Observable } from 'rxjs';
-import { UserFacade } from 'src/+state/facade/user.facade';
+import { UserFacade } from 'src/+state/facade/user/user.facade';
 import { UserActions } from 'src/+state/user/user.actions';
 
 @Component({
