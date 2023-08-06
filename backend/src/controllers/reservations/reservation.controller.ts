@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
-import { ReservationDto } from 'src/models/reservation.model';
-import { UsersService } from 'src/users/users.service';
-import { ReservationService } from './reservation.service';
+import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
+import { ReservationDto } from '../../models/reservation.model';
+import { ReservationService } from '../../services/reservation/reservation.service';
+import { UsersService } from '../../services/users/users.service';
 
 @Controller('reservation')
 export class ReservationController {

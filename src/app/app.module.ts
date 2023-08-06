@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TitleHeaderModule } from 'src/project/components/molecules/title-header/title-header.module';
 import { LoginModalModule } from 'src/project/components/organisms/login-modal/login-modal.module';
 import { FaqViewModule } from 'src/project/views/faq-view/faq-view.module';
@@ -31,6 +31,8 @@ import { ReservationResolver } from 'src/router/resolvers/reservation.resolver';
 import { userVehicleReducer } from 'src/+state/user-vehicles/user-vehicles.reducer';
 import { UserVehiclesEffects } from 'src/+state/user-vehicles/user-vehicles.effects';
 import { userReservationsReducer } from 'src/+state/user-reservations/user-reservations.reducer';
+import { GlobalHttpErrorHandlerInterceptor } from 'src/interceptors/global-http-error-handler.interceptor';
+import { GlobalInterceptorModuleModule } from 'src/interceptors/global-interceptor-module.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -49,6 +51,7 @@ import { userReservationsReducer } from 'src/+state/user-reservations/user-reser
     DatepickerModule,
     HttpClientModule,
     VehicleFormModule,
+    GlobalInterceptorModuleModule,
     StoreModule.forRoot({
       user: userReducer,
       vehicles: vehiclesReducer,

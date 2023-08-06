@@ -4,23 +4,36 @@ export interface VehicleQuery {
   endDate: { date: string; hour: string };
 }
 
-export interface VehicleDto {
-  // [key: string]: any;
+export interface VehicleModel {
   brand: string;
   model: string;
   place: string;
   price: number;
   description: string;
-  specification: {
-    fuelConsumption: { units: string; quantity: number };
-    fuelType: string;
-    doors: number;
-    seats: number;
-  };
-  features: {
-    engine: { capacity: number; power: number };
-    gearbox: string;
-    drive: string;
-    equipment: string[];
-  };
+  specification: VehicleSpecificationModel;
+  features: VehicleFeaturesModel;
+}
+
+export interface VehicleSpecificationModel {
+  fuelConsumption: VehicleFuelConsumptionModel;
+  fuelType: string;
+  doors: number;
+  seats: number;
+}
+
+export interface VehicleFeaturesModel {
+  engine: VehicleEngineModel;
+  gearbox: Record<string, boolean>;
+  drive: Record<string, boolean>;
+  equipment?: string[];
+}
+
+export interface VehicleEngineModel {
+  capacity: number;
+  power: number;
+}
+
+export interface VehicleFuelConsumptionModel {
+  units: string;
+  quantity: number;
 }

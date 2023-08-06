@@ -146,7 +146,10 @@ export class UserEffects {
         switchMap(([{ vehicle }, token, userId]) => {
           return this.vehicleService.addVehicle(userId, vehicle, token).pipe(
             map((vehicleId) => UserActions.addUserVehicleSuccess({ vehicleId: vehicleId })),
-            catchError(async (error) => UserActions.addUserVehicleError({ error }))
+            catchError(async (error) => {
+              console.log(error);
+              return UserActions.addUserVehicleError({ error: error.message });
+            })
           );
         })
       )

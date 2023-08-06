@@ -2,22 +2,25 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ICrud } from 'interface/crud.interface';
 import { Model } from 'mongoose';
-import { VehicleDto, VehicleQuery } from 'src/models/vehicle.model';
-import { Vehicle, VehicleDocument } from 'src/schemas/vehicle/vehicle.schema';
+import { VehicleQuery } from '../../models/vehicle.model';
+import { CreateVehicleDto } from './dto/vehicle.dto';
+import { Vehicle, VehicleDocument } from '../../schemas/vehicle/vehicle.schema';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
-export class VehiclesService implements ICrud<Vehicle, VehicleDto, string> {
-  constructor(@InjectModel(Vehicle.name) private readonly vehicleModel: Model<VehicleDocument>) {}
+export class VehiclesService implements ICrud<Vehicle, CreateVehicleDto, string> {
+  constructor(
+    @InjectModel(Vehicle.name) private readonly vehicleModel: Model<VehicleDocument>,
+    private readonly usersService: UsersService
+  ) {}
 
-  async create(createVehicleDto: VehicleDto, userId: string): Promise<{ vehicleId: string }> {
-    let result;
-
-    try {
-      const newVehicle = new this.vehicleModel({ ...createVehicleDto, owner: userId });
-      result = await newVehicle.save();
-    } catch (error) {
-      throw new Error(`Cannot create vehicle ${error}`);
-    }
+  async create(createVehicleDto: CreateVehicleDto, owner: string): Promise<{ vehicleId: string }> {
+    const newVehicle = new this.vehicleModel({
+      ...createVehicleDto,
+      owner
+    });
+    const result = await newVehicle.save();
+    await this.usersService.updateUserVehicles(owner, result._id);
 
     return { vehicleId: result._id };
   }
@@ -27,7 +30,7 @@ export class VehiclesService implements ICrud<Vehicle, VehicleDto, string> {
   }
 
   //TODO: implement on UI site this actions
-  async update(id: string, updateVehicleDto: Partial<VehicleDto>): Promise<Vehicle> {
+  async update(id: string, updateVehicleDto: Partial<CreateVehicleDto>): Promise<Vehicle> {
     throw new Error('Method not implemented.');
   }
 

@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
-import { filter, Observable, take, tap } from 'rxjs';
+import { catchError, filter, Observable, of, take, tap } from 'rxjs';
 import { UserActions } from '../../../../../+state/user/user.actions';
 import { UserFacade } from '../../../../../+state/facade/user/user.facade';
 import {
@@ -19,13 +19,13 @@ import {
     <div class="wrapper">
       <form [formGroup]="form">
         <app-vehicle-form-main-data
-          [formGroupCtrl]="form.get('vehicleMainInfo')"
+          [formGroupCtrl]="vehicleMainInformation"
         ></app-vehicle-form-main-data>
         <app-vehicle-form-spec-data
-          [formGroupCtrl]="form.get('vehicleSpecInfo')"
+          [formGroupCtrl]="vehicleSpecificationInformation"
         ></app-vehicle-form-spec-data>
         <app-vehicle-form-features-data
-          [formGroupCtrl]="form.get('vehicleFeaturesInfo')"
+          [formGroupCtrl]="vehicleFeaturesInformation"
         ></app-vehicle-form-features-data>
         <button (click)="handleSubmitVehicle()" data-test="submit-btn">add vehicle</button>
       </form>
@@ -50,8 +50,8 @@ export class VehicleFormComponent {
   unitsCtrl = new FormControl('', Validators.required);
   quantityCtrl = new FormControl('', Validators.required);
   fuelTypeCtrl = new FormControl('', Validators.required);
-  doorsCtrl = new FormControl(0, Validators.required);
-  seatsCtrl = new FormControl(0, Validators.required);
+  doorsCtrl = new FormControl(null, Validators.required);
+  seatsCtrl = new FormControl(null, Validators.required);
 
   fuelConsumption = new FormGroup({
     units: this.unitsCtrl,
@@ -102,6 +102,10 @@ export class VehicleFormComponent {
   ) {}
 
   handleSubmitVehicle(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+    }
+
     this.form.value$
       .pipe(take(1))
       .subscribe((vehicle) => this.store.dispatch(UserActions.addUserVehicle({ vehicle })));

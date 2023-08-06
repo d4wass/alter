@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { UserDataToUpdate, UserDto } from '../models/user.model';
+import { Error as MongooseError, Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import { User, UserDocument } from 'src/schemas/users/users.schema';
+import { User, UserDocument } from '../../schemas/users/users.schema';
+import { UserDto, UserDataToUpdate } from '../../models/user.model';
 
 @Injectable()
 export class UsersService {
@@ -67,23 +67,21 @@ export class UsersService {
   }
 
   async updateUserCredentials(dataRequest: UserDataToUpdate, userId: string): Promise<User> {
-    const updateUser = await this.updateUserConverter(dataRequest);
-
     let updatedUser;
 
     try {
+      const updateUser = await this.updateUserConverter(dataRequest);
       updatedUser = await this.userModel.findByIdAndUpdate(userId, { $set: { ...updateUser } });
+
+      return updatedUser as User;
     } catch (error) {
-      throw new NotFoundException('User Not Found');
+      console.log(error);
+      if (error) throw new NotFoundException('User Not Found');
+
+      if (!updatedUser) {
+        throw new NotFoundException('Cannot find user');
+      }
     }
-
-    if (!updatedUser) {
-      throw new NotFoundException('Cannot find user');
-    }
-
-    console.log(updatedUser);
-
-    return updatedUser as User;
   }
 
   async updateUserVehicles(id: string, vehicle: string): Promise<UserDocument> {

@@ -1,15 +1,16 @@
 import { Inject, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UsersController } from './users/users.controller';
-import { VehiclesController } from './vehicles/vehicles.controller';
-import { VehiclesModule } from './vehicles/vehicles.module';
+import { UsersController } from './controllers/users/users.controller';
+import { VehiclesController } from './controllers/vehicles/vehicles.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ReservationController } from './reservation/reservation.controller';
-import { ReservationModule } from './reservation/reservation.module';
+import { HttpExceptionValidationFilter } from './filters/http-exception.filter';
+import { ReservationController } from './controllers/reservations/reservation.controller';
+import { ReservationModule } from './controllers/reservations/reservation.module';
+import { UsersModule } from './controllers/users/users.module';
+import { VehiclesModule } from './controllers/vehicles/vehicles.module';
+import { AuthModule } from './services/auth/auth.module';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { ReservationModule } from './reservation/reservation.module';
     ReservationModule
   ],
   controllers: [AppController, UsersController, VehiclesController, ReservationController],
-  providers: [AppService]
+  providers: [AppService, HttpExceptionValidationFilter]
 })
 export class AppModule {
   @Inject(ConfigService)

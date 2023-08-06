@@ -1,7 +1,21 @@
-import { Controller, Get, Param, Post, Query, UseGuards, Request, Delete } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
-import { UsersService } from 'src/users/users.service';
-import { VehiclesService } from './vehicles.service';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+  Request,
+  Delete,
+  Body,
+  UsePipes,
+  Req
+} from '@nestjs/common';
+import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
+import { CreateVehicleValidationPipe } from '../../pipes/vehicle-validation.pipe';
+import { UsersService } from '../../services/users/users.service';
+import { CreateVehicleDto } from '../../services/vehicles/dto/vehicle.dto';
+import { VehiclesService } from '../../services/vehicles/vehicles.service';
 
 @Controller()
 export class VehiclesController {
@@ -12,13 +26,12 @@ export class VehiclesController {
 
   @UseGuards(JwtAuthGuard)
   @Post('host/addVehicle')
-  async addVehicle(@Request() req) {
-    const { userId, vehicle } = req.body;
-
+  @UsePipes(new CreateVehicleValidationPipe())
+  async addVehicle(@Body() vehicle: CreateVehicleDto, @Req() { user }: any) {
+    console.log(user);
+    const userId = user._id.toString();
     const addedVehicle = await this.vehicleService.create(vehicle, userId);
     const { vehicleId } = addedVehicle;
-
-    await this.usersService.updateUserVehicles(userId, vehicleId);
 
     return vehicleId;
   }

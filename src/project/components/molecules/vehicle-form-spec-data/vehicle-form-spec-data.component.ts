@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ControlsOf, FormGroup } from '@ngneat/reactive-forms';
 import { IVehicleSpecificationData } from 'src/project/model/vehicle-form-models/vehicle-forms.model';
 
@@ -57,5 +57,4 @@ import { IVehicleSpecificationData } from 'src/project/model/vehicle-form-models
 })
 export class VehicleFormSpecDataComponent {
   @Input() formGroupCtrl!: FormGroup<ControlsOf<IVehicleSpecificationData>>;
-  constructor() {}
 }

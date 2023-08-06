@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { UserDataToValidate, UserDto } from '../models/user.model';
 import * as bcrypt from 'bcrypt';
+import { UserDocument } from 'src/schemas/users/users.schema';
+import { UserDto, UserDataToValidate } from '../../models/user.model';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,7 @@ export class AuthService {
     return user;
   }
 
-  async validateUser(email: string, password: string): Promise<any> {
+  async validateUser(email: string, password: string): Promise<Partial<UserDocument>> {
     const user = await this.usersService.getUserByEmail(email);
     const isMatch = await bcrypt.compare(password, user.password);
 
@@ -26,12 +27,16 @@ export class AuthService {
   }
 
   async login(credentials: { email: string; password: string }): Promise<{ access_token: string }> {
-    const user = await this.usersService.getUserByEmail(credentials.email);
-    const { id, firstName, lastName, email } = user;
+    try {
+      const user = await this.usersService.getUserByEmail(credentials.email);
+      const { id, firstName, lastName, email } = user;
 
-    return {
-      access_token: this.jwtService.sign({ id, firstName, lastName, email })
-    };
+      return {
+        access_token: this.jwtService.sign({ id, firstName, lastName, email })
+      };
+    } catch (error) {
+      console.log('error from login', error);
+    }
   }
 
   async validateDataToUpdateUser(

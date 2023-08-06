@@ -17,8 +17,8 @@ export interface VehicleMainInformation {
 export interface VehicleSpecificationInformation {
   fuelConsumption: FormGroup<FuelConsumption>;
   fuelType: FormControl<string>;
-  doors: FormControl<number>;
-  seats: FormControl<number>;
+  doors: FormControl<number | null>;
+  seats: FormControl<number | null>;
 }
 
 export interface VehicleFeaturesInformation {

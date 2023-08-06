@@ -52,8 +52,7 @@ import { ControlsOf, FormControl, FormGroup } from '@ngneat/reactive-forms';
       ></app-vehicle-equipment-input-form>
     </form>
   `,
-  styleUrls: ['./vehicle-form-features-data.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./vehicle-form-features-data.component.scss']
 })
 export class VehicleFormFeaturesDataComponent implements OnInit {
   @Input() formGroupCtrl!: FormGroup<ControlsOf<any>>;

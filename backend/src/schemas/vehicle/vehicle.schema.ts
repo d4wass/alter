@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document, Types } from 'mongoose';
+import { Document, Types } from 'mongoose';
 import { Feature } from './feature.schema';
 import { Specification } from './specification.schema';
 import { Avalibility } from './avalibility.schema';
