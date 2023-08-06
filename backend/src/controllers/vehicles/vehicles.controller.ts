@@ -28,7 +28,7 @@ export class VehiclesController {
   @Post('host/addVehicle')
   @UsePipes(new CreateVehicleValidationPipe())
   async addVehicle(@Body() vehicle: CreateVehicleDto, @Req() { user }: any) {
-    console.log(user);
+    console.log('dasdsa');
     const userId = user._id.toString();
     const addedVehicle = await this.vehicleService.create(vehicle, userId);
     const { vehicleId } = addedVehicle;
