@@ -37,7 +37,7 @@
           }
         ]
       },
-      "no-console": true
+      "no-console": "error"
     },
     {
       "files": ["*.html"],
