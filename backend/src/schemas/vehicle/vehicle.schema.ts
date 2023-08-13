@@ -9,7 +9,11 @@ import { User } from '../users/users.schema';
 
 export type VehicleDocument = Vehicle & Document;
 
-@Schema()
+@Schema({
+  toJSON: {
+    virtuals: true
+  }
+})
 export class Vehicle {
   @Prop({ type: Types.ObjectId, ref: 'User' })
   owner: User;
@@ -39,8 +43,10 @@ export class Vehicle {
   avalibility: Avalibility[];
 }
 
-export const VehicleSchema = SchemaFactory.createForClass(Vehicle);
+const VehicleSchema = SchemaFactory.createForClass(Vehicle);
 
 VehicleSchema.virtual('id').get(function (this: VehicleDocument) {
   return this._id;
 });
+
+export { VehicleSchema };
