@@ -11,7 +11,7 @@ import { User, UserDocument } from 'src/schemas/users/users.schema';
 export class VehiclesService implements ICrud<Vehicle, CreateVehicleDto, string> {
   constructor(
     @InjectModel(Vehicle.name) private readonly vehicleModel: Model<VehicleDocument>,
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument> // private readonly usersService: UsersService
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>
   ) {}
 
   async create(createVehicleDto: CreateVehicleDto, owner: string): Promise<{ vehicleId: string }> {

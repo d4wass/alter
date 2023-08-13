@@ -1,20 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserDocument } from 'src/schemas/users/users.schema';
-import { UserDto, UserDataToValidate } from '../../models/user.model';
+import { UserDataToValidate } from '../../models/user.model';
 
 @Injectable()
 export class AuthService {
   constructor(private usersService: UsersService, private jwtService: JwtService) {}
-
-  async register(userData: UserDto): Promise<string | undefined> {
-    const user = await this.usersService.create(userData);
-
-    return user;
-  }
-
   async validateUser(email: string, password: string): Promise<Partial<UserDocument>> {
     const user = await this.usersService.getUserByEmail(email);
     const isMatch = await bcrypt.compare(password, user.password);
@@ -35,7 +28,7 @@ export class AuthService {
         access_token: this.jwtService.sign({ id, firstName, lastName, email })
       };
     } catch (error) {
-      console.log('error from login', error);
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }
   }
 
