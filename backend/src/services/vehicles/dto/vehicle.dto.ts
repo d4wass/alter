@@ -7,7 +7,7 @@ import {
 } from 'src/models/vehicle.model';
 import { IsNotEmpty, IsString, IsNumber, ValidateNested, MinLength } from 'class-validator';
 import { Type } from 'class-transformer';
-import { IsRecordOfBooleans } from 'src/decorators/is-record-of-booleans.decorator';
+import { IsRecordOfBooleans } from 'src/decorators/custom-valid-decorators.decorator';
 
 class FuelConsumption implements VehicleFuelConsumptionModel {
   @IsString()

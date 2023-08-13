@@ -3,40 +3,32 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { User, UserDocument } from '../../schemas/users/users.schema';
-import { UserDto, UserDataToUpdate } from '../../models/user.model';
+import { UserDataToUpdate } from '../../models/user.model';
+import { CreateUserDto } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
 
-  async create(userData: UserDto): Promise<string | undefined> {
+  async create(userData: CreateUserDto): Promise<User> {
     let user;
     const { email, firstName, lastName, password } = userData;
     const hashedPassword = await this.hashPassword(password);
     const isUser = await this.isUserExist(email);
 
-    try {
-      if (!isUser) {
-        const newUser = new this.userModel({
-          email,
-          firstName,
-          lastName,
-          password: hashedPassword
-        });
-        user = await newUser.save();
-      }
-    } catch (error) {
-      if (isUser) {
-        throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
-      }
-      throw new Error(error);
+    if (!isUser) {
+      const newUser = new this.userModel({
+        email,
+        firstName,
+        lastName,
+        password: hashedPassword
+      });
+      user = await newUser.save();
+    } else {
+      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
     }
 
-    if (user) {
-      return user._id;
-    } else {
-      return undefined;
-    }
+    return user;
   }
 
   async getUserByEmail(email: string): Promise<UserDocument | undefined> {
