@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Error as MongooseError, Model } from 'mongoose';
+import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { User, UserDocument } from '../../schemas/users/users.schema';
 import { UserDto, UserDataToUpdate } from '../../models/user.model';
@@ -75,27 +75,12 @@ export class UsersService {
 
       return updatedUser as User;
     } catch (error) {
-      console.log(error);
       if (error) throw new NotFoundException('User Not Found');
 
       if (!updatedUser) {
         throw new NotFoundException('Cannot find user');
       }
     }
-  }
-
-  async updateUserVehicles(id: string, vehicle: string): Promise<UserDocument> {
-    let user;
-    try {
-      user = await this.userModel.findById(id).exec();
-      await this.userModel.findByIdAndUpdate(
-        { _id: id },
-        { vehicles: [...user.vehicles, vehicle] }
-      );
-    } catch (error) {
-      throw new Error('Cannot update user vehicle');
-    }
-    return user as UserDocument;
   }
 
   async deleteUserVehicle(id: string, vehicleId: string): Promise<void> {
@@ -105,18 +90,13 @@ export class UsersService {
         .findByIdAndUpdate({ _id: id }, { $pull: { vehicles: { id: vehicleId } } })
         .exec();
       user = await this.userModel.findById(id).exec();
-      // user.vehicles.filter((_id) => _id !== vehicleId);
     } catch (error) {
-      console.log(error);
       throw new Error('Cannot remove user vehicle');
     }
-    console.log(vehicleId);
-    console.log(user);
   }
 
   async updateUserReservation(id: string, reservationId: string): Promise<UserDocument> {
     let user;
-    console.log('reservation user service');
     try {
       user = await this.userModel.findById(id).exec();
 
@@ -145,10 +125,8 @@ export class UsersService {
       );
       user = await this.userModel.findById(userId).exec();
     } catch (error) {
-      console.log('user error');
       throw new Error(error);
     }
-    console.log(user);
   }
 
   async deleteHostReservation(hostId: string, reservationId: string): Promise<void> {
@@ -164,10 +142,8 @@ export class UsersService {
       );
       user = await this.userModel.findById(hostId).exec();
     } catch (error) {
-      console.log('host error');
       throw new Error(error);
     }
-    console.log(user);
   }
 
   private async isUserExist(email: string): Promise<boolean> {

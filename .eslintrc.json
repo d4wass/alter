@@ -36,7 +36,8 @@
             "style": "kebab-case"
           }
         ]
-      }
+      },
+      "no-console": "error"
     },
     {
       "files": ["*.html"],

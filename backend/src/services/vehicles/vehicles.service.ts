@@ -1,32 +1,59 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ICrud } from 'interface/crud.interface';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { VehicleQuery } from '../../models/vehicle.model';
 import { CreateVehicleDto } from './dto/vehicle.dto';
 import { Vehicle, VehicleDocument } from '../../schemas/vehicle/vehicle.schema';
-import { UsersService } from '../users/users.service';
+import { User, UserDocument } from 'src/schemas/users/users.schema';
 
 @Injectable()
 export class VehiclesService implements ICrud<Vehicle, CreateVehicleDto, string> {
   constructor(
     @InjectModel(Vehicle.name) private readonly vehicleModel: Model<VehicleDocument>,
-    private readonly usersService: UsersService
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument> // private readonly usersService: UsersService
   ) {}
 
   async create(createVehicleDto: CreateVehicleDto, owner: string): Promise<{ vehicleId: string }> {
-    const newVehicle = new this.vehicleModel({
-      ...createVehicleDto,
-      owner
-    });
-    const result = await newVehicle.save();
-    await this.usersService.updateUserVehicles(owner, result._id);
+    let result;
+    try {
+      const newVehicle = new this.vehicleModel({
+        ...createVehicleDto,
+        owner
+      });
+      result = await newVehicle.save();
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
+    }
+
+    if (result) {
+      try {
+        await this.userModel.findByIdAndUpdate(
+          { _id: owner },
+          { $push: { vehicles: result._id } },
+          { new: true }
+        );
+      } catch (error) {
+        throw new HttpException(error, HttpStatus.FORBIDDEN);
+      }
+    }
 
     return { vehicleId: result._id };
   }
 
-  async delete(id: string): Promise<void> {
-    await this.vehicleModel.deleteOne({ _id: id });
+  async delete(vehicleId: string, userId: string): Promise<void> {
+    try {
+      const vehicle = await this.vehicleModel.findById(vehicleId);
+      vehicle.remove();
+
+      await this.userModel.updateOne(
+        { _id: userId },
+        { $pull: { vehicles: new Types.ObjectId(vehicleId) } },
+        { new: true }
+      );
+    } catch (error) {
+      throw new NotFoundException('Vehicle not exist or be already removed');
+    }
   }
 
   //TODO: implement on UI site this actions
@@ -51,12 +78,13 @@ export class VehiclesService implements ICrud<Vehicle, CreateVehicleDto, string>
     let vehicle;
 
     try {
-      vehicle = await (
-        await this.vehicleModel.findById(id)
-      ).populate({ path: 'owner', select: ['firstName', 'lastName', '_id', 'email'] });
+      vehicle = await this.vehicleModel
+        .findById(id)
+        .populate({ path: 'owner', select: ['firstName', 'lastName', 'id', 'email'] });
     } catch (error) {
       throw new Error(`Cannot find vehicle with ${id}`);
     }
+
     return vehicle;
   }
 
@@ -77,13 +105,6 @@ export class VehiclesService implements ICrud<Vehicle, CreateVehicleDto, string>
 
     return vehiclesByQuery;
   }
-
-  // async removeVehicle() { }
-  // async updateVehicle() { }
-
-  //user request
-  // async bookVehicle() { }
-  // async reviewVehicle() { }
 
   //search request
   async getVehiclesByModel(model: string) {

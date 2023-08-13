@@ -96,6 +96,10 @@
     "{src,cypress}/**/*.{html,json,md}": [
       "prettier --write",
       "eslint --fix"
+    ],
+    "*.{js,ts}": [
+      "eslint --fix",
+      "pretty-quick --staged"
     ]
   },
   "husky": {
