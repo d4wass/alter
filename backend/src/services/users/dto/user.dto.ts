@@ -22,7 +22,7 @@ export class CreateUserDto implements UserModel {
   @IsOptional()
   isNewsletter?: boolean;
   @IsBoolean()
-  @IsTrue()
+  @IsTrue({ message: 'Accept terms of Alter service to create account' })
   isTerms: boolean;
   @IsString()
   @IsNotEmpty()
