@@ -7,8 +7,9 @@ import {
   IsStrongPassword
 } from 'class-validator';
 import { IsTrue, IsMatch } from 'src/decorators/custom-valid-decorators.decorator';
-
-import { UserModel } from 'src/models/user.model';
+import { UserDataToUpdate, UserModel } from 'src/models/user.model';
+import { Reservation } from 'src/schemas/reservation/reservation.schema';
+import { Vehicle } from 'src/schemas/vehicle/vehicle.schema';
 
 export class CreateUserDto implements UserModel {
   @IsEmail()
@@ -42,3 +43,5 @@ export class CreateUserDto implements UserModel {
   @IsMatch('password', { message: 'passwords not matched' })
   passwordConfirm: string;
 }
+
+export class UpdateUserDto extends CreateUserDto {}

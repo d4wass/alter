@@ -13,7 +13,6 @@ export class ReservationController {
 
   @Post('/create-reservation')
   async addReservation(@Body('reservation') reservation: ReservationDto) {
-    console.log('ReservationDTO', reservation);
     const createdReservation = await this.reservationService.create(reservation);
     return createdReservation;
   }
@@ -39,7 +38,6 @@ export class ReservationController {
         await this.usersService.updateUserReservation(hostId, reservationId);
       }
     } catch (error) {
-      console.log(error);
       throw new Error('Cannot update user resdervation reservation not exists');
     }
 

@@ -40,7 +40,7 @@ export class AuthService {
     const { confirmValue } = data.updatedData.passwordUpdate;
     const { confirmValue: confirmMobileValue } = data.updatedData.mobileUpdate;
 
-    const user = await this.usersService.getUserById(userFromToken.payload.id);
+    const user = await this.usersService.findOne(userFromToken.payload.id);
 
     const isPasswordMatch = await bcrypt.compare(confirmValue, user.password);
     const isMobileMatch = user.mobile === confirmMobileValue;

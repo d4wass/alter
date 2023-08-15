@@ -9,8 +9,7 @@ import {
   Body,
   UsePipes,
   Req,
-  Put,
-  Request
+  Put
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { CreateVehicleValidationPipe } from '../../pipes/vehicle-validation.pipe';
@@ -22,18 +21,17 @@ export class VehiclesController {
   constructor(private readonly vehicleService: VehiclesService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Post('host/addVehicle')
+  @Post('vehicles')
   @UsePipes(new CreateVehicleValidationPipe())
   async addVehicle(@Body() vehicle: CreateVehicleDto, @Req() { user }: any) {
     const userId = user._id.toString();
-    const addedVehicle = await this.vehicleService.create(vehicle, userId);
-    const { vehicleId } = addedVehicle;
+    const newVehicle = await this.vehicleService.create(vehicle, userId);
 
-    return { vehicleId };
+    return newVehicle;
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete('host/removeVehicle/:id')
+  @Delete('vehicles/:id')
   async removeVehicle(@Param() { id }, @Req() { user }: any) {
     const userId = user._id.toString();
     await this.vehicleService.delete(id, userId);

@@ -4,11 +4,16 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { User, UserDocument } from '../../schemas/users/users.schema';
 import { UserDataToUpdate } from '../../models/user.model';
-import { CreateUserDto } from './dto/user.dto';
+import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
+import { ICrud } from 'interface/crud.interface';
 
 @Injectable()
-export class UsersService {
+export class UsersService implements ICrud<User, CreateUserDto, string, UpdateUserDto> {
   constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
+
+  delete(id: string, userId: string): Promise<void | User> {
+    throw new Error('Method not implemented.');
+  }
 
   async create(userData: CreateUserDto): Promise<User> {
     let user;
@@ -28,37 +33,10 @@ export class UsersService {
       throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
     }
 
-    return user;
-  }
-
-  async getUserByEmail(email: string): Promise<UserDocument | undefined> {
-    let user;
-    try {
-      user = await this.userModel.findOne({ email }).exec();
-    } catch (error) {
-      throw new NotFoundException('Cannot find user');
-    }
-
-    if (!user) {
-      throw new NotFoundException('Cannot find user');
-    }
-    return user as UserDocument;
-  }
-
-  async getUserById(id: string): Promise<User | undefined> {
-    let user;
-    try {
-      user = await this.userModel.findById(id).exec();
-    } catch (error) {
-      throw new NotFoundException('Cannot find user');
-    }
-    if (!user) {
-      throw new NotFoundException('Cannot find user');
-    }
     return user as User;
   }
 
-  async updateUserCredentials(dataRequest: UserDataToUpdate, userId: string): Promise<User> {
+  async update(userId: string, dataRequest: Partial<UpdateUserDto>): Promise<User> {
     let updatedUser;
 
     try {
@@ -75,16 +53,28 @@ export class UsersService {
     return updatedUser as User;
   }
 
-  async deleteUserVehicle(id: string, vehicleId: string): Promise<void> {
-    let user: UserDocument;
+  async findOne(id: string): Promise<User> {
+    let user;
     try {
-      await this.userModel
-        .findByIdAndUpdate({ _id: id }, { $pull: { vehicles: { id: vehicleId } } })
-        .exec();
       user = await this.userModel.findById(id).exec();
     } catch (error) {
-      throw new Error('Cannot remove user vehicle');
+      throw new NotFoundException(`Cannot find user with ${id}`);
     }
+    return user;
+  }
+
+  async getUserByEmail(email: string): Promise<UserDocument | undefined> {
+    let user;
+    try {
+      user = await this.userModel.findOne({ email }).exec();
+    } catch (error) {
+      throw new NotFoundException('Cannot find user');
+    }
+
+    if (!user) {
+      throw new NotFoundException('Cannot find user');
+    }
+    return user as UserDocument;
   }
 
   async updateUserReservation(id: string, reservationId: string): Promise<UserDocument> {

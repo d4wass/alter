@@ -39,19 +39,19 @@ export class UsersController {
   @Get('profile')
   async getProfile(@Request() req) {
     const userId = this.authService.getUserIdFromToken(req.headers.authorization);
-    return this.userService.getUserById(userId);
+    return this.userService.findOne(userId);
   }
 
   @Get('user')
   async getUser(@Request() req) {
-    return this.userService.getUserById(req.body.id);
+    return this.userService.findOne(req.body.id);
   }
 
   @UseGuards(JwtAuthGuard)
   @Put('update')
   async updateUser(@Body() body, @Req() { user }) {
     const userId = user._id.toString();
-    const updatedUser = await this.userService.updateUserCredentials(body, userId);
+    const updatedUser = await this.userService.update(body, userId);
 
     return updatedUser;
   }
