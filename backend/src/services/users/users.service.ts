@@ -63,16 +63,16 @@ export class UsersService {
 
     try {
       const updateUser = await this.updateUserConverter(dataRequest);
-      updatedUser = await this.userModel.findByIdAndUpdate(userId, { $set: { ...updateUser } });
-
-      return updatedUser as User;
-    } catch (error) {
-      if (error) throw new NotFoundException('User Not Found');
-
+      await this.userModel.findByIdAndUpdate(userId, { $set: { ...updateUser } });
+      updatedUser = await this.userModel.findById(userId).exec();
       if (!updatedUser) {
         throw new NotFoundException('Cannot find user');
       }
+    } catch (error) {
+      if (error) throw new NotFoundException('User Not Found');
     }
+
+    return updatedUser as User;
   }
 
   async deleteUserVehicle(id: string, vehicleId: string): Promise<void> {

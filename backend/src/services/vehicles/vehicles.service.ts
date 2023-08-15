@@ -40,7 +40,7 @@ export class VehiclesService implements ICrud<Vehicle, CreateVehicleDto, string>
 
     return { vehicleId: result._id };
   }
-
+  //TODO: check if vehicle which will be deleted is dont have rentals before delete
   async delete(vehicleId: string, userId: string): Promise<void> {
     try {
       const vehicle = await this.vehicleModel.findById(vehicleId);
@@ -56,9 +56,35 @@ export class VehiclesService implements ICrud<Vehicle, CreateVehicleDto, string>
     }
   }
 
-  //TODO: implement on UI site this actions
-  async update(id: string, updateVehicleDto: Partial<CreateVehicleDto>): Promise<Vehicle> {
-    throw new Error('Method not implemented.');
+  async update(vehicleId: string, updateVehicle: Partial<CreateVehicleDto>): Promise<Vehicle> {
+    const id = new Types.ObjectId(vehicleId);
+    const isVehicleExists = await this.vehicleModel.findById(vehicleId).exec();
+    const isUserHasVehicle = await this.userModel
+      .findOne({
+        vehicles: { $in: [id] }
+      })
+      .exec();
+
+    let vehicle;
+
+    if (!isVehicleExists) {
+      throw new NotFoundException('Vehicle selected to update is not exist');
+    }
+
+    try {
+      if (isVehicleExists && !isUserHasVehicle) {
+        throw new NotFoundException('Cannot find user vehicle');
+      }
+
+      await this.vehicleModel.findByIdAndUpdate(vehicleId, {
+        $set: { ...updateVehicle }
+      });
+      vehicle = this.vehicleModel.findById(vehicleId).exec();
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.FORBIDDEN);
+    }
+
+    return vehicle as Vehicle;
   }
 
   //Search Vehicle Actions

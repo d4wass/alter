@@ -1,4 +1,14 @@
-import { Controller, UseGuards, Post, Get, Request, Put, UsePipes, Body } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  Post,
+  Get,
+  Request,
+  Put,
+  UsePipes,
+  Body,
+  Req
+} from '@nestjs/common';
 import { UsersService } from '../../services/users/users.service';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../../guards/local-auth.guard';
@@ -39,14 +49,11 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Put('update')
-  async updateUser(@Request() req) {
-    const userId = this.authService.getUserIdFromToken(req.headers.authorization);
-    const updatedUser = await this.userService.updateUserCredentials(req.body, userId);
+  async updateUser(@Body() body, @Req() { user }) {
+    const userId = user._id.toString();
+    const updatedUser = await this.userService.updateUserCredentials(body, userId);
 
-    return {
-      user: updatedUser,
-      token: req.headers.authorization.replace('Bearer ', '')
-    };
+    return updatedUser;
   }
 
   @UseGuards(JwtAuthGuard)

@@ -4,10 +4,10 @@ import {
   VehicleFuelConsumptionModel,
   VehicleModel,
   VehicleSpecificationModel
-} from 'src/models/vehicle.model';
+} from '../../../models/vehicle.model';
 import { IsNotEmpty, IsString, IsNumber, ValidateNested, MinLength } from 'class-validator';
 import { Type } from 'class-transformer';
-import { IsRecordOfBooleans } from 'src/decorators/custom-valid-decorators.decorator';
+import { IsRecordOfBooleans } from '../../../decorators/custom-valid-decorators.decorator';
 
 class FuelConsumption implements VehicleFuelConsumptionModel {
   @IsString()

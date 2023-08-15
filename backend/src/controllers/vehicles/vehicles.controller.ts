@@ -8,7 +8,9 @@ import {
   Delete,
   Body,
   UsePipes,
-  Req
+  Req,
+  Put,
+  Request
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { CreateVehicleValidationPipe } from '../../pipes/vehicle-validation.pipe';
@@ -35,6 +37,13 @@ export class VehiclesController {
   async removeVehicle(@Param() { id }, @Req() { user }: any) {
     const userId = user._id.toString();
     await this.vehicleService.delete(id, userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('vehicles/:id')
+  async updateVehicle(@Param() { id }, @Body() body) {
+    const updatedVehicle = await this.vehicleService.update(id, body);
+    return updatedVehicle;
   }
 
   @Get('search/:brand')
