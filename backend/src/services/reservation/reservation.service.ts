@@ -29,7 +29,6 @@ export class ReservationService implements ICrud<Reservation, ReservationDto, st
         reservation = await newReservation.save();
       }
     } catch (error) {
-      console.log(error);
       throw new HttpException('Cannot create reservation', HttpStatus.BAD_REQUEST);
     }
 

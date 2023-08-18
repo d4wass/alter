@@ -9,11 +9,10 @@ import {
   Body,
   UsePipes,
   Req,
-  Put,
-  Request
+  Put
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
-import { CreateVehicleValidationPipe } from '../../pipes/vehicle-validation.pipe';
+import { CustomValidationPipe } from '../../pipes/custom-validation.pipe';
 import { CreateVehicleDto } from '../../services/vehicles/dto/vehicle.dto';
 import { VehiclesService } from '../../services/vehicles/vehicles.service';
 
@@ -22,18 +21,17 @@ export class VehiclesController {
   constructor(private readonly vehicleService: VehiclesService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Post('host/addVehicle')
-  @UsePipes(new CreateVehicleValidationPipe())
+  @Post('vehicles')
+  @UsePipes(new CustomValidationPipe('Vehicle validation failed'))
   async addVehicle(@Body() vehicle: CreateVehicleDto, @Req() { user }: any) {
     const userId = user._id.toString();
-    const addedVehicle = await this.vehicleService.create(vehicle, userId);
-    const { vehicleId } = addedVehicle;
+    const newVehicle = await this.vehicleService.create(vehicle, userId);
 
-    return { vehicleId };
+    return newVehicle;
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete('host/removeVehicle/:id')
+  @Delete('vehicles/:id')
   async removeVehicle(@Param() { id }, @Req() { user }: any) {
     const userId = user._id.toString();
     await this.vehicleService.delete(id, userId);
