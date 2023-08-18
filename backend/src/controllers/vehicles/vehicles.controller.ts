@@ -12,7 +12,7 @@ import {
   Put
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
-import { CreateVehicleValidationPipe } from '../../pipes/vehicle-validation.pipe';
+import { CustomValidationPipe } from '../../pipes/custom-validation.pipe';
 import { CreateVehicleDto } from '../../services/vehicles/dto/vehicle.dto';
 import { VehiclesService } from '../../services/vehicles/vehicles.service';
 
@@ -22,7 +22,7 @@ export class VehiclesController {
 
   @UseGuards(JwtAuthGuard)
   @Post('vehicles')
-  @UsePipes(new CreateVehicleValidationPipe())
+  @UsePipes(new CustomValidationPipe('Vehicle validation failed'))
   async addVehicle(@Body() vehicle: CreateVehicleDto, @Req() { user }: any) {
     const userId = user._id.toString();
     const newVehicle = await this.vehicleService.create(vehicle, userId);
