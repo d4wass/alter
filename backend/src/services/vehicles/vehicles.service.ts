@@ -101,14 +101,12 @@ export class VehiclesService implements ICrud<Vehicle, CreateVehicleDto, string>
   }
 
   async findOne(id: string): Promise<Vehicle> {
-    let vehicle;
+    const vehicle = await this.vehicleModel
+      .findById(id)
+      .populate({ path: 'owner', select: ['firstName', 'lastName', 'id', 'email'] });
 
-    try {
-      vehicle = await this.vehicleModel
-        .findById(id)
-        .populate({ path: 'owner', select: ['firstName', 'lastName', 'id', 'email'] });
-    } catch (error) {
-      throw new Error(`Cannot find vehicle with ${id}`);
+    if (!vehicle) {
+      throw new NotFoundException(`Cannot find vehicle of id: ${id}`);
     }
 
     return vehicle;

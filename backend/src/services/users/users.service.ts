@@ -1,17 +1,37 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { User, UserDocument } from '../../schemas/users/users.schema';
 import { CreateUserDto, UpdateUserDto, UserDto } from './dto/user.dto';
 import { ICrud } from 'interface/crud.interface';
+import { VehicleModel } from 'src/models/vehicle.model';
+import { Vehicle } from 'src/schemas/vehicle/vehicle.schema';
+import { Reservation } from 'src/schemas/reservation/reservation.schema';
+import { ReservationModel } from 'src/models/reservation.model';
 
 @Injectable()
 export class UsersService implements ICrud<User, UserDto, string> {
-  constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(Vehicle.name) private readonly vehicleModel: Model<VehicleModel>,
+    @InjectModel(Reservation.name) private readonly reservationModel: Model<ReservationModel>
+  ) {}
 
-  delete(id: string, userId: string): Promise<void | User> {
-    throw new Error('Method not implemented.');
+  async delete(id: string): Promise<void> {
+    try {
+      await this.userModel.findByIdAndDelete(id);
+      await this.vehicleModel.deleteMany({ owner: id });
+      //TODO: delete all reservation related to removed user
+    } catch (error) {
+      throw new ForbiddenException();
+    }
   }
 
   async create(userData: CreateUserDto): Promise<User> {

@@ -7,7 +7,8 @@ import {
   Put,
   UsePipes,
   Body,
-  Req
+  Req,
+  Delete
 } from '@nestjs/common';
 import { UsersService } from '../../services/users/users.service';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
@@ -61,5 +62,12 @@ export class UsersController {
   @Post('validate')
   async validateUserCredentials(@Request() req) {
     return this.authService.validateDataToUpdateUser(req.headers.authorization, req.body);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('user')
+  async deleteUser(@Req() { user }: any) {
+    const id = user._id.toString();
+    return this.userService.delete(id);
   }
 }
