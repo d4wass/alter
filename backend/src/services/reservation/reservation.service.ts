@@ -2,17 +2,17 @@ import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestj
 import { InjectModel } from '@nestjs/mongoose';
 import { ICrud } from 'interface/crud.interface';
 import { Model } from 'mongoose';
-import { ReservationDto } from 'src/models/reservation.model';
+import { ReservationModel } from 'src/models/reservation.model';
 import { Reservation, ReservationDocument } from 'src/schemas/reservation/reservation.schema';
 import * as moment from 'moment';
 
 @Injectable()
-export class ReservationService implements ICrud<Reservation, ReservationDto, string> {
+export class ReservationService implements ICrud<Reservation, ReservationModel, string> {
   constructor(
     @InjectModel(Reservation.name) private readonly reservationModel: Model<ReservationDocument>
   ) {}
 
-  async create(reservationData: ReservationDto): Promise<{ reservationId: string }> {
+  async create(reservationData: ReservationModel): Promise<{ reservationId: string }> {
     let reservation;
     const { hostId, userId, vehicleId, price, endDate, fromDate } = reservationData;
     const numberOfDay = this.calculateRentalCost(fromDate, endDate);
@@ -61,7 +61,7 @@ export class ReservationService implements ICrud<Reservation, ReservationDto, st
     throw new Error('Method not implemented.');
   }
 
-  update(id: unknown, updateDto: ReservationDto): Promise<Reservation> {
+  update(id: unknown, updateDto: ReservationModel): Promise<Reservation> {
     throw new Error('Method not implemented.');
   }
 

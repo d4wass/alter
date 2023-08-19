@@ -1,4 +1,4 @@
-export interface ReservationDto {
+export interface ReservationModel {
   hostId: string;
   userId: string;
   vehicleId: string;
