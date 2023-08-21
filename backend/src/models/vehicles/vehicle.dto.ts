@@ -1,13 +1,14 @@
 import {
+  AvailabilityModel,
   VehicleEngineModel,
   VehicleFeaturesModel,
   VehicleFuelConsumptionModel,
   VehicleModel,
   VehicleSpecificationModel
-} from '../../../models/vehicle.model';
+} from './vehicle.model';
 import { IsNotEmpty, IsString, IsNumber, ValidateNested, MinLength } from 'class-validator';
 import { Type } from 'class-transformer';
-import { IsRecordOfBooleans } from '../../../decorators/custom-valid-decorators.decorator';
+import { IsRecordOfBooleans } from '../../decorators/custom-valid-decorators.decorator';
 
 class FuelConsumption implements VehicleFuelConsumptionModel {
   @IsString()
@@ -53,6 +54,12 @@ class Features implements VehicleFeaturesModel {
   equipment?: string[];
 }
 
+class Availability implements AvailabilityModel {
+  reservationId: string;
+  fromDate: { date: string; hour: string };
+  endDate: { date: string; hour: string };
+}
+
 export class CreateVehicleDto implements VehicleModel {
   @IsNotEmpty()
   @IsString()
@@ -76,4 +83,10 @@ export class CreateVehicleDto implements VehicleModel {
   @ValidateNested()
   @Type(() => Features)
   features: Features = new Features();
+}
+
+export class VehicleAvailabilityDto extends CreateVehicleDto {
+  @ValidateNested()
+  @Type(() => Availability)
+  availability: Availability[];
 }

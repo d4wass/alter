@@ -2,8 +2,8 @@ import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestj
 import { InjectModel } from '@nestjs/mongoose';
 import { ICrud } from 'interface/crud.interface';
 import { Model, Types } from 'mongoose';
-import { VehicleQuery } from '../../models/vehicle.model';
-import { CreateVehicleDto } from './dto/vehicle.dto';
+import { VehicleQuery } from '../../models/vehicles/vehicle.model';
+import { CreateVehicleDto } from '../../models/vehicles/vehicle.dto';
 import { Vehicle, VehicleDocument } from '../../schemas/vehicle/vehicle.schema';
 import { User, UserDocument } from 'src/schemas/users/users.schema';
 

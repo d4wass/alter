@@ -8,7 +8,7 @@ import {
   IsStrongPassword
 } from 'class-validator';
 import { IsTrue, IsMatch } from 'src/decorators/custom-valid-decorators.decorator';
-import { UserModel } from 'src/models/user.model';
+import { UserModel } from 'src/models/users/user.model';
 
 export class UserDto implements UserModel {
   @IsEmail()

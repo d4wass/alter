@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { CustomValidationPipe } from '../../pipes/custom-validation.pipe';
-import { CreateVehicleDto } from '../../services/vehicles/dto/vehicle.dto';
+import { CreateVehicleDto } from '../../models/vehicles/vehicle.dto';
 import { VehiclesService } from '../../services/vehicles/vehicles.service';
 
 @Controller()

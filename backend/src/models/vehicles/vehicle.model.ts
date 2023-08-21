@@ -37,3 +37,9 @@ export interface VehicleFuelConsumptionModel {
   units: string;
   quantity: number;
 }
+
+export interface AvailabilityModel {
+  reservationId: string;
+  fromDate: { date: string; hour: string };
+  endDate: { date: string; hour: string };
+}
