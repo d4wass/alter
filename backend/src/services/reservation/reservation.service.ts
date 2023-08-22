@@ -38,12 +38,10 @@ export class ReservationService implements ICrud<Reservation, ReservationDto, st
       }
 
       if (reservation) {
-        const reservationId = reservation._id.toString();
-        this.usersReservationUpdate(hostId, userId, reservationId);
-        this.vehicleModel.findByIdAndUpdate(
-          { _id: vehicleId },
-          { $push: { avalibility: reservationId } }
-        );
+        this.usersReservationUpdate(hostId, userId, reservation._id);
+        await this.vehicleModel
+          .findByIdAndUpdate({ _id: vehicleId }, { $push: { avalibility: reservation._id } })
+          .exec();
       }
     } catch (error) {
       throw new HttpException('Cannot create reservation', HttpStatus.BAD_REQUEST);
@@ -89,16 +87,10 @@ export class ReservationService implements ICrud<Reservation, ReservationDto, st
   }
 
   private async usersReservationUpdate(hostId: string, userId: string, reservationId: string) {
-    await this.userModel.findByIdAndUpdate(
-      { _id: hostId },
-      { $push: { reservations: reservationId } }
-    );
-    await this.userModel.findByIdAndUpdate(
-      { _id: userId },
-      { $push: { reservations: reservationId } }
-    );
+    await this.userModel.findByIdAndUpdate(hostId, { $push: { reservations: reservationId } });
+    await this.userModel.findByIdAndUpdate(userId, { $push: { reservations: reservationId } });
   }
-  //TODO: implements the way for calculating hours like if day cost 100 that means 1h of rental will be cost 100/24h = 4,17
+
   private calculateRentalCost(fromDate: ReservationDate, endDate: ReservationDate, price: number) {
     const convertedFromDate = new Date(this.convertDate(`${fromDate.date} ${fromDate.hour}`));
     const convertedEndDate = new Date(this.convertDate(`${endDate.date} ${endDate.hour}`));
