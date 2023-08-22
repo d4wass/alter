@@ -4,21 +4,27 @@ import { User } from '../users/users.schema';
 import { Vehicle } from '../vehicle/vehicle.schema';
 
 export type ReservationDocument = Reservation & Document;
-
+@Schema()
+class ReservationDate {
+  @Prop({ type: String, required: true })
+  date: string;
+  @Prop({ type: String, required: true })
+  hour: string;
+}
 @Schema()
 export class Reservation {
-  @Prop({ type: Types.ObjectId, ref: 'User' })
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   user: User;
-  @Prop({ type: Types.ObjectId, ref: 'Vehicle' })
+  @Prop({ type: Types.ObjectId, ref: 'Vehicle', required: true })
   vehicle: Vehicle;
-  @Prop({ type: Types.ObjectId, ref: 'User' })
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   host: User;
-  @Prop({ type: String, required: true })
-  fromDate: string;
-  @Prop({ type: String, required: true })
-  endDate: string;
-  @Prop({ type: String })
-  cost: string;
+  @Prop({ required: true })
+  fromDate: ReservationDate;
+  @Prop({ required: true })
+  endDate: ReservationDate;
+  @Prop({ type: Number })
+  cost: number;
   @Prop({ type: String, enum: ['new', 'confirmed', 'canceled'], default: 'new' })
   status: string;
 }

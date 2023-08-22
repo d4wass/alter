@@ -32,7 +32,7 @@ export class User {
   @Prop([{ type: Types.ObjectId, ref: 'Vehicle' }])
   vehicles?: Vehicle[];
   @Prop([{ type: Types.ObjectId, ref: 'Reservation' }])
-  reservation?: Reservation[];
+  reservations?: Reservation[];
 }
 
 const UserSchema = SchemaFactory.createForClass(User);

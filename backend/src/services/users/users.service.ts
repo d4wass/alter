@@ -9,12 +9,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { User, UserDocument } from '../../schemas/users/users.schema';
-import { CreateUserDto, UpdateUserDto, UserDto } from './dto/user.dto';
+import { CreateUserDto, UpdateUserDto, UserDto } from '../../models/users/user.dto';
 import { ICrud } from 'interface/crud.interface';
-import { VehicleModel } from 'src/models/vehicle.model';
+import { VehicleModel } from 'src/models/vehicles/vehicle.model';
 import { Vehicle } from 'src/schemas/vehicle/vehicle.schema';
 import { Reservation } from 'src/schemas/reservation/reservation.schema';
-import { ReservationModel } from 'src/models/reservation.model';
+import { ReservationModel } from 'src/models/reservations/reservation.model';
 
 @Injectable()
 export class UsersService implements ICrud<User, UserDto, string> {

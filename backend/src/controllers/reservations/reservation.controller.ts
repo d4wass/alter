@@ -1,18 +1,15 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { ReservationDto } from 'src/models/reservations/reservation.dto';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
-import { ReservationModel } from '../../models/reservation.model';
 import { ReservationService } from '../../services/reservation/reservation.service';
-import { UsersService } from '../../services/users/users.service';
 
 @Controller('reservation')
 export class ReservationController {
-  constructor(
-    private readonly reservationService: ReservationService,
-    private readonly usersService: UsersService
-  ) {}
+  constructor(private readonly reservationService: ReservationService) {}
 
-  @Post('/create-reservation')
-  async addReservation(@Body('reservation') reservation: ReservationModel) {
+  @Post()
+  @UseGuards(JwtAuthGuard)
+  async addReservation(@Body() reservation: ReservationDto) {
     const createdReservation = await this.reservationService.create(reservation);
     return createdReservation;
   }
@@ -23,8 +20,15 @@ export class ReservationController {
     return reservation;
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Get()
+  async getAllReservations(@Req() { user }: any) {
+    const id = user._id.toString();
+    const reservations = await this.reservationService.findAll(id);
+    return reservations;
+  }
+
   @Put('/confirm-reservation/:id')
+  @UseGuards(JwtAuthGuard)
   async confirmReservation(
     @Param('id') reservationId: string,
     @Body('userId') userId: string,

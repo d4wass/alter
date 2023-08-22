@@ -1,5 +1,5 @@
 export interface ICrud<T, K, S> {
-  findAll?: () => Promise<T[]>;
+  findAll?: (id?: S) => Promise<T[]>;
   findOne: (id: S) => Promise<T>;
   create: (createDto: K, id?: S) => Promise<T | { [key: string]: S }>;
   update: (id: S, updateDto: K, userId?: S) => Promise<T>;

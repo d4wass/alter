@@ -2,20 +2,25 @@ import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestj
 import { InjectModel } from '@nestjs/mongoose';
 import { ICrud } from 'interface/crud.interface';
 import { Model } from 'mongoose';
-import { ReservationModel } from 'src/models/reservation.model';
+import { ReservationDate, ReservationModel } from 'src/models/reservations/reservation.model';
 import { Reservation, ReservationDocument } from 'src/schemas/reservation/reservation.schema';
 import * as moment from 'moment';
+import { User, UserDocument } from 'src/schemas/users/users.schema';
+import { Vehicle, VehicleDocument } from 'src/schemas/vehicle/vehicle.schema';
+import { ReservationDto } from 'src/models/reservations/reservation.dto';
 
 @Injectable()
-export class ReservationService implements ICrud<Reservation, ReservationModel, string> {
+export class ReservationService implements ICrud<Reservation, ReservationDto, string> {
   constructor(
-    @InjectModel(Reservation.name) private readonly reservationModel: Model<ReservationDocument>
+    @InjectModel(Reservation.name) private readonly reservationModel: Model<ReservationDocument>,
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(Vehicle.name) private readonly vehicleModel: Model<VehicleDocument>
   ) {}
 
-  async create(reservationData: ReservationModel): Promise<{ reservationId: string }> {
+  async create(reservationData: ReservationDto): Promise<{ reservationId: string }> {
     let reservation;
     const { hostId, userId, vehicleId, price, endDate, fromDate } = reservationData;
-    const numberOfDay = this.calculateRentalCost(fromDate, endDate);
+    const totalPrice = this.calculateRentalCost(fromDate, endDate, price);
 
     try {
       if (reservationData.hostId !== reservationData.userId) {
@@ -23,10 +28,20 @@ export class ReservationService implements ICrud<Reservation, ReservationModel, 
           host: hostId,
           user: userId,
           vehicle: vehicleId,
-          cost: Number(price) * numberOfDay,
+          cost: totalPrice,
           ...reservationData
         });
         reservation = await newReservation.save();
+      } else {
+        //TODO: consider to create custom exception for case when user tries to rent car from itself
+        throw new HttpException('Cannot make a reservation from itself', HttpStatus.BAD_REQUEST);
+      }
+
+      if (reservation) {
+        this.usersReservationUpdate(hostId, userId, reservation._id);
+        await this.vehicleModel
+          .findByIdAndUpdate({ _id: vehicleId }, { $push: { avalibility: reservation._id } })
+          .exec();
       }
     } catch (error) {
       throw new HttpException('Cannot create reservation', HttpStatus.BAD_REQUEST);
@@ -57,23 +72,36 @@ export class ReservationService implements ICrud<Reservation, ReservationModel, 
     }
   }
 
-  findAll(): Promise<Reservation[]> {
-    throw new Error('Method not implemented.');
+  async findAll(userId: string): Promise<Reservation[]> {
+    const reservations = await this.reservationModel.find({ host: userId });
+
+    if (!reservations) {
+      throw new NotFoundException("User doesn't have any reservations");
+    }
+
+    return [...reservations];
   }
 
   update(id: unknown, updateDto: ReservationModel): Promise<Reservation> {
     throw new Error('Method not implemented.');
   }
 
-  private calculateRentalCost(fromDate: string, endDate: string) {
-    const convertedFromDate = new Date(this.convertDate(fromDate));
-    const convertedEndDate = new Date(this.convertDate(endDate));
+  private async usersReservationUpdate(hostId: string, userId: string, reservationId: string) {
+    await this.userModel.findByIdAndUpdate(hostId, { $push: { reservations: reservationId } });
+    await this.userModel.findByIdAndUpdate(userId, { $push: { reservations: reservationId } });
+  }
+
+  private calculateRentalCost(fromDate: ReservationDate, endDate: ReservationDate, price: number) {
+    const convertedFromDate = new Date(this.convertDate(`${fromDate.date} ${fromDate.hour}`));
+    const convertedEndDate = new Date(this.convertDate(`${endDate.date} ${endDate.hour}`));
     const differentTime = convertedEndDate.getTime() - convertedFromDate.getTime();
 
-    return differentTime / (1000 * 3600 * 24) + 1;
+    const rentalTime = Number((differentTime / (1000 * 60 * 60)).toFixed(2));
+    const totalCost = (rentalTime / 24) * price;
+    return totalCost.toFixed(2);
   }
 
   private convertDate(date: string): any {
-    return moment(date, 'DD.MM.YYYY');
+    return moment(date, 'DD.MM.YYYY HH:mm');
   }
 }

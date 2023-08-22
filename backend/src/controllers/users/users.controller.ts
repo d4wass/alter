@@ -14,7 +14,7 @@ import { UsersService } from '../../services/users/users.service';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../../guards/local-auth.guard';
 import { AuthService } from '../../services/auth/auth.service';
-import { CreateUserDto, UpdateUserDto } from 'src/services/users/dto/user.dto';
+import { CreateUserDto, UpdateUserDto } from 'src/models/users/user.dto';
 import { CustomValidationPipe } from '../../pipes/custom-validation.pipe';
 
 @Controller()
