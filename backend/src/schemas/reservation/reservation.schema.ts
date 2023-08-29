@@ -14,11 +14,11 @@ class ReservationDate {
 @Schema()
 export class Reservation {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  user: User;
+  user: string;
   @Prop({ type: Types.ObjectId, ref: 'Vehicle', required: true })
-  vehicle: Vehicle;
+  vehicle: string;
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  host: User;
+  host: string;
   @Prop({ required: true })
   fromDate: ReservationDate;
   @Prop({ required: true })

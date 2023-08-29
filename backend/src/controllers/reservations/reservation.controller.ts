@@ -48,11 +48,10 @@ export class ReservationController {
     return reservation;
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Delete('/delete')
-  async cancelReservation(@Req() req) {
-    const { userId, reservationId, hostId } = req.body;
-    await this.reservationService.delete(reservationId);
+  @Delete('/:id')
+  //TODO: implement here API role
+  async cancelReservation(@Param('id') reservationId) {
+    return await this.reservationService.delete(reservationId);
     // await this.usersService.deleteUserReservation(userId, reservationId);
     // await this.usersService.deleteHostReservation(hostId, reservationId);
   }
