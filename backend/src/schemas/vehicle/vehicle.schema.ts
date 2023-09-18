@@ -39,7 +39,7 @@ export class Vehicle {
   description: string;
   @Prop({ type: Boolean })
   isCancelFree: boolean;
-  @Prop()
+  @Prop([{ type: Types.ObjectId, ref: 'Reservation' }])
   avalibility: Avalibility[];
 }
 
