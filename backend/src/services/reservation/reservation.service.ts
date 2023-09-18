@@ -21,23 +21,8 @@ export class ReservationService implements ICrud<Reservation, ReservationDto, st
     let reservation;
     const { hostId, userId, vehicleId, price, endDate, fromDate } = reservationData;
     const totalPrice = this.calculateRentalCost(fromDate, endDate, price);
-    const host = await this.userModel.findById(hostId).exec();
-    const user = await this.userModel.findById(userId).exec();
-    const vehicle = await this.vehicleModel.findById(vehicleId).exec();
-    const isHostVehicle = await this.vehicleModel.findOne({ owner: hostId }).exec();
-    console.log(isHostVehicle);
 
-    if (!host || !user || !vehicle) {
-      const documentNotExists = {
-        host: !!host,
-        user: !!user,
-        vehicle: !!vehicle
-      };
-      const msg = this.getErrorMsg(documentNotExists);
-      throw new HttpException(`Cannot create reservation, ${msg}`, HttpStatus.NOT_FOUND);
-    }
-
-    if (reservationData.hostId !== reservationData.userId && !!host && !!user && !!vehicle) {
+    try {
       const newReservation = new this.reservationModel({
         host: hostId,
         user: userId,
@@ -46,22 +31,20 @@ export class ReservationService implements ICrud<Reservation, ReservationDto, st
         ...reservationData
       });
       reservation = await newReservation.save();
-    }
 
-    // if (!) {
+      if (!!reservation) {
+        this.usersCreateReservationUpdate(hostId, userId, reservation._id);
+        await this.vehicleModel
+          .findByIdAndUpdate({ _id: vehicleId }, { $push: { avalibility: reservation._id } })
+          .exec();
+      } else {
+        throw new HttpException('Cannot create reservation', HttpStatus.INTERNAL_SERVER_ERROR);
+      }
 
-    // }
-
-    if (!!reservation) {
-      this.usersCreateReservationUpdate(hostId, userId, reservation._id);
-      await this.vehicleModel
-        .findByIdAndUpdate({ _id: vehicleId }, { $push: { avalibility: reservation._id } })
-        .exec();
-    } else {
+      return { reservationId: reservation._id };
+    } catch (error) {
       throw new HttpException('Cannot create reservation', HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    return { reservationId: reservation._id };
   }
 
   async findOne(id: string): Promise<Reservation> {

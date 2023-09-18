@@ -9,6 +9,7 @@ export class ReservationController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
+  //TODO: implement role for users in backend
   async addReservation(@Body() reservation: ReservationDto) {
     const createdReservation = await this.reservationService.create(reservation);
     return createdReservation;
@@ -29,6 +30,7 @@ export class ReservationController {
 
   @Put('/confirm-reservation/:id')
   @UseGuards(JwtAuthGuard)
+  //TODO: implement role for users in backend
   async confirmReservation(
     @Param('id') reservationId: string,
     @Body('userId') userId: string,
