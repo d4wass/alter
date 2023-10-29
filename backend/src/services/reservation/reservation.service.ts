@@ -4,7 +4,7 @@ import { Types } from 'mongoose';
 import { ReservationDate, ReservationStatus } from 'src/models/reservations/reservation.model';
 import { Reservation } from 'src/schemas/reservation/reservation.schema';
 import * as moment from 'moment';
-import { ReservationDto } from 'src/models/reservations/reservation.dto';
+import { ReservationDto, UpdateReservationDto } from 'src/models/reservations/reservation.dto';
 
 @Injectable()
 export class ReservationService extends ICrudService<Reservation, ReservationDto, string> {
@@ -77,8 +77,8 @@ export class ReservationService extends ICrudService<Reservation, ReservationDto
     return [...reservations];
   }
 
-  async update(id: string, updateReservation: Partial<ReservationDto>): Promise<Reservation> {
-    // eslint-disable-next-line prefer-const
+  async update(id: string, updateReservation: Partial<UpdateReservationDto>): Promise<Reservation> {
+    let updatedFields = {};
     let reservation = await this.reservationModel.findById(id).exec();
 
     if (!reservation) {
@@ -87,14 +87,9 @@ export class ReservationService extends ICrudService<Reservation, ReservationDto
 
     try {
       if (reservation) {
-        //! issue with update if request body have incomplete data then update overrides existing doc removing missing in body request fields
-        // await this.reservationModel.findByIdAndUpdate(id, updateReservation, { new: true });
-        for (const field in updateReservation) {
-          reservation[field] = updateReservation[field];
-        }
-        reservation.save((err, result) => {
-          return result;
-        });
+        updatedFields = this.reservationUpdateSetObject(updateReservation);
+        await this.reservationModel.findByIdAndUpdate(id, { $set: updatedFields }, { new: true });
+        reservation = await this.reservationModel.findById(id).exec();
       }
     } catch (error) {
       throw new HttpException(error, HttpStatus.FORBIDDEN);
@@ -162,5 +157,21 @@ export class ReservationService extends ICrudService<Reservation, ReservationDto
 
   private convertDate(date: string): any {
     return moment(date, 'DD.MM.YYYY HH:mm');
+  }
+
+  private reservationUpdateSetObject(updateReservation, path = '') {
+    const updatedFields = {};
+    for (const key in updateReservation) {
+      if (typeof updateReservation[key] === 'object' && !Array.isArray(updateReservation[key])) {
+        const nestedSetObject = this.reservationUpdateSetObject(
+          updateReservation[key],
+          path ? `${path}.${key}` : key
+        );
+        Object.assign(updatedFields, nestedSetObject);
+      } else {
+        updatedFields[path ? `${path}.${key}` : key] = updateReservation[key];
+      }
+    }
+    return updatedFields;
   }
 }

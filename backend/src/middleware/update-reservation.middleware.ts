@@ -2,7 +2,7 @@ import { NestMiddleware, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { NextFunction, Request, Response } from 'express';
 import { DateTime } from 'luxon';
-import { Document, Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { ReservationDate } from 'src/models/reservations/reservation.model';
 import { Reservation, ReservationDocument } from 'src/schemas/reservation/reservation.schema';
 import { User } from 'src/schemas/users/users.schema';
@@ -86,13 +86,6 @@ export class UpdateReservationMiddleware implements NestMiddleware {
       this.timestampChecker(i.fromDate, i.endDate, timestampDates.fromDate, timestampDates.endDate)
     );
 
-    console.log({
-      fromDate: DateTime.fromMillis(timestampDates.fromDate).toFormat(this.dateFormat),
-      endDate: DateTime.fromMillis(timestampDates.endDate).toFormat(this.dateFormat)
-    });
-    console.log(avalibility.map((i) => ({ fromDate: i.fromDate, endDate: i.endDate })));
-    console.log(isVehicleAvailable);
-
     if (timestampDates.fromDate > timestampDates.endDate) {
       throw {
         status: 400,
@@ -162,7 +155,6 @@ export class UpdateReservationMiddleware implements NestMiddleware {
     existingDate: ReservationDate
   ): ReservationDate {
     let filledData: ReservationDate;
-    console.log(updateDate);
     //! CANNOT READ POROPERTIES OF UNDEFINED READING 'DATE'
     if (!!updateDate.date) {
       filledData = { date: updateDate.date, hour: existingDate.hour };
