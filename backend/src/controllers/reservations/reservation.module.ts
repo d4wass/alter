@@ -1,4 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ReservationMiddleware } from 'src/middleware/reservation.middleware';
 import { UpdateReservationMiddleware } from 'src/middleware/update-reservation.middleware';
@@ -6,6 +7,7 @@ import { Reservation, ReservationSchema } from 'src/schemas/reservation/reservat
 import { User, UserSchema } from 'src/schemas/users/users.schema';
 import { Vehicle, VehicleSchema } from 'src/schemas/vehicle/vehicle.schema';
 import { ReservationService } from '../../services/reservation/reservation.service';
+import { ReservationController } from './reservation.controller';
 
 @Module({
   imports: [
