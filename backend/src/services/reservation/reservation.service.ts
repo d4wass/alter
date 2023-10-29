@@ -1,22 +1,13 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { ICrud } from 'interface/crud.interface';
-import { Model, Types } from 'mongoose';
-import { ReservationDate, ReservationModel } from 'src/models/reservations/reservation.model';
-import { Reservation, ReservationDocument } from 'src/schemas/reservation/reservation.schema';
+import { ICrudService } from 'interface/crud.interface';
+import { Types } from 'mongoose';
+import { ReservationDate, ReservationStatus } from 'src/models/reservations/reservation.model';
+import { Reservation } from 'src/schemas/reservation/reservation.schema';
 import * as moment from 'moment';
-import { User, UserDocument } from 'src/schemas/users/users.schema';
-import { Vehicle, VehicleDocument } from 'src/schemas/vehicle/vehicle.schema';
-import { ReservationDto } from 'src/models/reservations/reservation.dto';
+import { ReservationDto, UpdateReservationDto } from 'src/models/reservations/reservation.dto';
 
 @Injectable()
-export class ReservationService implements ICrud<Reservation, ReservationDto, string> {
-  constructor(
-    @InjectModel(Reservation.name) private readonly reservationModel: Model<ReservationDocument>,
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
-    @InjectModel(Vehicle.name) private readonly vehicleModel: Model<VehicleDocument>
-  ) {}
-
+export class ReservationService extends ICrudService<Reservation, ReservationDto, string> {
   async create(reservationData: ReservationDto): Promise<{ reservationId: string }> {
     let reservation;
     const { hostId, userId, vehicleId, price, endDate, fromDate } = reservationData;
@@ -61,15 +52,15 @@ export class ReservationService implements ICrud<Reservation, ReservationDto, st
     return result;
   }
 
-  async delete(reservationId: string): Promise<void> {
-    const reservation = await this.reservationModel.findById(reservationId).exec();
+  async delete(id: string): Promise<void> {
+    const reservation = await this.reservationModel.findById(id).exec();
     const { user, host, vehicle } = reservation;
 
     try {
-      await this.reservationModel.findByIdAndDelete(reservationId);
-      this.usersDeleteReservationUpdate(host, user, reservationId);
+      await this.reservationModel.findByIdAndDelete(id);
+      this.usersDeleteReservationUpdate(host, user, id);
       await this.vehicleModel.findByIdAndUpdate(vehicle, {
-        $pull: { avalibility: new Types.ObjectId(reservationId) }
+        $pull: { avalibility: new Types.ObjectId(id) }
       });
     } catch (error) {
       throw new NotFoundException('Cannot delete reservation');
@@ -86,8 +77,43 @@ export class ReservationService implements ICrud<Reservation, ReservationDto, st
     return [...reservations];
   }
 
-  update(id: unknown, updateDto: ReservationModel): Promise<Reservation> {
-    throw new Error('Method not implemented.');
+  async update(id: string, updateReservation: Partial<UpdateReservationDto>): Promise<Reservation> {
+    let updatedFields = {};
+    let reservation = await this.reservationModel.findById(id).exec();
+
+    if (!reservation) {
+      throw new NotFoundException('Cannot find reservation');
+    }
+
+    try {
+      if (reservation) {
+        updatedFields = this.reservationUpdateSetObject(updateReservation);
+        await this.reservationModel.findByIdAndUpdate(id, { $set: updatedFields }, { new: true });
+        reservation = await this.reservationModel.findById(id).exec();
+      }
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.FORBIDDEN);
+    }
+
+    return reservation as Reservation;
+  }
+
+  async confirm(id: string, status: ReservationStatus): Promise<Reservation> {
+    const confirmedReservation = await this.reservationModel.findByIdAndUpdate(
+      { _id: id },
+      { status },
+      { new: true }
+    );
+
+    try {
+      if (confirmedReservation) {
+        return confirmedReservation;
+      } else {
+        throw new NotFoundException('Reservation not found');
+      }
+    } catch (error) {
+      throw new NotFoundException('Cannot confirm reservation', error);
+    }
   }
 
   private async usersCreateReservationUpdate(
@@ -131,5 +157,21 @@ export class ReservationService implements ICrud<Reservation, ReservationDto, st
 
   private convertDate(date: string): any {
     return moment(date, 'DD.MM.YYYY HH:mm');
+  }
+
+  private reservationUpdateSetObject(updateReservation, path = '') {
+    const updatedFields = {};
+    for (const key in updateReservation) {
+      if (typeof updateReservation[key] === 'object' && !Array.isArray(updateReservation[key])) {
+        const nestedSetObject = this.reservationUpdateSetObject(
+          updateReservation[key],
+          path ? `${path}.${key}` : key
+        );
+        Object.assign(updatedFields, nestedSetObject);
+      } else {
+        updatedFields[path ? `${path}.${key}` : key] = updateReservation[key];
+      }
+    }
+    return updatedFields;
   }
 }

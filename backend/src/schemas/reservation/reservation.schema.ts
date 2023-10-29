@@ -1,7 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Types } from 'mongoose';
-import { User } from '../users/users.schema';
-import { Vehicle } from '../vehicle/vehicle.schema';
+import { Types, Document } from 'mongoose';
 
 export type ReservationDocument = Reservation & Document;
 @Schema()
@@ -11,7 +9,11 @@ class ReservationDate {
   @Prop({ type: String, required: true })
   hour: string;
 }
-@Schema()
+@Schema({
+  toJSON: {
+    virtuals: true
+  }
+})
 export class Reservation {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   user: string;
@@ -29,4 +31,10 @@ export class Reservation {
   status: string;
 }
 
-export const ReservationSchema = SchemaFactory.createForClass(Reservation);
+const ReservationSchema = SchemaFactory.createForClass(Reservation);
+
+ReservationSchema.virtual('id').get(function (this: ReservationDocument) {
+  return this._id;
+});
+
+export { ReservationSchema };
