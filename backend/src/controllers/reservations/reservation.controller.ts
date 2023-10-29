@@ -1,5 +1,22 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
-import { ReservationDto } from 'src/models/reservations/reservation.dto';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Put,
+  Req,
+  UseGuards,
+  UsePipes
+} from '@nestjs/common';
+import {
+  ReservationDto,
+  StatusReservationDto,
+  UpdateReservationDto
+} from 'src/models/reservations/reservation.dto';
+import { CustomValidationPipe } from 'src/pipes/custom-validation.pipe';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { ReservationService } from '../../services/reservation/reservation.service';
 
@@ -9,6 +26,7 @@ export class ReservationController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
+  @UsePipes(new CustomValidationPipe('Reservation validation failed'))
   //TODO: implement role for users in backend
   async addReservation(@Body() reservation: ReservationDto) {
     const createdReservation = await this.reservationService.create(reservation);
@@ -28,25 +46,25 @@ export class ReservationController {
     return reservations;
   }
 
-  @Put('/confirm-reservation/:id')
-  @UseGuards(JwtAuthGuard)
-  //TODO: implement role for users in backend
-  async confirmReservation(
-    @Param('id') reservationId: string,
-    @Body('userId') userId: string,
-    @Body('hostId') hostId: string
+  // @UseGuards(JwtAuthGuard)
+  @UsePipes(new CustomValidationPipe('Reservation validation failed'))
+  @Put('/:id')
+  //TODO: implement role for users in backend - only host should be able to confirm reservation
+  async updateReservation(
+    @Body() updateReservation: UpdateReservationDto,
+    @Param('id') reservationId: string
   ) {
-    let reservation;
-    try {
-      reservation = await this.reservationService.findOne(reservationId);
-      if (reservation) {
-        // await this.usersService.updateUserReservation(userId, reservationId);
-        // await this.usersService.updateUserReservation(hostId, reservationId);
-      }
-    } catch (error) {
-      throw new Error('Cannot update user resdervation reservation not exists');
-    }
+    const reservation = await this.reservationService.update(reservationId, updateReservation);
+    return reservation;
+  }
 
+  // @UseGuards(JwtAuthGuard)
+  @UsePipes(new CustomValidationPipe('Reservation validation failed'))
+  @Patch('/confirm/:id')
+  //TODO: implement role for users in backend - only host should be able to confirm reservation
+  async confirmReservation(@Body() body: StatusReservationDto, @Param('id') reservationId: string) {
+    const { status } = body;
+    const reservation = await this.reservationService.confirm(reservationId, status);
     return reservation;
   }
 

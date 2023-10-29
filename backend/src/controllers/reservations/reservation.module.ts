@@ -1,6 +1,8 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ReservationMiddleware } from 'src/middleware/reservation.middleware';
+import { UpdateReservationMiddleware } from 'src/middleware/update-reservation.middleware';
 import { Reservation, ReservationSchema } from 'src/schemas/reservation/reservation.schema';
 import { User, UserSchema } from 'src/schemas/users/users.schema';
 import { Vehicle, VehicleSchema } from 'src/schemas/vehicle/vehicle.schema';
@@ -22,12 +24,10 @@ export class ReservationModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(ReservationMiddleware)
-      .exclude(
-        { path: '/reservation', method: RequestMethod.GET },
-        { path: '/reservation/:id', method: RequestMethod.GET },
-        { path: '/reservation/confirm-reservation/:id', method: RequestMethod.PUT },
-        { path: '/reservation/:id', method: RequestMethod.DELETE }
-      )
-      .forRoutes(ReservationController);
+      .forRoutes({ path: '/reservation', method: RequestMethod.POST });
+
+    consumer
+      .apply(UpdateReservationMiddleware)
+      .forRoutes({ path: '/reservation/:id', method: RequestMethod.PUT });
   }
 }

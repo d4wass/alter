@@ -1,19 +1,12 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { ICrud } from 'interface/crud.interface';
-import { Model, Types } from 'mongoose';
+import { ICrudService } from 'interface/crud.interface';
+import { Types } from 'mongoose';
 import { VehicleQuery } from '../../models/vehicles/vehicle.model';
 import { CreateVehicleDto } from '../../models/vehicles/vehicle.dto';
-import { Vehicle, VehicleDocument } from '../../schemas/vehicle/vehicle.schema';
-import { User, UserDocument } from 'src/schemas/users/users.schema';
+import { Vehicle } from '../../schemas/vehicle/vehicle.schema';
 
 @Injectable()
-export class VehiclesService implements ICrud<Vehicle, CreateVehicleDto, string> {
-  constructor(
-    @InjectModel(Vehicle.name) private readonly vehicleModel: Model<VehicleDocument>,
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>
-  ) {}
-
+export class VehiclesService extends ICrudService<Vehicle, CreateVehicleDto, string> {
   async create(createVehicleDto: CreateVehicleDto, owner: string): Promise<{ vehicleId: string }> {
     let result;
     try {
@@ -103,7 +96,8 @@ export class VehiclesService implements ICrud<Vehicle, CreateVehicleDto, string>
   async findOne(id: string): Promise<Vehicle> {
     const vehicle = await this.vehicleModel
       .findById(id)
-      .populate({ path: 'owner', select: ['firstName', 'lastName', 'id', 'email'] });
+      .populate({ path: 'owner', select: ['firstName', 'lastName', 'id', 'email'] })
+      .exec();
 
     if (!vehicle) {
       throw new NotFoundException(`Cannot find vehicle of id: ${id}`);

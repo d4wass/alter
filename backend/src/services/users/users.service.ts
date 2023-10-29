@@ -5,25 +5,13 @@ import {
   Injectable,
   NotFoundException
 } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { User, UserDocument } from '../../schemas/users/users.schema';
 import { CreateUserDto, UpdateUserDto, UserDto } from '../../models/users/user.dto';
-import { ICrud } from 'interface/crud.interface';
-import { VehicleModel } from 'src/models/vehicles/vehicle.model';
-import { Vehicle } from 'src/schemas/vehicle/vehicle.schema';
-import { Reservation } from 'src/schemas/reservation/reservation.schema';
-import { ReservationModel } from 'src/models/reservations/reservation.model';
+import { ICrudService } from 'interface/crud.interface';
 
 @Injectable()
-export class UsersService implements ICrud<User, UserDto, string> {
-  constructor(
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
-    @InjectModel(Vehicle.name) private readonly vehicleModel: Model<VehicleModel>,
-    @InjectModel(Reservation.name) private readonly reservationModel: Model<ReservationModel>
-  ) {}
-
+export class UsersService extends ICrudService<User, UserDto, string> {
   async delete(id: string): Promise<void> {
     try {
       await this.userModel.findByIdAndDelete(id);
@@ -56,7 +44,7 @@ export class UsersService implements ICrud<User, UserDto, string> {
   }
 
   async update(userId: string, updateUserDto: UpdateUserDto): Promise<User> {
-    const updatedField = {};
+    const updatedFields = {};
     const user = await this.userModel.findById(userId).exec();
 
     if (!user) {
@@ -65,12 +53,12 @@ export class UsersService implements ICrud<User, UserDto, string> {
 
     for (const key in updateUserDto) {
       if (updateUserDto.hasOwnProperty(key) && user[key] !== updateUserDto[key]) {
-        updatedField[key] = updateUserDto[key];
+        updatedFields[key] = updateUserDto[key];
       }
     }
 
-    if (Object.keys(updatedField).length > 0) {
-      await this.userModel.findByIdAndUpdate(userId, { $set: updatedField }).exec();
+    if (Object.keys(updatedFields).length > 0) {
+      await this.userModel.findByIdAndUpdate(userId, { $set: updatedFields }).exec();
       return this.userModel.findById(userId).exec();
     }
 
