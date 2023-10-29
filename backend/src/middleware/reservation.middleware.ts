@@ -16,7 +16,20 @@ export class ReservationMiddleware implements NestMiddleware {
   ) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
+    try {
+      if (req.method === 'POST') {
+        await this.checkDataOfNewReservation(req);
+      }
+
+      next();
+    } catch (error) {
+      res.status(error.status || 500).json({ message: error.message });
+    }
+  }
+
+  private async checkDataOfNewReservation(req: Request) {
     const { userId, vehicleId, hostId, fromDate, endDate } = req.body;
+
     const user = await this.userModel.findById(userId);
     const host = await this.userModel.findById(hostId);
     const vehicle = await this.vehicleModel.findById(vehicleId);
@@ -24,15 +37,10 @@ export class ReservationMiddleware implements NestMiddleware {
       _id: { $in: vehicle.avalibility }
     });
 
-    try {
-      this.isDocumentExists({ user, host, vehicle });
-      this.isHostNotEqualToUser(hostId, userId);
-      if (!!vehicleReservations.length) {
-        this.isReservationDateCorrect(vehicleReservations, fromDate, endDate);
-      }
-      next();
-    } catch (error) {
-      res.status(error.status || 500).json({ message: error.message });
+    this.isDocumentExists({ user, host, vehicle });
+    this.isHostNotEqualToUser(hostId, userId);
+    if (!!vehicleReservations.length) {
+      this.isReservationDateCorrect(vehicleReservations, fromDate, endDate);
     }
   }
 
@@ -61,12 +69,18 @@ export class ReservationMiddleware implements NestMiddleware {
     fromDate: ReservationDate,
     endDate: ReservationDate
   ) {
-    const fromDateTimestamp = this.convertToTimestamp(`${fromDate.date} ${fromDate.hour}`);
-    const endDateTimestamp = this.convertToTimestamp(`${endDate.date} ${endDate.hour}`);
+    const fromDateTimestamp = this.convertToTimestamp(
+      !!fromDate ? fromDate.date : '',
+      !!fromDate ? fromDate.hour : ''
+    );
+    const endDateTimestamp = this.convertToTimestamp(
+      !!endDate ? endDate.date : '',
+      !!endDate ? endDate.hour : ''
+    );
     const avalibilityTimestamps = avalibility.map((i) => {
       const avalibilityTimestamps = {
-        fromDate: this.convertToTimestamp(`${i.fromDate.date} ${i.fromDate.hour}`),
-        endDate: this.convertToTimestamp(`${i.endDate.date} ${i.endDate.hour}`)
+        fromDate: this.convertToTimestamp(i.fromDate.date, i.fromDate.hour),
+        endDate: this.convertToTimestamp(i.endDate.date, i.endDate.hour)
       };
       return avalibilityTimestamps;
     });
@@ -112,8 +126,10 @@ export class ReservationMiddleware implements NestMiddleware {
     );
   }
 
-  private convertToTimestamp(date: string): number {
+  private convertToTimestamp(date: string, hour: string): number {
     const format = 'dd/MM/yy HH:mm';
-    return DateTime.fromFormat(date, format).toMillis();
+    const dateToFormat = `${date} ${hour}`;
+
+    return DateTime.fromFormat(dateToFormat, format).toMillis();
   }
 }

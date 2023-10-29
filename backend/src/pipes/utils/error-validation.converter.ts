@@ -1,15 +1,28 @@
 import { ValidationError } from 'class-validator';
 import { ConvertedValidationError } from './validation-types';
 
-export function errorsConverter(errors: ValidationError[]): Array<ConvertedValidationError> {
-  const result: Array<ConvertedValidationError> = [];
+export class ValidationErrorConverter {
+  private _convertedErrors: Array<ConvertedValidationError> = [];
+  public get convertedErrors(): Array<ConvertedValidationError> {
+    return this._convertedErrors;
+  }
+  public set convertedErrors(value: Array<ConvertedValidationError>) {
+    this._convertedErrors = value;
+  }
+  private _errors: ValidationError[];
 
-  errors.map((error) => {
-    if (!error.children.length) {
-      result.push({ property: error.property, constraints: error.constraints });
-    } else {
-      errorsConverter(error.children);
-    }
-  });
-  return result;
+  constructor(errors: ValidationError[]) {
+    this._errors = errors;
+    this.errorsConverter(this._errors);
+  }
+
+  errorsConverter(errors: ValidationError[]): void {
+    errors.forEach((error) => {
+      if (!error.children.length) {
+        this._convertedErrors.push({ property: error.property, constraints: error.constraints });
+      } else {
+        this.errorsConverter(error.children);
+      }
+    });
+  }
 }

@@ -61,3 +61,37 @@ export function IsTrue(validationOptions?: ValidationOptions) {
     });
   };
 }
+
+export function IsDateMatches(validationOptions?: ValidationOptions) {
+  return function (object: any, propertyName: string) {
+    registerDecorator({
+      name: 'IsDateMatches',
+      target: object.constructor,
+      propertyName: propertyName,
+      options: validationOptions,
+      validator: {
+        validate(value: string, args: ValidationArguments) {
+          const regexPattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{2}$/;
+          return regexPattern.test(value) === true;
+        }
+      }
+    });
+  };
+}
+
+export function IsTimeMatches(validationOptions?: ValidationOptions) {
+  return function (object: any, propertyName: string) {
+    registerDecorator({
+      name: 'IsTimeMatches',
+      target: object.constructor,
+      propertyName: propertyName,
+      options: validationOptions,
+      validator: {
+        validate(value: string, args: ValidationArguments) {
+          const regexPattern = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+          return regexPattern.test(value) === true;
+        }
+      }
+    });
+  };
+}
