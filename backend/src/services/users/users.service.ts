@@ -1,44 +1,43 @@
-import {
-  ForbiddenException,
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException
-} from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { User, UserDocument } from '../../schemas/users/users.schema';
 import { CreateUserDto, UpdateUserDto, UserDto } from '../../models/users/user.dto';
-import { ICrudService } from 'interface/crud.interface';
+import { ICrudService } from 'src/interface/crud.interface';
+import { hashPassword } from 'src/helper/password-hash';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class UsersService extends ICrudService<User, UserDto, string> {
   async delete(id: string): Promise<void> {
     try {
-      await this.userModel.findByIdAndDelete(id);
+      const reservationsIdsAsUser = await this.reservationOfUser(id, 'user');
+      const reservationsIdsAsHost = await this.reservationOfUser(id, 'host');
+
+      if (reservationsIdsAsUser.length) {
+        await this.removeUserFromReferencesDocs(reservationsIdsAsUser, 'host');
+      }
+      if (reservationsIdsAsHost.length) {
+        await this.removeUserFromReferencesDocs(reservationsIdsAsHost, 'user');
+      }
+
       await this.vehicleModel.deleteMany({ owner: id });
-      //TODO: delete all reservation related to removed user
+      await this.reservationModel.deleteMany({ user: id });
+      await this.reservationModel.deleteMany({ host: id });
+      await this.userModel.findByIdAndDelete(id);
     } catch (error) {
-      throw new ForbiddenException();
+      throw new ForbiddenException('Cannot remove user');
     }
   }
 
   async create(userData: CreateUserDto): Promise<User> {
-    let user;
     const { email, firstName, lastName, password } = userData;
-    const hashedPassword = await this.hashPassword(password);
-    const isUser = await this.isUserExist(email);
-
-    if (!isUser) {
-      const newUser = new this.userModel({
-        email,
-        firstName,
-        lastName,
-        password: hashedPassword
-      });
-      user = await newUser.save();
-    } else {
-      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
-    }
+    const hashedPassword = await hashPassword(password);
+    const newUser = new this.userModel({
+      email,
+      firstName,
+      lastName,
+      password: hashedPassword
+    });
+    const user = await newUser.save();
 
     return user as User;
   }
@@ -89,16 +88,33 @@ export class UsersService extends ICrudService<User, UserDto, string> {
     return user as UserDocument;
   }
 
-  private async isUserExist(email: string): Promise<boolean> {
-    const user = await this.userModel.findOne({ email });
+  private async removeUserFromReferencesDocs(
+    reservationsIds: Types.ObjectId[],
+    as: string
+  ): Promise<void> {
+    reservationsIds.forEach(async (reservationId) => {
+      const reservation = await this.reservationModel.findById(reservationId).exec();
 
-    return user ? true : false;
+      await this.userModel.findByIdAndUpdate(
+        reservation[as],
+        { $pull: { reservations: new Types.ObjectId(reservationId) } },
+        { new: true }
+      );
+      await this.vehicleModel.findByIdAndUpdate(
+        reservation.vehicle,
+        { $pull: { avalibility: new Types.ObjectId(reservationId) } },
+        { new: true }
+      );
+    });
   }
 
-  private async hashPassword(password: string): Promise<string> {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+  private async reservationOfUser(id: string, as: string): Promise<Types.ObjectId[]> {
+    const reservationsAsUser = await this.reservationModel
+      .find()
+      .where({ [as]: { $in: [id] } })
+      .exec();
+    const reservationIds = reservationsAsUser.map((reservation) => reservation._id);
 
-    return hashedPassword;
+    return reservationIds;
   }
 }

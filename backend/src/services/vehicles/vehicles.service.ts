@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { ICrudService } from 'interface/crud.interface';
+import { ICrudService } from 'src/interface/crud.interface';
 import { Types } from 'mongoose';
 import { VehicleQuery } from '../../models/vehicles/vehicle.model';
 import { CreateVehicleDto } from '../../models/vehicles/vehicle.dto';

@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { ICrudService } from 'interface/crud.interface';
+import { ICrudService } from 'src/interface/crud.interface';
 import { Types } from 'mongoose';
 import { ReservationDate, ReservationStatus } from 'src/models/reservations/reservation.model';
 import { Reservation } from 'src/schemas/reservation/reservation.schema';

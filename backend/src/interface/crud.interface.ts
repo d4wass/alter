@@ -1,8 +1,8 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Reservation, ReservationDocument } from 'src/schemas/reservation/reservation.schema';
-import { User, UserDocument } from 'src/schemas/users/users.schema';
-import { Vehicle, VehicleDocument } from 'src/schemas/vehicle/vehicle.schema';
+import { Reservation, ReservationDocument } from '../schemas/reservation/reservation.schema';
+import { User, UserDocument } from '../schemas/users/users.schema';
+import { Vehicle, VehicleDocument } from '../schemas/vehicle/vehicle.schema';
 
 export interface ICrud<T, K, S> {
   findAll?: (id?: S) => Promise<T[]>;
