@@ -3,7 +3,6 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserDocument } from 'src/schemas/users/users.schema';
-import { UserDataToValidate } from '../../models/users/user.model';
 
 @Injectable()
 export class AuthService {
@@ -30,46 +29,5 @@ export class AuthService {
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }
-  }
-
-  async validateDataToUpdateUser(
-    token: string,
-    data: { updatedData: UserDataToValidate }
-  ): Promise<{ isPasswordValid: boolean; isMobileValid: boolean }> {
-    const userFromToken = this.detokenizeUser(token);
-    const { confirmValue } = data.updatedData.passwordUpdate;
-    const { confirmValue: confirmMobileValue } = data.updatedData.mobileUpdate;
-
-    const user = await this.usersService.findOne(userFromToken.payload.id);
-
-    const isPasswordMatch = await bcrypt.compare(confirmValue, user.password);
-    const isMobileMatch = user.mobile === confirmMobileValue;
-
-    return { isPasswordValid: isPasswordMatch, isMobileValid: isMobileMatch };
-  }
-
-  getUserIdFromToken(token: string): string {
-    const tokenizedUser = this.jwtService.decode(token.replace('Bearer ', ''), {
-      complete: true,
-      json: true
-    }) as any;
-
-    return tokenizedUser.payload.id;
-  }
-
-  private async hashPassword(password: string): Promise<string> {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    return hashedPassword;
-  }
-
-  private detokenizeUser(token: string) {
-    const tokenizedUser = this.jwtService.decode(token.replace('Bearer ', ''), {
-      complete: true,
-      json: true
-    }) as any;
-
-    return tokenizedUser;
   }
 }

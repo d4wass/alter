@@ -1,6 +1,4 @@
 import { Inject, Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersController } from './controllers/users/users.controller';
 import { VehiclesController } from './controllers/vehicles/vehicles.controller';
@@ -21,8 +19,8 @@ import { AuthModule } from './services/auth/auth.module';
     MongooseModule.forRoot(process.env.DATABASE_URI),
     ReservationModule
   ],
-  controllers: [AppController, UsersController, VehiclesController, ReservationController],
-  providers: [AppService, HttpExceptionValidationFilter]
+  controllers: [UsersController, VehiclesController, ReservationController],
+  providers: [HttpExceptionValidationFilter]
 })
 export class AppModule {
   @Inject(ConfigService)

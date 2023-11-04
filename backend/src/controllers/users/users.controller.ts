@@ -24,14 +24,14 @@ export class UsersController {
     private readonly userService: UsersService
   ) {}
 
-  @Post('auth/register')
+  @Post('register')
   @UsePipes(new CustomValidationPipe('User validation failed'))
   async register(@Body() user: CreateUserDto) {
     return this.userService.create(user);
   }
 
   @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
+  @Post('login')
   async login(@Request() req): Promise<any> {
     return this.authService.login(req.body);
   }
@@ -48,20 +48,14 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getProfile(@Request() req) {
-    const userId = this.authService.getUserIdFromToken(req.headers.authorization);
+  async getProfile(@Request() { user }) {
+    const userId = user._id.toString();
     return this.userService.findOne(userId);
   }
-
+  //leave this endpoint for action of getting data to display info about user for other user perspective
   @Get('user')
   async getUser(@Request() req) {
     return this.userService.findOne(req.body.id);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Post('validate')
-  async validateUserCredentials(@Request() req) {
-    return this.authService.validateDataToUpdateUser(req.headers.authorization, req.body);
   }
 
   @UseGuards(JwtAuthGuard)
