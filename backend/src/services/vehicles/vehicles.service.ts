@@ -33,17 +33,31 @@ export class VehiclesService extends ICrudService<Vehicle, CreateVehicleDto, str
 
     return { vehicleId: result._id };
   }
-  //TODO: check if vehicle which will be deleted is dont have rentals before delete
   async delete(vehicleId: string, userId: string): Promise<void> {
     try {
-      const vehicle = await this.vehicleModel.findById(vehicleId);
-      vehicle.remove();
-
-      await this.userModel.updateOne(
-        { _id: userId },
+      const availibility = (await this.vehicleModel.findById(vehicleId).exec()).avalibility;
+      if (availibility.length) {
+        availibility.forEach(async (id) => {
+          const reservation = await this.reservationModel.findById(id).exec();
+          await this.userModel.findByIdAndUpdate(
+            reservation.user,
+            { $pull: { reservations: id } },
+            { new: true }
+          );
+          await this.userModel.findByIdAndUpdate(
+            reservation.host,
+            { $pull: { reservations: id } },
+            { new: true }
+          );
+          await this.reservationModel.findByIdAndDelete(id);
+        });
+      }
+      await this.userModel.findByIdAndUpdate(
+        userId,
         { $pull: { vehicles: new Types.ObjectId(vehicleId) } },
         { new: true }
       );
+      await this.vehicleModel.findByIdAndDelete(vehicleId);
     } catch (error) {
       throw new NotFoundException('Vehicle not exist or be already removed');
     }
@@ -87,7 +101,7 @@ export class VehiclesService extends ICrudService<Vehicle, CreateVehicleDto, str
     try {
       vehicles = await this.vehicleModel.find().exec();
     } catch (error) {
-      throw new Error(`Cannot find any vehicles`);
+      throw new NotFoundException(`Cannot find any vehicles`);
     }
 
     return vehicles;

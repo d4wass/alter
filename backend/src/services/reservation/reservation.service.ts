@@ -116,6 +116,7 @@ export class ReservationService extends ICrudService<Reservation, ReservationDto
     }
   }
 
+  //TODO: move or these private mehtod which are not connected directly with db querying
   private async usersCreateReservationUpdate(
     hostId: string,
     userId: string,
@@ -123,16 +124,6 @@ export class ReservationService extends ICrudService<Reservation, ReservationDto
   ) {
     await this.userModel.findByIdAndUpdate(hostId, { $push: { reservations: reservationId } });
     await this.userModel.findByIdAndUpdate(userId, { $push: { reservations: reservationId } });
-  }
-
-  private getErrorMsg<T extends Record<string, boolean>>(obj: T): string[] {
-    const failedDocument: string[] = [];
-    for (const key in obj) {
-      if (!obj[key]) {
-        failedDocument.push(`${key} was not found`);
-      }
-    }
-    return failedDocument;
   }
 
   private async usersDeleteReservationUpdate(
