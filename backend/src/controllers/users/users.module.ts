@@ -19,6 +19,6 @@ import { UsersService } from '../../services/users/users.service';
 })
 export class UsersModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(UserMiddleware).forRoutes({ path: 'register', method: RequestMethod.POST });
+    consumer.apply(UserMiddleware).forRoutes({ path: 'users', method: RequestMethod.POST });
   }
 }

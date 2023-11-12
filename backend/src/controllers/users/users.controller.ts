@@ -17,14 +17,14 @@ import { AuthService } from '../../services/auth/auth.service';
 import { CreateUserDto, UpdateUserDto } from 'src/models/users/user.dto';
 import { CustomValidationPipe } from '../../pipes/custom-validation.pipe';
 
-@Controller()
+@Controller('users')
 export class UsersController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UsersService
   ) {}
 
-  @Post('register')
+  @Post()
   @UsePipes(new CustomValidationPipe('User validation failed'))
   async register(@Body() user: CreateUserDto) {
     return this.userService.create(user);
@@ -38,7 +38,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @UsePipes(new CustomValidationPipe('User validation failed'))
-  @Put('update')
+  @Put()
   async updateUser(@Body() updateUser: UpdateUserDto, @Req() { user }) {
     const userId = user._id.toString();
     const updatedUser = await this.userService.update(userId, updateUser);
@@ -53,13 +53,13 @@ export class UsersController {
     return this.userService.findOne(userId);
   }
   //leave this endpoint for action of getting data to display info about user for other user perspective
-  @Get('user')
+  @Get()
   async getUser(@Request() req) {
     return this.userService.findOne(req.body.id);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete('user')
+  @Delete()
   async deleteUser(@Req() { user }: any) {
     const id = user._id.toString();
     return this.userService.delete(id);

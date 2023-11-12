@@ -9,6 +9,8 @@ import { ReservationModule } from './controllers/reservations/reservation.module
 import { UsersModule } from './controllers/users/users.module';
 import { VehiclesModule } from './controllers/vehicles/vehicles.module';
 import { AuthModule } from './services/auth/auth.module';
+import { SearchController } from './controllers/search/search.controller';
+import { SearchModule } from './controllers/search/search.module';
 
 @Module({
   imports: [
@@ -17,9 +19,10 @@ import { AuthModule } from './services/auth/auth.module';
     UsersModule,
     VehiclesModule,
     MongooseModule.forRoot(process.env.DATABASE_URI),
-    ReservationModule
+    ReservationModule,
+    SearchModule
   ],
-  controllers: [UsersController, VehiclesController, ReservationController],
+  controllers: [UsersController, VehiclesController, ReservationController, SearchController],
   providers: [HttpExceptionValidationFilter]
 })
 export class AppModule {
