@@ -101,22 +101,22 @@ export class VehiclesService extends ICrudService<Vehicle, CreateVehicleDto, str
     try {
       vehicles = await this.vehicleModel.find().exec();
     } catch (error) {
-      throw new NotFoundException(`Cannot find any vehicles`);
+      throw new NotFoundException(error, `Cannot find any vehicles`);
     }
 
     return vehicles;
   }
 
   async findOne(id: string): Promise<Vehicle> {
-    const vehicle = await this.vehicleModel
-      .findById(id)
-      .populate({ path: 'owner', select: ['firstName', 'lastName', 'id', 'email'] })
-      .exec();
-
-    if (!vehicle) {
-      throw new NotFoundException(`Cannot find vehicle of id: ${id}`);
+    let vehicle: Vehicle;
+    try {
+      vehicle = await this.vehicleModel
+        .findById(id)
+        .populate({ path: 'owner', select: ['firstName', 'lastName', 'id', 'email'] })
+        .exec();
+    } catch (error) {
+      throw new NotFoundException(error, `Cannot find vehicle of id: ${id}`);
     }
-
     return vehicle;
   }
 
@@ -138,7 +138,7 @@ export class VehiclesService extends ICrudService<Vehicle, CreateVehicleDto, str
     return vehiclesByQuery;
   }
 
-  //search request
+  //search vehicle requests
   async getVehiclesByModel(model: string) {
     let vehiclesByModel: Promise<Vehicle[]>;
     try {
@@ -174,7 +174,7 @@ export class VehiclesService extends ICrudService<Vehicle, CreateVehicleDto, str
     try {
       vehiclesByPlace = await this.vehicleModel.find({ place }).exec();
     } catch (error) {
-      throw new NotFoundException('Cannot find vehicles by place');
+      throw new NotFoundException(error, 'Cannot find vehicles by place');
     }
 
     if (!vehiclesByPlace) {
