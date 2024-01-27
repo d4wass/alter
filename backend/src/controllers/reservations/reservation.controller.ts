@@ -27,7 +27,6 @@ export class ReservationController {
   @Post()
   @UseGuards(JwtAuthGuard)
   @UsePipes(new CustomValidationPipe('Reservation validation failed'))
-  //TODO: implement role for users in backend
   async addReservation(@Body() reservation: ReservationDto) {
     const createdReservation = await this.reservationService.create(reservation);
     return createdReservation;

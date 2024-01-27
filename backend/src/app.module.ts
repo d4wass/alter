@@ -11,6 +11,8 @@ import { VehiclesModule } from './controllers/vehicles/vehicles.module';
 import { AuthModule } from './services/auth/auth.module';
 import { SearchController } from './controllers/search/search.controller';
 import { SearchModule } from './controllers/search/search.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './guards/roles.guard';
 
 @Module({
   imports: [
@@ -23,7 +25,7 @@ import { SearchModule } from './controllers/search/search.module';
     SearchModule
   ],
   controllers: [UsersController, VehiclesController, ReservationController, SearchController],
-  providers: [HttpExceptionValidationFilter]
+  providers: [HttpExceptionValidationFilter, { provide: APP_GUARD, useClass: RolesGuard }]
 })
 export class AppModule {
   @Inject(ConfigService)
