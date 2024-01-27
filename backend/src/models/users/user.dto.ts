@@ -1,6 +1,8 @@
 import {
+  IsArray,
   IsBoolean,
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsOptional,
   IsPhoneNumber,
@@ -9,6 +11,7 @@ import {
 } from 'class-validator';
 import { IsTrue, IsMatch } from 'src/decorators/custom-valid-decorators.decorator';
 import { UserModel } from 'src/models/users/user.model';
+import { RolesEnum } from '../auth/roles.enum';
 
 export class UserDto implements UserModel {
   @IsEmail()
@@ -38,6 +41,9 @@ export class UserDto implements UserModel {
   @IsString()
   @IsOptional()
   description?: string;
+  @IsArray()
+  @IsEnum(RolesEnum, { each: true })
+  roles: string[] = [RolesEnum.User];
 }
 
 export class CreateUserDto extends UserDto {

@@ -3,7 +3,6 @@ import {
   Get,
   Param,
   Post,
-  Query,
   UseGuards,
   Delete,
   Body,
@@ -15,13 +14,17 @@ import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { CustomValidationPipe } from '../../pipes/custom-validation.pipe';
 import { CreateVehicleDto } from '../../models/vehicles/vehicle.dto';
 import { VehiclesService } from '../../services/vehicles/vehicles.service';
+import { Roles } from 'src/decorators/roles.decorator';
+import { RolesEnum } from 'src/models/auth/roles.enum';
+import { RolesGuard } from 'src/guards/roles.guard';
 
 @Controller('vehicles')
 export class VehiclesController {
   constructor(private readonly vehicleService: VehiclesService) {}
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Post()
+  @Roles(RolesEnum.User)
   @UsePipes(new CustomValidationPipe('Vehicle validation failed'))
   async addVehicle(@Body() vehicle: CreateVehicleDto, @Req() { user }: any) {
     const userId = user._id.toString();

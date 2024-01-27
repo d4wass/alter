@@ -1,26 +1,29 @@
-:host{
-
+:host {
 }
 
-.carousel-section{
-    padding: 50px 0;
-    h1{
-        margin-bottom: 50px;
-    }
+.carousel-section {
+  padding: 50px 0;
+  h1 {
+    margin-bottom: 50px;
+  }
 }
 
 .carousel-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    img {
-        height: 50px;
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    height: 50px;
+  }
 
-    .car-card-wrapper {
-        width: 100%;
-        padding: 0 30px;
-        display: flex;
-        justify-content: space-between;
-    }
+  .car-card-wrapper {
+    width: 100%;
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+}
+.nav-btn {
+  cursor: pointer;
 }
