@@ -1,5 +1,17 @@
 import { animate, AnimationBuilder, AnimationPlayer, style } from '@angular/animations';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  QueryList,
+  Renderer2,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
+import { iif } from 'rxjs';
+import { CarCardComponent } from '../../molecules/car-card/car-card.component';
 
 const carCards = [
   { title: 'BMW', img: 'assets/car.png' },
@@ -23,43 +35,72 @@ const carCards = [
           <img src="assets/angle-left.svg" />
         </div>
         <div class="car-card-wrapper" #carousel>
-          <app-car-card *ngFor="let item of carCards" [carCard]="item" #carouselItem></app-car-card>
+          <app-car-card
+            *ngFor="let item of carCards"
+            #carouselCards
+            [carCard]="item"
+          ></app-car-card>
         </div>
-        <div (click)="handleClick()" class="nav-btn">
+        <div (click)="handleClick('')" class="nav-btn">
           <img src="assets/angle-right.svg" />
         </div>
       </div>
     </div>
   `,
-  styleUrls: ['./carousel-section.component.scss']
+  styleUrls: ['./carousel-section.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CarouselSectionComponent {
+export class CarouselSectionComponent implements AfterViewInit {
   carCards = carCards;
   time = '250ms ease-in';
   private player!: AnimationPlayer;
+  private carouselItems!: HTMLElement[];
+  private carouselWidth!: number;
   offset: number = 0;
 
-  constructor(private animationBuilder: AnimationBuilder) {}
+  constructor(private animationBuilder: AnimationBuilder, private cdr: ChangeDetectorRef) {}
   //todo: whats the difference between viewChild and ViewChildren
   @ViewChild('carousel') private carousel!: ElementRef;
-  // @ViewChildren('carouselItem') private carouselItems!: QueryList<CarCardComponent>;
+  @ViewChildren('carouselCards') private carouselCards!: QueryList<ElementRef>;
 
-  //add proper types for all
-  handleClick(direction?: string): void {
-    const carouselItems: HTMLElement[] = [...this.carousel.nativeElement.children];
-    const itemWidth = carouselItems[0].clientWidth;
-    const carouselAnimation = this.buildAnimation(itemWidth, direction);
-
-    carouselItems.forEach((item) => {
-      this.player = carouselAnimation.create(item);
-      this.player.play();
-    });
+  ngAfterViewInit(): void {
+    console.log(this.carousel);
+    console.log(this.carouselCards);
+    this.carouselItems = [...this.carousel.nativeElement.children];
+    this.carouselWidth = this.carousel.nativeElement.clientWidth;
   }
 
-  private buildAnimation(itemWidth: number, direction: string = '') {
-    this.offset = direction ? this.offset - itemWidth : this.offset + itemWidth;
+  //add proper types for all
+  handleClick(direction: string): void {
+    const itemWidth = this.carouselItems[0].clientWidth;
+    const maxOffset = this.carouselItems.length * itemWidth - this.carouselWidth;
+    this.offset = this.checkCurrentOffset(direction, itemWidth, maxOffset);
+    const carouselAnimation = this.buildAnimation();
+
+    this.carouselItems.forEach((item) => {
+      this.player = carouselAnimation.create(item);
+      this.player.onDone(() => {});
+      this.player.play();
+    });
+
+    console.log('3', this.offset);
+  }
+
+  private buildAnimation() {
+    console.log('buildAnimation', this.offset);
     return this.animationBuilder.build([
       animate(this.time, style({ transform: `translateX(${this.offset}px)` }))
     ]);
+  }
+
+  private checkCurrentOffset(direction: string, itemWidth: number, maxOffset: number): number {
+    let newOffset = this.offset;
+
+    if (direction === '' && newOffset === 0) return (newOffset = 0);
+    if (direction === '-' && newOffset === 0) return (newOffset = newOffset - itemWidth);
+    if (direction === '-' && newOffset <= -maxOffset) return (newOffset = -maxOffset);
+    if (direction === '' && newOffset > 0) return (newOffset = 0);
+
+    return direction ? newOffset - itemWidth : newOffset + itemWidth;
   }
 }
