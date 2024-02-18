@@ -5,7 +5,9 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  OnInit,
   QueryList,
+  Renderer2,
   ViewChild,
   ViewChildren
 } from '@angular/core';
@@ -58,16 +60,18 @@ export class CarouselSectionComponent implements AfterViewInit {
   private counter = 0;
   private offset: number = 0;
 
-  constructor(private animationBuilder: AnimationBuilder, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private animationBuilder: AnimationBuilder,
+    private cdr: ChangeDetectorRef,
+    private renderer: Renderer2
+  ) {}
   //todo: whats the difference between viewChild and ViewChildren
   @ViewChild('carousel') private carousel!: ElementRef;
   @ViewChildren('carouselCards') private carouselCards!: QueryList<ElementRef>;
 
   ngAfterViewInit(): void {
-    console.log(this.carousel);
-    console.log(this.carouselCards);
     this.carouselItems = [...this.carousel.nativeElement.children];
-    this.carouselWidth = this.carousel.nativeElement.clientWidth;
+    setTimeout(() => (this.carouselWidth = this.carousel.nativeElement.clientWidth));
   }
 
   //add proper types for all
@@ -82,12 +86,9 @@ export class CarouselSectionComponent implements AfterViewInit {
       this.player.onDone(() => {});
       this.player.play();
     });
-
-    console.log('3', this.offset);
   }
 
   private buildAnimation() {
-    console.log('buildAnimation', this.offset);
     return this.animationBuilder.build([
       animate(this.time, style({ transform: `translateX(${this.offset}px)` }))
     ]);
@@ -112,26 +113,69 @@ export class CarouselSectionComponent implements AfterViewInit {
     let newOffset = this.offset;
     const num = this.carouselWidth / this.carouselItems[0].clientWidth;
     const roundedNum = this.roundNumber(num); // how many entire cards I can display for user
-    const numerOfClicksToDisplayLastCard = this.carouselItems.length - Math.floor(roundedNum) - 1;
-    //! watch for negative in case for roundedNum !
-    const movePx = itemWidth * this.roundNumber(roundedNum - Math.floor(roundedNum)) + 25 + 20;
-    // console.log(roundedNum);
-    // console.log(movePx);
-    // console.log(this.counter, 'lastClick', numerOfClicksToDisplayLastCard);
-    this.counterDirectionControl(direction, numerOfClicksToDisplayLastCard);
-    console.log(this.counter);
+    const numberOfCardsVisibleOnCarousel = this.carouselItems.length - Math.floor(roundedNum) - 1;
+    const numberOfNonVisibleCardsOnCarousel =
+      this.carouselItems.length - numberOfCardsVisibleOnCarousel;
+    const movePxOfLastCard = this.checkIfPartOfItemIsVisible(
+      numberOfCardsVisibleOnCarousel,
+      itemWidth
+    );
+    this.counterDirectionControl(direction, numberOfNonVisibleCardsOnCarousel);
+    console.log(
+      'counter',
+      this.counter,
+      'number of visible cards',
+      numberOfCardsVisibleOnCarousel,
+      'how many px move last card',
+      movePxOfLastCard,
+      'non visible cards on carousel',
+      numberOfNonVisibleCardsOnCarousel
+    );
 
-    if (direction === '' && newOffset === 0) return (newOffset = 0);
-    if (direction === '-' && newOffset === 0) return (newOffset = newOffset - itemWidth);
-    if (direction === '-' && newOffset !== 0 && this.counter === numerOfClicksToDisplayLastCard)
-      return (newOffset = newOffset - movePx);
-    if (direction === '-' && newOffset <= -maxOffset) return (newOffset = -maxOffset - 29);
-    if (direction === '' && newOffset > 0) return (newOffset = 0);
+    //! rework this conditions
+    if (direction === '' && newOffset === 0) {
+      console.log('1 offset');
+      console.log('maxOffset', maxOffset, 'current Offset', this.offset);
+
+      return (newOffset = 0);
+    }
+    if (this.counter === numberOfNonVisibleCardsOnCarousel) {
+      console.log('3 offset');
+      console.log('maxOffset', maxOffset, 'current Offset', this.offset);
+
+      return (newOffset = newOffset - movePxOfLastCard);
+    }
+    if (direction === '-' && newOffset <= 0) {
+      console.log('2 offset');
+      console.log('maxOffset', maxOffset, 'current Offset', this.offset);
+
+      return (newOffset = newOffset - itemWidth);
+    }
+    if (direction === '-' && newOffset <= -maxOffset) {
+      console.log('4 offset set offset to max valuxe');
+      console.log('maxOffset', maxOffset, 'current Offset', this.offset);
+
+      return (newOffset = -maxOffset);
+    }
+    if (direction === '' && newOffset > 0) {
+      console.log('5 offset');
+      console.log('maxOffset', maxOffset, 'current Offset', this.offset);
+
+      return (newOffset = 0);
+    }
 
     return direction ? newOffset - itemWidth : newOffset + itemWidth;
   }
 
   private roundNumber(num: number): number {
     return Math.round((num + Number.EPSILON) * 100) / 100;
+  }
+
+  private checkIfPartOfItemIsVisible(numberOfVisibleCards: number, itemWidth: number): number {
+    // after implement should return number
+    console.log(this.carouselWidth);
+    const visibleItemPartWidth = this.carouselWidth - numberOfVisibleCards * itemWidth;
+    const movePx = itemWidth - visibleItemPartWidth;
+    return movePx;
   }
 }
