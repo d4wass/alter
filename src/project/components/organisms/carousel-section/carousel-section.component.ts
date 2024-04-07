@@ -2,28 +2,26 @@ import { animate, AnimationBuilder, AnimationPlayer, style } from '@angular/anim
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
   ElementRef,
-  OnInit,
-  QueryList,
-  Renderer2,
+  Component,
   ViewChild,
-  ViewChildren
+  ViewChildren,
+  ContentChild
 } from '@angular/core';
+import { CarouselAnimationDirective } from '../../../directives/carousel-animation/carousel-animation.directive';
 
 const carCards = [
-  { title: 'BMW', img: 'assets/car.png' },
-  { title: 'Toyota', img: 'assets/car.png' },
-  { title: 'Mazda', img: 'assets/car.png' },
-  { title: 'Jeep', img: 'assets/car.png' },
-  { title: 'Mercedes-Benz', img: 'assets/car.png' },
-  { title: 'Mercedes-Benz', img: 'assets/car.png' },
-  { title: 'Mercedes-Benz', img: 'assets/car.png' },
-  { title: 'Mercedes-Benz', img: 'assets/car.png' },
-  { title: 'Mercedes-Benz', img: 'assets/car.png' },
-  { title: 'Mercedes-Benz', img: 'assets/car.png' },
-  { title: 'Mercedes-Benz', img: 'assets/car.png' }
+  { title: '1', img: 'assets/car.png' },
+  { title: '2', img: 'assets/car.png' },
+  { title: '3', img: 'assets/car.png' },
+  { title: '4', img: 'assets/car.png' },
+  { title: '5', img: 'assets/car.png' },
+  { title: '6', img: 'assets/car.png' },
+  { title: '7', img: 'assets/car.png' },
+  { title: '8', img: 'assets/car.png' },
+  { title: '9', img: 'assets/car.png' },
+  { title: '10', img: 'assets/car.png' },
+  { title: '11', img: 'assets/car.png' }
 ];
 
 @Component({
@@ -31,18 +29,18 @@ const carCards = [
   template: `
     <div class="carousel-section">
       <h1>Browse by make</h1>
-      <div class="carousel-content">
-        <div (click)="handleClick('-')" class="nav-btn">
+      <div class="carousel-content" appCarouselAnimation>
+        <div class="nav-btn-prev" #carouselPrevBtn>
           <img src="assets/angle-left.svg" />
         </div>
-        <div class="car-card-wrapper" #carousel>
+        <div class="car-card-wrapper" #carouselItems>
           <app-car-card
             *ngFor="let item of carCards"
             #carouselCards
             [carCard]="item"
           ></app-car-card>
         </div>
-        <div (click)="handleClick('')" class="nav-btn">
+        <div class="nav-btn-next" #carouselNextBtn>
           <img src="assets/angle-right.svg" />
         </div>
       </div>
@@ -55,127 +53,120 @@ export class CarouselSectionComponent implements AfterViewInit {
   carCards = carCards;
   time = '250ms ease-in';
   private player!: AnimationPlayer;
-  private carouselItems!: HTMLElement[];
   private carouselWidth!: number;
-  private counter = 0;
+  private displayedItems!: number; //Todo: rename to numberOfDisplayedItems
   private offset: number = 0;
 
-  constructor(
-    private animationBuilder: AnimationBuilder,
-    private cdr: ChangeDetectorRef,
-    private renderer: Renderer2
-  ) {}
-  //todo: whats the difference between viewChild and ViewChildren
-  @ViewChild('carousel') private carousel!: ElementRef;
-  @ViewChildren('carouselCards') private carouselCards!: QueryList<ElementRef>;
+  private carouselItems!: HTMLElement[]; //Todo: rename to allCarouselItems
+  private displayedCarouselItems: HTMLElement[] = [];
+  private nonDisplayedCarouselItems: HTMLElement[] = [];
+
+  // constructor(private animationBuilder: AnimationBuilder) {}
+  // @ViewChild('carouselItems') private carousel!: ElementRef;
 
   ngAfterViewInit(): void {
-    this.carouselItems = [...this.carousel.nativeElement.children];
-    setTimeout(() => (this.carouselWidth = this.carousel.nativeElement.clientWidth));
+    // this.carouselItems = [...this.carousel.nativeElement.children];
+    // setTimeout(() => {
+    //   this.carouselWidth = this.carousel.nativeElement.clientWidth;
+    //   this.displayedItems = Math.floor(
+    //     this.roundNumber(this.carouselWidth / this.carouselItems[0].clientWidth)
+    //   );
+    //   this.displayedCarouselItems.push(...this.carouselItems.slice(0, this.displayedItems));
+    //   this.nonDisplayedCarouselItems.push(...this.carouselItems.slice(this.displayedItems));
+    console.log('lkdsjalkdj');
+    // });
   }
 
-  //add proper types for all
-  handleClick(direction: string): void {
-    const itemWidth = this.carouselItems[0].clientWidth;
-    const maxOffset = this.carouselItems.length * itemWidth - this.carouselWidth;
-    this.offset = this.checkCurrentOffset(direction, itemWidth, maxOffset);
-    const carouselAnimation = this.buildAnimation();
+  // //add proper types for all
+  // handleClick(direction: string): void {
+  //   this.offset = this.handleCarouselMove(direction);
+  //   const carouselAnimation = this.buildAnimation();
 
-    this.carouselItems.forEach((item) => {
-      this.player = carouselAnimation.create(item);
-      this.player.onDone(() => {});
-      this.player.play();
-    });
-  }
+  //   this.carouselItems.forEach((item) => {
+  //     this.player = carouselAnimation.create(item);
+  //     this.player.onDone(() => {});
+  //     this.player.play();
+  //   });
+  // }
 
-  private buildAnimation() {
-    return this.animationBuilder.build([
-      animate(this.time, style({ transform: `translateX(${this.offset}px)` }))
-    ]);
-  }
+  // private buildAnimation() {
+  //   return this.animationBuilder.build([
+  //     animate(this.time, style({ transform: `translateX(${this.offset}px)` }))
+  //   ]);
+  // }
 
-  private counterDirectionControl(direction: string, maxCounterValue: number): void {
-    let counter = this.counter;
-    if (direction === '' && this.counter !== 0) {
-      --counter;
-      this.counter = counter;
-    }
+  // private handleCarouselMove(direction: string): any {
+  //   const itemWidth = this.carouselItems[0].clientWidth;
+  //   const visibleItems = Math.floor(this.roundNumber(this.carouselWidth / itemWidth));
+  //   const movePx = this.calculateCarouselMovePx(itemWidth, visibleItems, direction);
 
-    if (direction === '-' && this.counter === maxCounterValue) {
-      this.counter = counter;
-    } else if (direction === '-') {
-      ++counter;
-      this.counter = counter;
-    }
-  }
+  //   let newOffset = this.offset;
+  //   if (newOffset === 0 && direction === '') {
+  //     newOffset = 0;
+  //   } else {
+  //     newOffset = direction ? newOffset - movePx : newOffset + movePx;
+  //   }
 
-  private checkCurrentOffset(direction: string, itemWidth: number, maxOffset: number): number {
-    let newOffset = this.offset;
-    const num = this.carouselWidth / this.carouselItems[0].clientWidth;
-    const roundedNum = this.roundNumber(num); // how many entire cards I can display for user
-    const numberOfCardsVisibleOnCarousel = this.carouselItems.length - Math.floor(roundedNum) - 1;
-    const numberOfNonVisibleCardsOnCarousel =
-      this.carouselItems.length - numberOfCardsVisibleOnCarousel;
-    const movePxOfLastCard = this.checkIfPartOfItemIsVisible(
-      numberOfCardsVisibleOnCarousel,
-      itemWidth
-    );
-    this.counterDirectionControl(direction, numberOfNonVisibleCardsOnCarousel);
-    console.log(
-      'counter',
-      this.counter,
-      'number of visible cards',
-      numberOfCardsVisibleOnCarousel,
-      'how many px move last card',
-      movePxOfLastCard,
-      'non visible cards on carousel',
-      numberOfNonVisibleCardsOnCarousel
-    );
+  //   return newOffset;
+  // }
 
-    //! rework this conditions
-    if (direction === '' && newOffset === 0) {
-      console.log('1 offset');
-      console.log('maxOffset', maxOffset, 'current Offset', this.offset);
+  // private calculateCarouselMovePx(
+  //   itemWidth: number,
+  //   visibleItems: number,
+  //   direction: string
+  // ): number {
+  //   if (this.nonDisplayedCarouselItems.length === 0 && direction !== '-') {
+  //     this.nonDisplayedCarouselItems = [...this.displayedCarouselItems.slice(-visibleItems)];
+  //     this.displayedCarouselItems = [
+  //       ...this.displayedCarouselItems.splice(0, this.displayedCarouselItems.length - visibleItems)
+  //     ];
+  //   }
 
-      return (newOffset = 0);
-    }
-    if (this.counter === numberOfNonVisibleCardsOnCarousel) {
-      console.log('3 offset');
-      console.log('maxOffset', maxOffset, 'current Offset', this.offset);
+  //   if (this.displayedCarouselItems.length === 0) {
+  //     this.displayedCarouselItems = [...this.nonDisplayedCarouselItems.slice(-visibleItems)];
+  //     this.nonDisplayedCarouselItems = [
+  //       ...this.nonDisplayedCarouselItems.splice(
+  //         0,
+  //         this.nonDisplayedCarouselItems.length - visibleItems
+  //       )
+  //     ];
+  //   }
 
-      return (newOffset = newOffset - movePxOfLastCard);
-    }
-    if (direction === '-' && newOffset <= 0) {
-      console.log('2 offset');
-      console.log('maxOffset', maxOffset, 'current Offset', this.offset);
+  //   let displayed = this.displayedCarouselItems;
+  //   let nonDisplayed = this.nonDisplayedCarouselItems;
+  //   let howManyItemMove = 0;
 
-      return (newOffset = newOffset - itemWidth);
-    }
-    if (direction === '-' && newOffset <= -maxOffset) {
-      console.log('4 offset set offset to max valuxe');
-      console.log('maxOffset', maxOffset, 'current Offset', this.offset);
+  //   if (direction === '-') {
+  //     howManyItemMove =
+  //       visibleItems >= this.nonDisplayedCarouselItems.length
+  //         ? this.nonDisplayedCarouselItems.length
+  //         : visibleItems;
+  //     displayed = [...displayed, ...nonDisplayed.slice(0, visibleItems)];
+  //     nonDisplayed = [
+  //       ...nonDisplayed.slice(
+  //         visibleItems >= nonDisplayed.length ? nonDisplayed.length : visibleItems
+  //       )
+  //     ];
+  //   } else {
+  //     howManyItemMove =
+  //       visibleItems >= this.displayedCarouselItems.length
+  //         ? this.displayedCarouselItems.length
+  //         : visibleItems;
+  //     nonDisplayed = [...nonDisplayed, ...displayed.slice(-visibleItems)];
+  //     displayed = [
+  //       ...displayed.slice(visibleItems >= displayed.length ? displayed.length : visibleItems)
+  //     ];
+  //   }
 
-      return (newOffset = -maxOffset);
-    }
-    if (direction === '' && newOffset > 0) {
-      console.log('5 offset');
-      console.log('maxOffset', maxOffset, 'current Offset', this.offset);
+  //   this.displayedCarouselItems = displayed;
+  //   this.nonDisplayedCarouselItems = nonDisplayed;
 
-      return (newOffset = 0);
-    }
+  //   let movePx = howManyItemMove * itemWidth;
 
-    return direction ? newOffset - itemWidth : newOffset + itemWidth;
-  }
+  //   return movePx;
+  // }
 
-  private roundNumber(num: number): number {
-    return Math.round((num + Number.EPSILON) * 100) / 100;
-  }
-
-  private checkIfPartOfItemIsVisible(numberOfVisibleCards: number, itemWidth: number): number {
-    // after implement should return number
-    console.log(this.carouselWidth);
-    const visibleItemPartWidth = this.carouselWidth - numberOfVisibleCards * itemWidth;
-    const movePx = itemWidth - visibleItemPartWidth;
-    return movePx;
-  }
+  // private roundNumber(num: number): number {
+  //   return Math.round((num + Number.EPSILON) * 100) / 100;
+  // }
 }
