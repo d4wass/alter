@@ -1,49 +1,100 @@
-import { animate, AnimationBuilder, AnimationPlayer, style } from '@angular/animations';
-import { AfterViewInit, ContentChild, Directive, ElementRef } from '@angular/core';
+import {
+  animate,
+  AnimationBuilder,
+  AnimationFactory,
+  AnimationPlayer,
+  style
+} from '@angular/animations';
+import {
+  AfterViewInit,
+  ContentChild,
+  Directive,
+  ElementRef,
+  NgZone,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 
 @Directive({
   selector: '[appCarouselAnimation]',
   standalone: true
 })
-export class CarouselAnimationDirective implements AfterViewInit {
+export class CarouselAnimationDirective implements AfterViewInit, OnInit, OnDestroy {
   private allCarouselItems: HTMLElement[] = [];
   private displayedCarouselItems: HTMLElement[] = [];
   private nonDisplayedCarouselItems: HTMLElement[] = [];
-  private carouselWidth: number = 0;
-  private carouselItemWidth: number = 0;
-  private carouselOffset: number = 0;
+  private carouselWidth = new BehaviorSubject<number>(0);
+  private carouselItemWidth = new BehaviorSubject<number>(0);
+
+  private carouselOffset = new BehaviorSubject<number>(0);
   private displayedItems!: number;
-  private time = '250ms ease-in';
+  private time = '350ms ease-in';
   private player!: AnimationPlayer;
+  private resizeObserver!: ResizeObserver;
 
   @ContentChild('carouselPrevBtn') prevBtn!: ElementRef;
   @ContentChild('carouselItems') carousel!: ElementRef;
   @ContentChild('carouselNextBtn') nextBtn!: ElementRef;
-  constructor(private animationBuilder: AnimationBuilder) {}
+  constructor(private animationBuilder: AnimationBuilder, private zone: NgZone) {}
+
+  ngOnInit(): void {
+    this.resizeObserver = new ResizeObserver((entries) => {
+      this.zone.run(() => {
+        this.carouselWidth.next(entries[0].contentRect.width);
+        this.carouselItemWidth.next(entries[0].target.children[0].clientWidth);
+
+        this.udpateOffsetOnResize();
+      });
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.resizeObserver.unobserve(this.carousel.nativeElement);
+  }
 
   ngAfterViewInit(): void {
-    this.allCarouselItems = [...this.carousel.nativeElement.children];
-    setTimeout(() => {
-      this.carouselWidth = this.carousel.nativeElement.clientWidth;
-      this.carouselItemWidth = this.allCarouselItems[0].clientWidth;
-      this.displayedItems = this.numberOfDisplayedCarouselItems(
-        this.carouselWidth,
-        this.carouselItemWidth
+    const carouselElement = this.carousel.nativeElement;
+
+    this.allCarouselItems = [...carouselElement.children];
+    this.resizeObserver.observe(carouselElement);
+
+    combineLatest([this.carouselWidth, this.carouselItemWidth])
+      .pipe(map(([carouselWidth, carouselItemWidth]) => ({ carouselWidth, carouselItemWidth })))
+      .subscribe(
+        ({ carouselWidth, carouselItemWidth }) =>
+          (this.displayedItems = this.numberOfDisplayedCarouselItems(
+            carouselWidth,
+            carouselItemWidth
+          ))
       );
-      this.displayedCarouselItems.push(...this.allCarouselItems.slice(0, this.displayedItems));
-      this.nonDisplayedCarouselItems.push(...this.allCarouselItems.slice(this.displayedItems));
-    });
+
+    this.displayedCarouselItems.push(...this.allCarouselItems.slice(0, this.displayedItems));
+    this.nonDisplayedCarouselItems.push(...this.allCarouselItems.slice(this.displayedItems));
 
     this.prevBtn.nativeElement.addEventListener('click', () => this.handleClick(''));
     this.nextBtn.nativeElement.addEventListener('click', () => this.handleClick('-'));
   }
 
   handleClick(direction: string) {
-    this.playCarouselAnimation(direction);
+    this.handleCarouselMove(direction);
   }
 
-  private playCarouselAnimation(direction: string): void {
-    this.carouselOffset = this.handleCarouselMove(direction);
+  private updateCarouselOffset(offset: number): void {
+    this.carouselOffset.next(offset);
+    this.playCarouselAnimation();
+  }
+
+  private udpateOffsetOnResize(): void {
+    const offset =
+      (this.displayedCarouselItems.length == 0
+        ? this.displayedCarouselItems.length
+        : this.displayedCarouselItems.length - this.displayedItems) * this.carouselItemWidth.value;
+    console.log(this.displayedItems, this.displayedCarouselItems, offset);
+    this.updateCarouselOffset(-offset);
+  }
+
+  private playCarouselAnimation(): void {
     const carouselAnimation = this.buildAnimation();
 
     this.allCarouselItems.forEach((item) => {
@@ -60,25 +111,25 @@ export class CarouselAnimationDirective implements AfterViewInit {
 
   private buildAnimation() {
     return this.animationBuilder.build([
-      animate(this.time, style({ transform: `translateX(${this.carouselOffset}px)` }))
+      animate(this.time, style({ transform: `translateX(${this.carouselOffset.value}px)` }))
     ]);
   }
 
-  private handleCarouselMove(direction: string): number {
+  private handleCarouselMove(direction: string): void {
     const movePx = this.calculateCarouselMovePx(
-      this.carouselItemWidth,
+      this.carouselItemWidth.value,
       this.displayedItems,
       direction
     );
 
-    let newOffset = this.carouselOffset;
+    let newOffset = this.carouselOffset.value;
     if (newOffset === 0 && direction === '') {
       newOffset = 0;
     } else {
       newOffset = direction ? newOffset - movePx : newOffset + movePx;
     }
 
-    return newOffset;
+    this.updateCarouselOffset(newOffset);
   }
 
   private calculateCarouselMovePx(
