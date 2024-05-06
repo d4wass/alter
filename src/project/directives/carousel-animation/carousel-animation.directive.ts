@@ -106,7 +106,8 @@ export class CarouselAnimationDirective implements AfterViewInit, OnInit, OnDest
 
   private numberOfDisplayedCarouselItems(carouselWidth: number, carouselItemWidth: number): number {
     const numberOfDiplayedItems = carouselWidth / carouselItemWidth;
-    return Math.floor(Math.round((numberOfDiplayedItems + Number.EPSILON) * 100) / 100);
+    const num = Math.ceil(Math.round(numberOfDiplayedItems));
+    return num;
   }
 
   private buildAnimation() {
