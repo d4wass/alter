@@ -13,7 +13,7 @@ import { BenefitSectionModule } from 'src/project/components/molecules/benefit-s
     CommonModule,
     TitleHeaderModule,
     HowWorksSectionModule,
-    CarouselSectionModule,
+    // CarouselSectionModule,
     BenefitSectionModule
   ]
 })

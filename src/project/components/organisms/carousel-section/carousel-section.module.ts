@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { CarouselSectionComponent } from './carousel-section.component';
 import { CarCardComponent } from '../../molecules/car-card/car-card.component';
 import { CarouselAnimationDirective } from '../../../directives/carousel-animation/carousel-animation.directive';
+import { ReviewCardComponent } from '../../molecules/customer-card/customer-card.component';
 
 @NgModule({
-  declarations: [CarouselSectionComponent, CarCardComponent],
+  declarations: [CarouselSectionComponent, CarCardComponent, ReviewCardComponent],
   imports: [CommonModule, CarouselAnimationDirective],
   exports: [CarouselSectionComponent]
 })
