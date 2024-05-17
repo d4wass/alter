@@ -38,7 +38,7 @@ export class CarouselSectionComponent implements OnInit {
   @Input() carouselTitle!: string;
   @Input() carouselType!: CarouselEnum;
   CarouselEnum = CarouselEnum;
-  items: any[] = [];
+  items!: any[];
 
   ngOnInit(): void {
     this.items = this.carouselItems;
