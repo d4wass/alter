@@ -17,8 +17,7 @@ import {
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 
 @Directive({
-  selector: '[appCarouselAnimation]',
-  standalone: true
+  selector: '[appCarouselAnimation]'
 })
 export class CarouselAnimationDirective implements AfterViewInit, OnInit, OnDestroy {
   private allCarouselItems: HTMLElement[] = [];
@@ -76,7 +75,7 @@ export class CarouselAnimationDirective implements AfterViewInit, OnInit, OnDest
     this.nextBtn.nativeElement.addEventListener('click', () => this.handleClick('-'));
   }
 
-  handleClick(direction: string) {
+  handleClick(direction: string): void {
     this.handleCarouselMove(direction);
   }
 
@@ -90,7 +89,6 @@ export class CarouselAnimationDirective implements AfterViewInit, OnInit, OnDest
       (this.displayedCarouselItems.length == 0
         ? this.displayedCarouselItems.length
         : this.displayedCarouselItems.length - this.displayedItems) * this.carouselItemWidth.value;
-    console.log(this.displayedItems, this.displayedCarouselItems, offset);
     this.updateCarouselOffset(-offset);
   }
 
@@ -110,7 +108,7 @@ export class CarouselAnimationDirective implements AfterViewInit, OnInit, OnDest
     return num;
   }
 
-  private buildAnimation() {
+  private buildAnimation(): AnimationFactory {
     return this.animationBuilder.build([
       animate(this.time, style({ transform: `translateX(${this.carouselOffset.value}px)` }))
     ]);

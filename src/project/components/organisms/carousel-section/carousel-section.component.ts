@@ -12,16 +12,12 @@ import { CarouselEnum } from './carousel.utils';
         </div>
         <ng-container *ngIf="carouselType === CarouselEnum.CarCarousel">
           <div class="car-card-wrapper" #carouselItems>
-            <app-car-card *ngFor="let item of items" #carouselCards [carCard]="item"></app-car-card>
+            <app-car-card *ngFor="let item of items" [carCard]="item"></app-car-card>
           </div>
         </ng-container>
         <ng-container *ngIf="carouselType === CarouselEnum.ReviewCarousel">
           <div class="review-card-wrapper" #carouselItems>
-            <app-review-card
-              *ngFor="let item of items"
-              #carouselCards
-              [review]="item"
-            ></app-review-card>
+            <app-review-card *ngFor="let item of items" [review]="item"></app-review-card>
           </div>
         </ng-container>
         <div class="nav-btn-next" #carouselNextBtn>

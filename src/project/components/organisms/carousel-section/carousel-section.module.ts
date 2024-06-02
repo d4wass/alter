@@ -6,8 +6,13 @@ import { CarouselAnimationDirective } from '../../../directives/carousel-animati
 import { ReviewCardComponent } from '../../molecules/customer-card/customer-card.component';
 
 @NgModule({
-  declarations: [CarouselSectionComponent, CarCardComponent, ReviewCardComponent],
-  imports: [CommonModule, CarouselAnimationDirective],
+  declarations: [
+    CarouselSectionComponent,
+    CarCardComponent,
+    ReviewCardComponent,
+    CarouselAnimationDirective
+  ],
+  imports: [CommonModule],
   exports: [CarouselSectionComponent]
 })
 export class CarouselSectionModule {}
