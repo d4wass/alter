@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CarouselSectionComponent should match to snapshot 1`] = `
+<app-carousel-section
+  CarouselEnum={[Function Object]}
+  carouselItems={[Function Array]}
+  carouselTitle={[Function String]}
+  carouselType={[Function String]}
+  items={[Function Array]}
+>
+  <div
+    class="carousel-section"
+  >
+    <h1>
+    </h1>
+    <div
+      appcarouselanimation=""
+      class="carousel-content"
+    >
+      <div
+        class="nav-btn-prev"
+      >
+        <img
+          src="assets/angle-left.svg"
+        />
+      </div>
+      <div
+        class="nav-btn-next"
+      >
+        <img
+          src="assets/angle-right.svg"
+        />
+      </div>
+    </div>
+  </div>
+</app-carousel-section>
+`;

@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CarouselAnimationDirective should create instance of directive 1`] = `
+<ng-component>
+  <div
+    appcarouselanimation=""
+  >
+    <div
+      class="prev-btn"
+    />
+    <div
+      class="carousel"
+    >
+      <div
+        class="carousel-items"
+      />
+      <div
+        class="carousel-items"
+      />
+      <div
+        class="carousel-items"
+      />
+    </div>
+    <div
+      class="next-btn"
+    />
+  </div>
+</ng-component>
+`;
