@@ -9,8 +9,10 @@ const selectIsLoginModalOpen = createSelector(
   (state) => state.isLoginModalOpen
 );
 const selectIsEditProfile = createSelector(appStateFeatureSelector, (state) => state.isEditProfile);
+const selectBrands = createSelector(appStateFeatureSelector, (state) => state.brands);
 
 export const AppSelectors = {
   selectIsEditProfile,
-  selectIsLoginModalOpen
+  selectIsLoginModalOpen,
+  selectBrands
 };

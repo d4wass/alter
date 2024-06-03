@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import { CarouselEnum } from './carousel.utils';
 
 @Component({
@@ -12,7 +19,7 @@ import { CarouselEnum } from './carousel.utils';
         </div>
         <ng-container *ngIf="carouselType === CarouselEnum.CarCarousel">
           <div class="car-card-wrapper" #carouselItems>
-            <app-car-card *ngFor="let item of items" [carCard]="item"></app-car-card>
+            <app-car-card *ngFor="let item of items | async" [carCard]="item"></app-car-card>
           </div>
         </ng-container>
         <ng-container *ngIf="carouselType === CarouselEnum.ReviewCarousel">
@@ -29,14 +36,16 @@ import { CarouselEnum } from './carousel.utils';
   styleUrls: ['./carousel-section.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CarouselSectionComponent implements OnInit {
+export class CarouselSectionComponent implements OnChanges {
   @Input() carouselItems!: any[];
   @Input() carouselTitle!: string;
   @Input() carouselType!: CarouselEnum;
   CarouselEnum = CarouselEnum;
   items!: any[];
 
-  ngOnInit(): void {
-    this.items = this.carouselItems;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.carouselItems) {
+      this.items = this.carouselItems;
+    }
   }
 }

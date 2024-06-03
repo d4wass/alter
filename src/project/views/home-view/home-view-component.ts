@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { map, Observable, take, tap } from 'rxjs';
+import { AppSettingFacade } from '../../../+state/facade/app-state/app-settings.facade';
 import { CarouselEnum } from '../../components/organisms/carousel-section/carousel.utils';
 
 const carsData = [
@@ -94,8 +96,18 @@ const reviewsData = [
   styleUrls: ['./home-view-component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeViewComponent {
+export class HomeViewComponent implements OnInit {
+  constructor(private appSettingsFacade: AppSettingFacade) {}
+  cars$!: Observable<{ title: string; img: string }[]>;
+
+  ngOnInit(): void {
+    this.cars$ = this.appSettingsFacade.vehicleBrands$.pipe(
+      map((brands) => brands.map((brand) => ({ title: brand, img: 'assets/car.png' }))),
+      tap((brands) => console.log(brands))
+    );
+  }
+
   reviews = reviewsData;
-  cars = carsData;
+  // cars = carsData;
   CarouselEnum = CarouselEnum;
 }

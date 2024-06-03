@@ -14,7 +14,7 @@ import {
   takeUntil
 } from 'rxjs';
 import { AppActions } from '../../../+state/app-state/app-state.actions';
-import { AppSettingFacade } from '../../../+state/facade/app-settings.facade';
+import { AppSettingFacade } from '../../../+state/facade/app-state/app-settings.facade';
 import { UserFacade } from '../../../+state/facade/user/user.facade';
 import { UserDataToUpdate } from '../../../+state/models/user.model';
 import { UserReservationsActions } from '../../../+state/user-reservations/user-reservations.actions';

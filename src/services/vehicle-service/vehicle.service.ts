@@ -13,6 +13,10 @@ export class VehicleService {
     return this.http.get<Vehicle>(`http://localhost:3000/vehicle/${id}`);
   }
 
+  getVehicleBrands(): Observable<string[]> {
+    return this.http.get<string[]>(`http://localhost:3000/vehicles/brands`);
+  }
+
   addVehicle(userId: string, vehicle: any, token: string): Observable<string> {
     const convertedVehicle = this.vehicleDataConverter(vehicle);
 

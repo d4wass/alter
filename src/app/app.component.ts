@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppActions } from 'src/+state/app-state/app-state.actions';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +11,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Alter';
+
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {
+    this.store.dispatch(AppActions.loadInitialData());
+  }
 }

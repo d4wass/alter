@@ -7,11 +7,13 @@ export const APP_FEATURE = 'app';
 export interface AppState {
   isLoginModalOpen: boolean;
   isEditProfile: boolean;
+  brands: string[];
 }
 
 export const initialState: AppState = {
   isLoginModalOpen: false,
-  isEditProfile: false
+  isEditProfile: false,
+  brands: []
 };
 
 export const AppReducer = createReducer(
@@ -28,5 +30,6 @@ export const AppReducer = createReducer(
   on(AppActions.closeEditProfileUser, (state, { isProfile }) => ({
     ...state,
     isEditProfile: isProfile
-  }))
+  })),
+  on(AppActions.setInitialData, (state, { brands }) => ({ ...state, brands }))
 );

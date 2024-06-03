@@ -183,4 +183,19 @@ export class VehiclesService extends ICrudService<Vehicle, CreateVehicleDto, str
 
     return vehiclesByPlace as Vehicle[];
   }
+
+  async getVehiclesBrands() {
+    let brands: string[];
+    try {
+      brands = await this.vehicleModel.find().distinct('brand').exec();
+    } catch (error) {
+      throw new NotFoundException('Cannot find brands');
+    }
+
+    if (!brands) {
+      throw new NotFoundException('Cannot find brands');
+    }
+
+    return brands;
+  }
 }
