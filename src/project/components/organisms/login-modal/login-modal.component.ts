@@ -98,6 +98,7 @@ export class LoginModalComponent implements OnInit {
 
   constructor(private modalLoginService: ModalLoginService, private readonly store: Store) {}
 
+  // Todo: refactor and remove subscriptions
   ngOnInit() {
     this.modalLoginService.isVisible$.subscribe((isVisible) => (this.isVisible = isVisible));
     this.modalLoginService.isLogin$.subscribe((isLogin) => (this.isLogin = isLogin));

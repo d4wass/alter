@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
-import { ModalLoginService } from 'src/services/modal-login/modal-login-service.service';
-import { VehicleService } from 'src/services/vehicle-service/vehicle.service';
+import { ModalLoginService } from '../../services/modal-login/modal-login-service.service';
+import { VehicleService } from '../../services/vehicle-service/vehicle.service';
 import { AppActions } from './app-state.actions';
 
 @Injectable()
