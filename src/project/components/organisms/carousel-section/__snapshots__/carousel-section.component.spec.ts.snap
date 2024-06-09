@@ -3,15 +3,16 @@
 exports[`CarouselSectionComponent should match the snapshot 1`] = `
 <app-carousel-section
   CarouselEnum={[Function Object]}
-  carouselItems={[Function Array]}
-  carouselTitle={[Function String]}
+  _items={[Function Array]}
   carouselType={[Function String]}
-  items={[Function Array]}
+  isLoading$={[Function BehaviorSubject]}
+  title={[Function String]}
 >
   <div
     class="carousel-section"
   >
     <h1>
+      carousel title
     </h1>
     <div
       appcarouselanimation=""
@@ -23,6 +24,15 @@ exports[`CarouselSectionComponent should match the snapshot 1`] = `
         <img
           src="assets/angle-left.svg"
         />
+      </div>
+      <div
+        class="car-card-wrapper"
+      >
+        <app-car-card />
+        <app-car-card />
+        <app-car-card />
+        <app-car-card />
+        <app-car-card />
       </div>
       <div
         class="nav-btn-next"

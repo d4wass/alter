@@ -1,21 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { map, Observable, take, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { AppSettingFacade } from '../../../+state/facade/app-state/app-settings.facade';
 import { CarouselEnum } from '../../components/organisms/carousel-section/carousel.utils';
-
-const carsData = [
-  { title: '1', img: 'assets/car.png' },
-  { title: '2', img: 'assets/car.png' },
-  { title: '3', img: 'assets/car.png' },
-  { title: '4', img: 'assets/car.png' },
-  { title: '5', img: 'assets/car.png' },
-  { title: '6', img: 'assets/car.png' },
-  { title: '7', img: 'assets/car.png' },
-  { title: '8', img: 'assets/car.png' },
-  { title: '9', img: 'assets/car.png' },
-  { title: '10', img: 'assets/car.png' },
-  { title: '11', img: 'assets/car.png' }
-];
 
 const reviewsData = [
   {
@@ -102,12 +88,10 @@ export class HomeViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.cars$ = this.appSettingsFacade.vehicleBrands$.pipe(
-      map((brands) => brands.map((brand) => ({ title: brand, img: 'assets/car.png' }))),
-      tap((brands) => console.log(brands))
+      map((brands) => brands.map((brand) => ({ title: brand, img: 'assets/car.png' })))
     );
   }
 
   reviews = reviewsData;
-  // cars = carsData;
   CarouselEnum = CarouselEnum;
 }

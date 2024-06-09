@@ -13,13 +13,9 @@ import { FormControl, FormGroup } from '@ngneat/reactive-forms';
   `,
   styleUrls: ['./datepicker.component.scss']
 })
-export class DatepickerComponent implements OnInit {
+export class DatepickerComponent {
   @Input() label!: string;
   @Input() parentForm!: any;
   @Input() details!: any;
   @Input() control!: FormControl<any>;
-
-  ngOnInit(): void {
-    console.log(this.control.value);
-  }
 }

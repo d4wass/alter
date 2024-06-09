@@ -1,5 +1,6 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { createComponentFactory, Spectator } from '@ngneat/spectator';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, MockModule } from 'ng-mocks';
 import { CarCardComponent } from '../../molecules/car-card/car-card.component';
 import { ReviewCardComponent } from '../../molecules/customer-card/customer-card.component';
 import { CarouselSectionComponent } from './carousel-section.component';
@@ -13,18 +14,21 @@ describe('CarouselSectionComponent', () => {
 
   const createComponent = createComponentFactory({
     component: CarouselSectionComponent,
-    declarations: [MockComponent(CarCardComponent), MockComponent(ReviewCardComponent)]
+    declarations: [MockComponent(CarCardComponent), MockComponent(ReviewCardComponent)],
+    imports: [MockModule(MatProgressSpinnerModule)]
   });
 
   beforeEach(() => {
     spectator = createComponent();
     component = spectator.component;
 
-    component.carouselItems = createMockCarouselItemsArray(carouselLength, 'item');
-    component.carouselTitle = carouselTitle;
+    component.items = createMockCarouselItemsArray(carouselLength, {
+      title: 'item',
+      img: 'assets/car.png'
+    } as any);
+    component.title = carouselTitle;
     component.carouselType = CarouselEnum.CarCarousel;
-    component.ngOnInit();
-    spectator.detectChanges();
+    spectator.detectComponentChanges();
   });
 
   it('should match the snapshot', () => {
@@ -47,9 +51,16 @@ describe('CarouselSectionComponent', () => {
 
   it('should display the correct number of review card elements when carouselType is ReviewCarousel', () => {
     component.carouselType = CarouselEnum.ReviewCarousel;
-    spectator.detectChanges();
+    spectator.detectComponentChanges();
     const reviewCardElements = spectator.queryAll('app-review-card');
     expect(reviewCardElements.length).toEqual(carouselLength);
+  });
+
+  it('should display a loading spinner when items is not defined or empty array', () => {
+    component.items = undefined as any;
+    spectator.detectComponentChanges();
+    const spinner = spectator.query('mat-spinner');
+    expect(spinner).toBeTruthy();
   });
 });
 
