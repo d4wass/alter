@@ -19,6 +19,17 @@
     grid-auto-flow: column;
     grid-auto-columns: calc(100% / 4);
     overflow: hidden;
+
+    &.spinner-active {
+      grid-auto-columns: 100%;
+    }
+
+    .carousel-spinner {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   .review-card-wrapper {
@@ -29,6 +40,7 @@
     overflow: hidden;
   }
 }
+
 .nav-btn {
   cursor: pointer;
 }

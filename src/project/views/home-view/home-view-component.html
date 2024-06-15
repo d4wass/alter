@@ -2,13 +2,13 @@
   <app-title-header [title]="'Find your drive'"></app-title-header>
   <div class="flex-wrapper">
     <app-carousel-section
-      [carouselItems]="cars"
-      [carouselTitle]="'Browse by make'"
+      [items]="cars$ | async"
+      [title]="'Browse by make'"
       [carouselType]="CarouselEnum.CarCarousel"
     ></app-carousel-section>
     <app-carousel-section
-      [carouselItems]="reviews"
-      [carouselTitle]="'Alter Customers'"
+      [items]="reviews"
+      [title]="'Alter Hosts'"
       [carouselType]="CarouselEnum.ReviewCarousel"
     ></app-carousel-section>
     <app-faq-section></app-faq-section>

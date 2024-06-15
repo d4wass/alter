@@ -13,6 +13,10 @@ export class VehicleService {
     return this.http.get<Vehicle>(`http://localhost:3000/vehicle/${id}`);
   }
 
+  getVehicleBrands(): Observable<string[]> {
+    return this.http.get<string[]>(`http://localhost:3000/vehicles/brands`);
+  }
+
   addVehicle(userId: string, vehicle: any, token: string): Observable<string> {
     const convertedVehicle = this.vehicleDataConverter(vehicle);
 
@@ -38,7 +42,6 @@ export class VehicleService {
   }
 
   removeVehicle(vehicleId: string, userId: string, token: string): Observable<any> {
-    console.log('removed');
     return this.http.delete<any>(`http://localhost:3000/host/removeVehicle`, {
       body: { vehicleId, userId },
       headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)

@@ -27,6 +27,10 @@ const closeEditProfileUser = createAction(
   props<{ isProfile: boolean }>()
 );
 
+const loadInitialData = createAction('[App] Load initial data');
+const setInitialData = createAction('[App] Set initial data', props<{ brands: string[] }>());
+const setInitialDataError = createAction('[App] Set initial data error', props<{ error: any }>());
+
 export const AppActions = {
   openModal,
   closeModal,
@@ -36,5 +40,8 @@ export const AppActions = {
   setLoginModalToLoginView,
   openEditProfileUser,
   saveProfileUser,
-  closeEditProfileUser
+  closeEditProfileUser,
+  loadInitialData,
+  setInitialData,
+  setInitialDataError
 };

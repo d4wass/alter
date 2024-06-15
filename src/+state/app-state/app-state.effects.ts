@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { tap } from 'rxjs';
-import { ModalLoginService } from 'src/services/modal-login/modal-login-service.service';
+import { catchError, map, of, switchMap, tap } from 'rxjs';
+import { ModalLoginService } from '../../services/modal-login/modal-login-service.service';
+import { VehicleService } from '../../services/vehicle-service/vehicle.service';
 import { AppActions } from './app-state.actions';
 
 @Injectable()
 export class AppEffects {
-  constructor(private actions$: Actions, private modalLoginService: ModalLoginService) {}
+  constructor(
+    private actions$: Actions,
+    private modalLoginService: ModalLoginService,
+    private vehicleService: VehicleService
+  ) {}
 
   handleModalVisibility = createEffect(
     () => () =>
@@ -58,5 +63,18 @@ export class AppEffects {
         })
       ),
     { dispatch: false }
+  );
+
+  setInitialData = createEffect(
+    () => () =>
+      this.actions$.pipe(
+        ofType(AppActions.loadInitialData),
+        switchMap(() => {
+          return this.vehicleService.getVehicleBrands().pipe(
+            map((brands) => AppActions.setInitialData({ brands })),
+            catchError((error) => of(AppActions.setInitialDataError({ error })))
+          );
+        })
+      )
   );
 }

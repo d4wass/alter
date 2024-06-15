@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeViewComponentComponent should match to snapshot and be defined 1`] = `
+<app-home-view-component
+  CarouselEnum={[Function Object]}
+  appSettingsFacade={[Function AppSettingsFacadeMock]}
+  cars$={[Function AnonymousSubject]}
+  reviews={[Function Array]}
+>
+  <main>
+    <app-title-header />
+    <div
+      class="flex-wrapper"
+    >
+      <app-carousel-section />
+      <app-carousel-section />
+      <app-faq-section />
+    </div>
+  </main>
+</app-home-view-component>
+`;
