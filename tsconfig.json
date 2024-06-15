@@ -2,6 +2,10 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "@project/*": ["src/project/*"], // This maps @project to the src/app/project directory
+      "@components/*": ["src/project/components/*"] // This maps @components to the src/app/components directory
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,

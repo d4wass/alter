@@ -42,7 +42,6 @@ export class VehicleService {
   }
 
   removeVehicle(vehicleId: string, userId: string, token: string): Observable<any> {
-    console.log('removed');
     return this.http.delete<any>(`http://localhost:3000/host/removeVehicle`, {
       body: { vehicleId, userId },
       headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
-import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
+import { VehiclesActions } from '../../../../+state/vehicles/vehicle.actions';
 
 @Component({
   selector: 'app-main-search-form',
