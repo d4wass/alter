@@ -7,11 +7,11 @@ import { User, UserDataToUpdate, UserDataUpdate } from 'src/+state/models/user.m
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   createUser(user: Partial<User>): Observable<Partial<User>> {
     const { firstName, lastName, email, password } = user;
-    const createdUser = this.http.post('http://localhost:3000/auth/register', {
+    const createdUser = this.http.post('http://localhost:3000/users', {
       firstName,
       lastName,
       email,
@@ -22,7 +22,7 @@ export class AuthService {
 
   loginUser(email: string, password: string): Observable<{ access_token: string }> {
     const auth_token = this.http.post<{ access_token: string }>(
-      'http://localhost:3000/auth/login',
+      'http://localhost:3000/users/login',
       {
         email,
         password
@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   getUserProfile(token: string): Observable<User> {
-    const userProfile = this.http.get<User>('http://localhost:3000/profile', {
+    const userProfile = this.http.get<User>('http://localhost:3000/users/profile', {
       headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
     });
 
@@ -60,7 +60,7 @@ export class AuthService {
     token: string
   ): Observable<{ user: Partial<User>; token: string }> {
     const updateUserData = this.http.put<{ user: Partial<User>; token: string }>(
-      'http://localhost:3000/update',
+      'http://localhost:3000/users',
       { ...updateUser },
       { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) }
     );

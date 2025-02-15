@@ -31,5 +31,14 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": false
   },
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*.ts"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.spec.ts",
+    "**/*.mock.ts",
+    "**/setupJest.ts",
+    "**/*.test.ts",
+    "**/test/*"
+  ]
 }

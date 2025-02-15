@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { IVehicleBasicData } from '@project/model/vehicle-form-models/vehicle-forms.model';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Vehicle } from 'src/+state/models/vehicle.model';
 
@@ -14,7 +15,9 @@ export class VehicleService {
   }
 
   getVehicleBrands(): Observable<string[]> {
-    return this.http.get<string[]>(`http://localhost:3000/vehicles/brands`);
+    const req = this.http.get<string[]>(`http://localhost:3000/vehicles/brands`);
+
+    return req;
   }
 
   addVehicle(userId: string, vehicle: any, token: string): Observable<string> {
@@ -108,13 +111,7 @@ export class VehicleService {
 }
 
 interface VehicleForm {
-  vehicleMainInfo: {
-    brand: string;
-    model: string;
-    place: string;
-    price: number | null;
-    description: string;
-  };
+  vehicleMainInfo: IVehicleBasicData;
   vehicleSpecInfo: {
     fuelConsumption: {
       units: string;

@@ -29,7 +29,6 @@ export class UserVehiclesEffects {
       this.actions$.pipe(
         ofType(UserVehiclesActions.removeVehicle),
         withLatestFrom(this.userFacade.userId$, this.userFacade.userToken$),
-        tap((x) => console.log(x)),
         map(([{ vehicleId }, userId, token]) => ({ vehicleId, userId, token })),
         switchMap(({ vehicleId, userId, token }) =>
           this.vehicleService.removeVehicle(vehicleId, userId, token).pipe(

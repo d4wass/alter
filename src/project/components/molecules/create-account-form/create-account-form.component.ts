@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ControlsOf, FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
@@ -9,6 +9,8 @@ interface IAccount {
   lastName: string;
   email: string;
   password: string;
+  passwordConfirm: string;
+  mobile: string;
   isTerms: boolean;
   isNewsletter?: boolean;
 }
@@ -17,20 +19,22 @@ interface IAccount {
   selector: 'app-create-account-form',
   template: `
     <div>
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <form [formGroup]="form" (ngSubmit)="handleSubmit.emit($event)">
         <div class="personal-info">
           <div class="personal-inputs">
             <input
               placeholder="First name"
               formControlName="firstName"
               [ngClass]="{
-                invalid: !this.controls.firstName.valid && this.controls.firstName.dirty
+                invalid: !this.form.controls.firstName.valid && this.form.controls.firstName.dirty
               }"
             />
             <input
               placeholder="Last name"
               formControlName="lastName"
-              [ngClass]="{ invalid: !this.controls.lastName.valid && this.controls.lastName.dirty }"
+              [ngClass]="{
+                invalid: !this.form.controls.lastName.valid && this.form.controls.lastName.dirty
+              }"
             />
           </div>
           <span>Enter your name as it appears on your driver’s license</span>
@@ -39,13 +43,34 @@ interface IAccount {
           <input
             placeholder="Email"
             formControlName="email"
-            [ngClass]="{ invalid: !this.controls.email.valid && this.controls.email.dirty }"
+            [ngClass]="{
+              invalid: !this.form.controls.email.valid && this.form.controls.email.dirty
+            }"
           />
           <input
             type="password"
             placeholder="Password"
             formControlName="password"
-            [ngClass]="{ invalid: !this.controls.password.valid && this.controls.password.dirty }"
+            [ngClass]="{
+              invalid: !this.form.controls.password.valid && this.form.controls.password.dirty
+            }"
+          />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            formControlName="paswordConfirm"
+            [ngClass]="{
+              invalid:
+                !this.form.controls.passwordConfirm.valid &&
+                this.form.controls.passwordConfirm.dirty
+            }"
+          />
+          <input
+            placeholder="Phone"
+            formControlName="mobile"
+            [ngClass]="{
+              invalid: !this.form.controls.mobile.valid && this.form.controls.mobile.dirty
+            }"
           />
         </div>
         <div class="checkbox-terms">
@@ -55,7 +80,8 @@ interface IAccount {
               for="terms"
               [ngClass]="{
                 unchecked:
-                  (this.controls.isTerms.invalid$ | async) && (this.controls.isTerms.dirty$ | async)
+                  (this.form.controls.isTerms.invalid$ | async) &&
+                  (this.form.controls.isTerms.dirty$ | async)
               }"
               >I agree to the terms of service and privacy policy.</label
             >
@@ -80,21 +106,7 @@ interface IAccount {
   styleUrls: ['./create-account-form.component.scss']
 })
 export class CreateAccountFormComponent {
-  form = new FormGroup<ControlsOf<IAccount>>({
-    firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    lastName: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    email: new FormControl('', [Validators.email, Validators.required]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    isTerms: new FormControl(false, [Validators.required, Validators.requiredTrue]),
-    isNewsletter: new FormControl(false)
-  });
-  controls = this.form.controls;
-
-  constructor(private store: Store) {}
-
-  onSubmit() {
-    console.log(this.form.value);
-    const user = this.form.value;
-    this.store.dispatch(UserActions.createUser({ user }));
-  }
+  @Output() handleSubmit = new EventEmitter<any>();
+  @Input() form!: FormGroup<ControlsOf<IAccount>>;
+  @Input() invalid!: any;
 }

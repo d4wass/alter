@@ -7,12 +7,12 @@
 
 .search-label {
   font-weight: base.$bold-font;
-  margin-bottom: 10px;
 }
 .search-input {
   border: none;
   outline: none;
   width: 100%;
+  border-top: 10px transparent solid;
 
   &-noLabel {
     margin-top: 29px;
