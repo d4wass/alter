@@ -1,0 +1,14 @@
+# Node
+node_modules
+dist
+
+# IDE ignore
+.idea
+.vscode
+
+# Env files
+.env
+
+# Git ignore
+.git
+.gitignore

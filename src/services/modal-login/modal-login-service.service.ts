@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ModalLoginService {
   isVisible$ = new BehaviorSubject(false);
-  isLogin$ = new BehaviorSubject(true);
+  isLoginView$ = new BehaviorSubject(true);
   isEmailView$ = new BehaviorSubject(false);
 
   constructor() {}
@@ -16,7 +16,7 @@ export class ModalLoginService {
   }
 
   setModalViewState(isLogin: boolean) {
-    this.isLogin$.next(isLogin);
+    this.isLoginView$.next(isLogin);
   }
 
   setEmailViewForModal(isEmail: boolean) {
@@ -26,6 +26,6 @@ export class ModalLoginService {
   setModalToInitialState() {
     this.isVisible$.next(false);
     this.isEmailView$.next(false);
-    this.isLogin$.next(true);
+    this.isLoginView$.next(true);
   }
 }
