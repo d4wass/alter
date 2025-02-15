@@ -3,8 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@project/*": ["src/project/*"], // This maps @project to the src/app/project directory
-      "@components/*": ["src/project/components/*"] // This maps @components to the src/app/components directory
+      "@project/*": ["src/project/*"],
+      "@components/*": ["src/project/components/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -17,13 +17,14 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "module": "es2020",
     "lib": ["es2018", "dom"],
     "allowSyntheticDefaultImports": true,
     "types": ["node", "jest"],
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -32,13 +33,5 @@
     "strictTemplates": false
   },
   "include": ["src/**/*.ts"],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.spec.ts",
-    "**/*.mock.ts",
-    "**/setupJest.ts",
-    "**/*.test.ts",
-    "**/test/*"
-  ]
+  "exclude": ["node_modules", "dist"]
 }

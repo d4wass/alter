@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { DatepickerComponent } from './datepicker.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { MatMomentDateModule, MomentDateModule } from '@angular/material-moment-adapter';
 import { MatNativeDateModule, MAT_DATE_FORMATS } from '@angular/material/core';
 

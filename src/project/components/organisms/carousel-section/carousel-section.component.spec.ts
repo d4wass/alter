@@ -1,4 +1,4 @@
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
 import { createComponentFactory, Spectator } from '@ngneat/spectator';
 import { MockComponent, MockModule } from 'ng-mocks';
 import { CarCardComponent } from '../../molecules/car-card/car-card.component';
