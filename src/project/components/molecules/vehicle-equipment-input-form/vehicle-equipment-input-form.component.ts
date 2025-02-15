@@ -7,7 +7,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { MatTooltip } from '@angular/material/tooltip';
+import { MatLegacyTooltip as MatTooltip } from '@angular/material/legacy-tooltip';
 import { FormControl } from '@ngneat/reactive-forms';
 import { EquipmentValidationMsg } from 'src/+state/models/user.model';
 import { isNonNull } from '../../../../utils/helpers';
