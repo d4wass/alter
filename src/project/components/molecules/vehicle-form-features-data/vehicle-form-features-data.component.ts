@@ -9,8 +9,8 @@ import {
 import { ControlsOf, FormControl, FormGroup } from '@ngneat/reactive-forms';
 
 @Component({
-  selector: 'app-vehicle-form-features-data',
-  template: `
+    selector: 'app-vehicle-form-features-data',
+    template: `
     <form [formGroup]="formGroupCtrl">
       <h2>Features</h2>
       <form formGroupName="engine">
@@ -52,7 +52,8 @@ import { ControlsOf, FormControl, FormGroup } from '@ngneat/reactive-forms';
       ></app-vehicle-equipment-input-form>
     </form>
   `,
-  styleUrls: ['./vehicle-form-features-data.component.scss']
+    styleUrls: ['./vehicle-form-features-data.component.scss'],
+    standalone: false
 })
 export class VehicleFormFeaturesDataComponent implements OnInit {
   @Input() formGroupCtrl!: FormGroup<ControlsOf<any>>;

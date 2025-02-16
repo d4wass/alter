@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-vehicle-feature-radio-input-form',
-  template: `
+    selector: 'app-vehicle-feature-radio-input-form',
+    template: `
     <form>
       <h4>{{ title }}</h4>
       <mat-radio-group *ngFor="let type of types" [formControl]="formCtrl" [(ngModel)]="name">
@@ -11,7 +11,8 @@ import { FormControl } from '@angular/forms';
       </mat-radio-group>
     </form>
   `,
-  styleUrls: ['./vehicle-feature-radio-input-form.component.scss']
+    styleUrls: ['./vehicle-feature-radio-input-form.component.scss'],
+    standalone: false
 })
 export class VehicleFeatureRadioInputFormComponent {
   @Input() title!: string;

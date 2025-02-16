@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 import { LanguageSelectService } from 'src/services/language-select/language-select.service';
 
 @Component({
-  selector: 'app-language-option',
-  template: `
+    selector: 'app-language-option',
+    template: `
     <div (click)="handleRadioSelect($event)">
       <div class="option">
         <img src="{{ languageIcon }}" />
@@ -12,7 +12,8 @@ import { LanguageSelectService } from 'src/services/language-select/language-sel
       </div>
     </div>
   `,
-  styleUrls: ['./language-option.component.scss']
+    styleUrls: ['./language-option.component.scss'],
+    standalone: false
 })
 export class LanguageOptionComponent {
   @Input() labelValue!: string;

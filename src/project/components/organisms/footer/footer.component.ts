@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-footer',
-  template: `
+    selector: 'app-footer',
+    template: `
     <div class="wrapper">
       <div class="content">
         <div class="wrapper-nav">
@@ -48,7 +48,8 @@ import { Component } from '@angular/core';
       <a href="#">Sitemap</a>
     </div>
   `,
-  styleUrls: ['./footer.component.scss']
+    styleUrls: ['./footer.component.scss'],
+    standalone: false
 })
 export class FooterComponent {
   footerMenus = [

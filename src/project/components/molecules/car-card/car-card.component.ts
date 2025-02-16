@@ -6,8 +6,8 @@ interface CarCard {
 }
 
 @Component({
-  selector: 'app-car-card',
-  template: `
+    selector: 'app-car-card',
+    template: `
     <div class="car-card">
       <img class="car-card-img" src="{{ carCard.img }}" alt="" />
       <div class="car-card-title">
@@ -15,7 +15,8 @@ interface CarCard {
       </div>
     </div>
   `,
-  styleUrls: ['./car-card.component.scss']
+    styleUrls: ['./car-card.component.scss'],
+    standalone: false
 })
 export class CarCardComponent {
   @Input() carCard!: CarCard;

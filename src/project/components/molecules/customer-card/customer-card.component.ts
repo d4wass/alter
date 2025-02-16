@@ -11,8 +11,8 @@ export interface CustomerReview {
 }
 
 @Component({
-  selector: 'app-review-card',
-  template: `
+    selector: 'app-review-card',
+    template: `
     <div class="wrapper-card">
       <div class="content-card">
         <div class="header-card">
@@ -35,7 +35,8 @@ export interface CustomerReview {
       </div>
     </div>
   `,
-  styleUrls: ['./customer-card.component.scss']
+    styleUrls: ['./customer-card.component.scss'],
+    standalone: false
 })
 export class ReviewCardComponent implements OnInit {
   @Input() review!: CustomerReview;

@@ -27,8 +27,8 @@ const worksItems = [
 ];
 
 @Component({
-  selector: 'app-how-works-section',
-  template: `
+    selector: 'app-how-works-section',
+    template: `
     <div class="wrapper">
       <h2>Reservation Steps:</h2>
       <div class="content">
@@ -44,7 +44,8 @@ const worksItems = [
       </div>
     </div>
   `,
-  styleUrls: ['./how-works-section.component.scss']
+    styleUrls: ['./how-works-section.component.scss'],
+    standalone: false
 })
 export class HowWorksSectionComponent {
   worksItems: WorkItems[] = worksItems;

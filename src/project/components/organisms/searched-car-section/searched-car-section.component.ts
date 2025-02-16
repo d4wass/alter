@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { VehicleFacade } from 'src/+state/facade/vehicle.facade';
 
 @Component({
-  selector: 'app-searched-car-section',
-  template: `
+    selector: 'app-searched-car-section',
+    template: `
     <div class="wrapper">
       <ng-container *ngIf="vehicleFacade.getIsVehicleFound() | async">
         <app-searched-car-card
@@ -18,7 +18,8 @@ import { VehicleFacade } from 'src/+state/facade/vehicle.facade';
       </ng-container>
     </div>
   `,
-  styleUrls: ['./searched-car-section.component.scss']
+    styleUrls: ['./searched-car-section.component.scss'],
+    standalone: false
 })
 export class SearchedCarSectionComponent {
   constructor(public vehicleFacade: VehicleFacade) {}

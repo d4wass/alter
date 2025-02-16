@@ -9,10 +9,7 @@ import { dataTest } from '../../../../../utils/data-test';
 import { VehicleFormComponent } from './vehicle-form.component';
 import { mockVehicleFormData } from '../../../../../utils/mocks/mockVehicleFormData';
 import { VehicleSuccessCreateModalComponent } from '../../../../components/molecules/vehicle-success-create-modal/vehicle-success-create-modal.component';
-import {
-  MOCK_USER_FACADE,
-  UserFacadeMock
-} from '../../../../../+state/facade/user/user.facade.mock';
+import { MOCK_USER_FACADE, UserFacadeMock } from '../../../../../utils/mocks/user.facade.mock';
 
 describe('VehicleFormComponent', () => {
   let component: VehicleFormComponent;

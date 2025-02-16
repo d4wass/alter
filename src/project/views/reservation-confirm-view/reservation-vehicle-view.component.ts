@@ -11,8 +11,8 @@ import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-reservation-vehicle-modal',
-  template: `
+    selector: 'app-reservation-vehicle-modal',
+    template: `
     <div class="wrapper">
       <div class="content">
         <h3>Your reservation</h3>
@@ -56,7 +56,8 @@ import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
       </div>
     </div>
   `,
-  styleUrls: ['./reservation-vehicle-view.component.scss']
+    styleUrls: ['./reservation-vehicle-view.component.scss'],
+    standalone: false
 })
 export class ReservationVehicleViewComponent implements OnInit {
   reservation!: PopulatedReservation;

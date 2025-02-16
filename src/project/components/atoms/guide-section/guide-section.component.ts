@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-guide-section',
-  template: `
+    selector: 'app-guide-section',
+    template: `
     <div class="wrapper">
       <h1>Guides to help you learn & earn</h1>
       <div class="guides-container">
@@ -15,7 +15,8 @@ import { Component } from '@angular/core';
       </div>
     </div>
   `,
-  styleUrls: ['./guide-section.component.scss']
+    styleUrls: ['./guide-section.component.scss'],
+    standalone: false
 })
 export class GuideSectionComponent {
   guidesItems = [

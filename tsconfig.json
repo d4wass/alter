@@ -6,7 +6,6 @@
       "@project/*": ["src/project/*"],
       "@components/*": ["src/project/components/*"]
     },
-    "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitReturns": true,
@@ -33,5 +32,5 @@
     "strictTemplates": false
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "src/utils/**/*.ts"]
 }

@@ -7,8 +7,8 @@ import { Reservation } from 'src/+state/models/reservation.model';
 import { ReservationActions } from 'src/+state/reservation/reservation.actions';
 
 @Component({
-  selector: 'app-reservation-user-list',
-  template: `
+    selector: 'app-reservation-user-list',
+    template: `
     <table>
       <thead>
         <tr>
@@ -33,7 +33,8 @@ import { ReservationActions } from 'src/+state/reservation/reservation.actions';
       </tbody>
     </table>
   `,
-  styleUrls: ['./reservation-user-list.component.scss']
+    styleUrls: ['./reservation-user-list.component.scss'],
+    standalone: false
 })
 @UntilDestroy()
 export class ReservationUserListComponent implements OnInit {

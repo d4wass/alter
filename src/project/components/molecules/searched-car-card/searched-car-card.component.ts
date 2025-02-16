@@ -7,8 +7,8 @@ import { UnshplashService, UnsplashImg } from 'src/services/unsplash-service/uns
 
 @UntilDestroy()
 @Component({
-  selector: 'app-searched-car-card',
-  template: `
+    selector: 'app-searched-car-card',
+    template: `
     <div class="wrapper" (click)="showVehicleDetails()">
       <div
         class="card-image"
@@ -34,8 +34,9 @@ import { UnshplashService, UnsplashImg } from 'src/services/unsplash-service/uns
       </div>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./searched-car-card.component.scss']
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrls: ['./searched-car-card.component.scss'],
+    standalone: false
 })
 export class SearchedCarCardComponent implements OnInit {
   @Input() vehicle!: Vehicle;

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { urlList } from '../../../../router/routes';
 
 @Component({
-  selector: 'app-navigation-bar',
-  template: `
+    selector: 'app-navigation-bar',
+    template: `
     <nav>
       <ul>
         <li *ngFor="let item of urlList">
@@ -12,7 +12,8 @@ import { urlList } from '../../../../router/routes';
       </ul>
     </nav>
   `,
-  styleUrls: ['./navigation-bar.component.scss']
+    styleUrls: ['./navigation-bar.component.scss'],
+    standalone: false
 })
 export class NavigationBarComponent {
   urlList = urlList;

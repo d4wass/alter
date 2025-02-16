@@ -4,7 +4,7 @@ import { CarouselSectionComponent } from './carousel-section.component';
 import { CarCardComponent } from '../../molecules/car-card/car-card.component';
 import { CarouselAnimationDirective } from '../../../directives/carousel-animation/carousel-animation.directive';
 import { ReviewCardComponent } from '../../molecules/customer-card/customer-card.component';
-import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [

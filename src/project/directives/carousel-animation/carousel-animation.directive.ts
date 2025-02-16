@@ -17,7 +17,8 @@ import {
 import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 
 @Directive({
-  selector: '[appCarouselAnimation]'
+    selector: '[appCarouselAnimation]',
+    standalone: false
 })
 export class CarouselAnimationDirective implements AfterViewInit, OnInit, OnDestroy {
   private allCarouselItems: HTMLElement[] = [];

@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@ngneat/reactive-forms';
 @Component({
-  selector: 'app-search-header-input',
-  template: `
+    selector: 'app-search-header-input',
+    template: `
     <form class="search">
       <label for="where" class="search-label" *ngIf="labelValue" data-test="search-label">{{
         labelValue
@@ -17,7 +17,8 @@ import { FormControl } from '@ngneat/reactive-forms';
       />
     </form>
   `,
-  styleUrls: ['./search-header-input.component.scss']
+    styleUrls: ['./search-header-input.component.scss'],
+    standalone: false
 })
 export class SearchHeaderInputComponent {
   @Input() labelValue!: string;

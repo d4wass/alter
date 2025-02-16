@@ -6,8 +6,8 @@ import { UserFacade } from 'src/+state/facade/user/user.facade';
 import { ModalLoginService } from 'src/services/modal-login/modal-login-service.service';
 
 @Component({
-  selector: 'app-navigation',
-  template: `
+    selector: 'app-navigation',
+    template: `
     <div>
       <a routerLink="/">
         <img src="assets/Logo.svg" alt="logo" class="logo" />
@@ -20,7 +20,8 @@ import { ModalLoginService } from 'src/services/modal-login/modal-login-service.
       ></app-login-btn>
     </div>
   `,
-  styleUrls: ['./navigation.component.scss']
+    styleUrls: ['./navigation.component.scss'],
+    standalone: false
 })
 export class NavigationComponent {
   constructor(private store: Store, private userFacade: UserFacade) {}

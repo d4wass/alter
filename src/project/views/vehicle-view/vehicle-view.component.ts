@@ -12,10 +12,11 @@ import { ReservationActions } from 'src/+state/reservation/reservation.actions';
 import moment from 'moment';
 
 @Component({
-  selector: 'app-vehicle-view',
-  templateUrl: './vehicle-view.component.html',
-  styleUrls: ['./vehicle-view.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-vehicle-view',
+    templateUrl: './vehicle-view.component.html',
+    styleUrls: ['./vehicle-view.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class VehicleViewComponent implements OnInit {
   vehicle?: Vehicle;

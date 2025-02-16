@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { VehiclesActions } from '../../../../+state/vehicles/vehicle.actions';
 
 @Component({
-  selector: 'app-main-search-form',
-  template: `
+    selector: 'app-main-search-form',
+    template: `
     <div class="wrapper">
       <form [formGroup]="searchForm" class="input-wrapper">
         <div>
@@ -34,7 +34,8 @@ import { VehiclesActions } from '../../../../+state/vehicles/vehicle.actions';
       </form>
     </div>
   `,
-  styleUrls: ['./main-search-form.component.scss']
+    styleUrls: ['./main-search-form.component.scss'],
+    standalone: false
 })
 export class MainSearchFormComponent {
   constructor(private store: Store) {}

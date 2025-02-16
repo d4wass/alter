@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-faq-section',
-  template: `
+    selector: 'app-faq-section',
+    template: `
     <div class="wrapper">
       <div class="faq-content">
         <h1>Frequently asked questions</h1>
@@ -17,7 +17,8 @@ import { Component } from '@angular/core';
       <div class="faq-img-wrapper"></div>
     </div>
   `,
-  styleUrls: ['./faq-section.component.scss']
+    styleUrls: ['./faq-section.component.scss'],
+    standalone: false
 })
 export class FaqSectionComponent {
   questions = [

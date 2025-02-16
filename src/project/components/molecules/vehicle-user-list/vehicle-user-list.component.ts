@@ -4,8 +4,8 @@ import { UserFacade } from 'src/+state/facade/user/user.facade';
 import { Vehicle } from 'src/+state/models/vehicle.model';
 
 @Component({
-  selector: 'app-vehicle-user-list',
-  template: `
+    selector: 'app-vehicle-user-list',
+    template: `
     <table>
       <thead>
         <tr>
@@ -26,7 +26,8 @@ import { Vehicle } from 'src/+state/models/vehicle.model';
       </tbody>
     </table>
   `,
-  styleUrls: ['./vehicle-user-list.component.scss']
+    styleUrls: ['./vehicle-user-list.component.scss'],
+    standalone: false
 })
 export class VehicleUserListComponent implements OnInit {
   @Output() removeEmitter: EventEmitter<string> = new EventEmitter<string>();

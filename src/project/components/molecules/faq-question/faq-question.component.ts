@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-faq-question',
-  template: `
+    selector: 'app-faq-question',
+    template: `
     <div class="faq-wrapper">
       <div class="faq-header">
         <app-faq-title [title]="questionItem.title" [titleNumber]="questionNumber"></app-faq-title>
@@ -13,7 +13,8 @@ import { Component, Input } from '@angular/core';
       </div>
     </div>
   `,
-  styleUrls: ['./faq-question.component.scss']
+    styleUrls: ['./faq-question.component.scss'],
+    standalone: false
 })
 export class FaqQuestionComponent {
   @Input() questionItem!: { title: string; content: string };

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-login-btn',
-  template: `
+    selector: 'app-login-btn',
+    template: `
     <ng-container *ngIf="!isAuthorized; then loginBtn; else userBtn"></ng-container>
     <ng-template #loginBtn>
       <button class="login-btn" (click)="this.isClicked.emit(true)" data-test="login-btn">
@@ -17,7 +17,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       </button>
     </ng-template>
   `,
-  styleUrls: ['./login-btn.component.scss']
+    styleUrls: ['./login-btn.component.scss'],
+    standalone: false
 })
 export class LoginBtnComponent {
   @Output() isClicked = new EventEmitter<boolean>();

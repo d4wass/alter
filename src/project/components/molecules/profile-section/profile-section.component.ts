@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-profile-section',
-  template: `
+    selector: 'app-profile-section',
+    template: `
     <div class="profile-section">
       <div class="profile-info-wrapper">
         <div class="profile-title">
@@ -27,7 +27,8 @@ import { Observable } from 'rxjs';
       </div>
     </div>
   `,
-  styleUrls: ['./profile-section.component.scss']
+    styleUrls: ['./profile-section.component.scss'],
+    standalone: false
 })
 export class ProfileSectionComponent {
   userName$!: Observable<string | undefined>;

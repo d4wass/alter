@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-footer-menu',
-  template: `
+    selector: 'app-footer-menu',
+    template: `
     <div class="wrapper">
       <h3>{{ menuTitle }}</h3>
       <ul>
@@ -12,7 +12,8 @@ import { Component, Input } from '@angular/core';
       </ul>
     </div>
   `,
-  styleUrls: ['./footer-menu.component.scss']
+    styleUrls: ['./footer-menu.component.scss'],
+    standalone: false
 })
 export class FooterMenuComponent {
   @Input() menuTitle!: string;

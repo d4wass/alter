@@ -7,7 +7,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { MatLegacyTooltip as MatTooltip } from '@angular/material/legacy-tooltip';
+import { MatTooltip } from '@angular/material/tooltip';
 import { FormControl } from '@ngneat/reactive-forms';
 import { EquipmentValidationMsg } from 'src/+state/models/user.model';
 import { isNonNull } from '../../../../utils/helpers';
@@ -42,7 +42,8 @@ import { isNonNull } from '../../../../utils/helpers';
     </div>
   `,
   styleUrls: ['./vehicle-equipment-input-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class VehicleEquipmentInputFormComponent {
   @ViewChild('equipmentInput') inputElement!: ElementRef;
