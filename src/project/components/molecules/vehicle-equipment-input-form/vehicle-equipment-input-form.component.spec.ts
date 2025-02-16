@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import { dataTest } from '../../../../utils/data-test';
 import { VehicleEquipmentInputFormComponent } from './vehicle-equipment-input-form.component';

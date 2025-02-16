@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-vehicle-success-create-modal',
-  template: `
+    selector: 'app-vehicle-success-create-modal',
+    template: `
     <ng-container class="wrapper" *ngIf="isCreated">
       <div class="wrapper-modal">
         <h2>Your Vehicle was successfully created</h2>
@@ -10,7 +10,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       </div>
     </ng-container>
   `,
-  styleUrls: ['./vehicle-success-create-modal.component.scss']
+    styleUrls: ['./vehicle-success-create-modal.component.scss'],
+    standalone: false
 })
 export class VehicleSuccessCreateModalComponent {
   @Input() isCreated: boolean = false;

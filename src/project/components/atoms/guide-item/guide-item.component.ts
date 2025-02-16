@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-guide-item',
-  template: `
+    selector: 'app-guide-item',
+    template: `
     <div class="wrapper">
       <div class="img-container">
         <img src="{{ graphic }}" *ngIf="graphic" data-test="image" />
@@ -11,7 +11,8 @@ import { Component, Input } from '@angular/core';
       <p data-test="content">{{ content }}</p>
     </div>
   `,
-  styleUrls: ['./guide-item.component.scss']
+    styleUrls: ['./guide-item.component.scss'],
+    standalone: false
 })
 export class GuideItemComponent {
   @Input() title!: string;

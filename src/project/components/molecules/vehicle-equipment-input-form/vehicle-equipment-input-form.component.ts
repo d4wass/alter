@@ -42,7 +42,8 @@ import { isNonNull } from '../../../../utils/helpers';
     </div>
   `,
   styleUrls: ['./vehicle-equipment-input-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class VehicleEquipmentInputFormComponent {
   @ViewChild('equipmentInput') inputElement!: ElementRef;

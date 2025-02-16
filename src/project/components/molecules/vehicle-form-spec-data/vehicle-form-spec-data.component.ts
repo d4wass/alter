@@ -3,8 +3,8 @@ import { ControlsOf, FormGroup } from '@ngneat/reactive-forms';
 import { IVehicleSpecificationData } from 'src/project/model/vehicle-form-models/vehicle-forms.model';
 
 @Component({
-  selector: 'app-vehicle-form-spec-data',
-  template: `
+    selector: 'app-vehicle-form-spec-data',
+    template: `
     <form [formGroup]="formGroupCtrl" class="wrapper">
       <h2>Specification</h2>
       <mat-form-field>
@@ -53,7 +53,8 @@ import { IVehicleSpecificationData } from 'src/project/model/vehicle-form-models
       <mat-checkbox class="example-margin">Is cancelation of reservation is free?</mat-checkbox>
     </form>
   `,
-  styleUrls: ['./vehicle-form-spec-data.component.scss']
+    styleUrls: ['./vehicle-form-spec-data.component.scss'],
+    standalone: false
 })
 export class VehicleFormSpecDataComponent {
   @Input() formGroupCtrl!: FormGroup<ControlsOf<IVehicleSpecificationData>>;

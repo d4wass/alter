@@ -3,8 +3,8 @@ import { ControlsOf, FormGroup } from '@ngneat/reactive-forms';
 import { IVehicleBasicData } from 'src/project/model/vehicle-form-models/vehicle-forms.model';
 
 @Component({
-  selector: 'app-vehicle-form-main-data',
-  template: `
+    selector: 'app-vehicle-form-main-data',
+    template: `
     <form [formGroup]="formGroupCtrl">
       <h2>Vehicle Info</h2>
       <mat-form-field appearance="fill">
@@ -39,7 +39,8 @@ import { IVehicleBasicData } from 'src/project/model/vehicle-form-models/vehicle
       </mat-form-field>
     </form>
   `,
-  styleUrls: ['./vehicle-form-main-data.component.scss']
+    styleUrls: ['./vehicle-form-main-data.component.scss'],
+    standalone: false
 })
 export class VehicleFormMainDataComponent {
   @Input() formGroupCtrl!: FormGroup<ControlsOf<IVehicleBasicData>>;

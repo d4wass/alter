@@ -8,8 +8,8 @@ import { AppActions } from 'src/+state/app-state/app-state.actions';
 import { filter, map, Observable, tap, withLatestFrom } from 'rxjs';
 
 @Component({
-  selector: 'app-login-modal',
-  template: `
+    selector: 'app-login-modal',
+    template: `
     <ng-container *ngIf="isVisible$ | async">
       <div class="wrapper" appLoginModal>
         <div class="wrapper-modal" appLoginModal>
@@ -92,7 +92,8 @@ import { filter, map, Observable, tap, withLatestFrom } from 'rxjs';
       </div>
     </ng-container>
   `,
-  styleUrls: ['./login-modal.component.scss']
+    styleUrls: ['./login-modal.component.scss'],
+    standalone: false
 })
 export class LoginModalComponent implements OnInit {
   isVisible$?: Observable<boolean>;

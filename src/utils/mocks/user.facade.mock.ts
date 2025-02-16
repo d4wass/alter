@@ -1,7 +1,7 @@
 import { Provider } from '@angular/core';
 import { BehaviorSubject, EMPTY } from 'rxjs';
-import { FacadeMock } from '../../facade.mock';
-import { UserFacade } from './user.facade';
+import { FacadeMock } from '../facade.mock';
+import { UserFacade } from '../../+state/facade/user/user.facade';
 
 export class UserFacadeMock implements FacadeMock<Partial<UserFacade>> {
   store = EMPTY as any;

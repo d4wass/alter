@@ -16,8 +16,8 @@ interface IAccount {
 }
 
 @Component({
-  selector: 'app-create-account-form',
-  template: `
+    selector: 'app-create-account-form',
+    template: `
     <div>
       <form [formGroup]="form" (ngSubmit)="handleSubmit.emit($event)">
         <div class="personal-info">
@@ -103,7 +103,8 @@ interface IAccount {
       <!-- <mat-progress-spinner mode="indeterminate"></mat-progress-spinner> -->
     </div>
   `,
-  styleUrls: ['./create-account-form.component.scss']
+    styleUrls: ['./create-account-form.component.scss'],
+    standalone: false
 })
 export class CreateAccountFormComponent {
   @Output() handleSubmit = new EventEmitter<any>();

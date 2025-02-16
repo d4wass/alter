@@ -68,7 +68,7 @@ import { GlobalInterceptorModuleModule } from 'src/interceptors/global-intercept
     ]),
     StoreDevtoolsModule.instrument({
       maxAge: 500
-    }),
+    , connectInZone: true}),
     BrowserAnimationsModule
   ],
   providers: [UserProfileGuard, VehicleResolver, ReservationResolver],

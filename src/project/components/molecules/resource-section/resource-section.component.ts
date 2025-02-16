@@ -28,8 +28,8 @@ const resourceItems = [
 ];
 
 @Component({
-  selector: 'app-resource-section',
-  template: `
+    selector: 'app-resource-section',
+    template: `
     <div class="wrapper">
       <h1>Resources</h1>
       <div class="resources-container">
@@ -55,7 +55,8 @@ const resourceItems = [
       </div>
     </div>
   `,
-  styleUrls: ['./resource-section.component.scss']
+    styleUrls: ['./resource-section.component.scss'],
+    standalone: false
 })
 export class ResourceSectionComponent {
   resourceItems = resourceItems;

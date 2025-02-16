@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-how-work-item',
-  template: `
+    selector: 'app-how-work-item',
+    template: `
     <div class="wrapper">
       <div class="indicator">
         <p *ngIf="itemNumber" data-test="indicator">{{ itemNumber }}</p>
@@ -13,7 +13,8 @@ import { Component, Input } from '@angular/core';
       </div>
     </div>
   `,
-  styleUrls: ['./how-work-item.component.scss']
+    styleUrls: ['./how-work-item.component.scss'],
+    standalone: false
 })
 export class HowWorkItemComponent {
   @Input() itemNumber?: string;

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-cta-section',
-  template: `
+    selector: 'app-cta-section',
+    template: `
     <div class="wrapper">
       <div class="span-container">
         <span class="first"></span>
@@ -20,7 +20,8 @@ import { Component } from '@angular/core';
       </div>
     </div>
   `,
-  styleUrls: ['./cta-section.component.scss']
+    styleUrls: ['./cta-section.component.scss'],
+    standalone: false
 })
 export class CtaSectionComponent {
   constructor() {}

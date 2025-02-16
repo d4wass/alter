@@ -4,8 +4,8 @@ import { CarCardType, CardData, ReviewCardType } from 'src/project/model/custome
 import { CarouselEnum } from './carousel.utils';
 
 @Component({
-  selector: 'app-carousel-section',
-  template: `
+    selector: 'app-carousel-section',
+    template: `
     <div class="carousel-section">
       <h1>{{ title }}</h1>
       <div class="carousel-content" appCarouselAnimation>
@@ -37,8 +37,9 @@ import { CarouselEnum } from './carousel.utils';
       </div>
     </ng-template>
   `,
-  styleUrls: ['./carousel-section.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    styleUrls: ['./carousel-section.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class CarouselSectionComponent {
   private _items!: Array<CardData<ReviewCardType | CarCardType>>;
