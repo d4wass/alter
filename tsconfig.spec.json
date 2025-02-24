@@ -7,8 +7,9 @@
     "module": "CommonJS",
     "allowJs": true,
     "emitDecoratorMetadata": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "target": "ES2022"
   },
-  "files": ["src/polyfills.ts", "src/setupJest.ts", "src/test.ts"],
+  "files": ["src/polyfills.ts", "src/setup.jest.ts"],
   "include": ["src/**/*.spec.ts", "src/**/*.test.ts", "src/**/*.mock.ts", "src/**/*.d.ts"]
 }

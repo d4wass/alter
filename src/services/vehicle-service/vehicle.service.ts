@@ -3,19 +3,21 @@ import { Injectable } from '@angular/core';
 import { IVehicleBasicData } from '@project/model/vehicle-form-models/vehicle-forms.model';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Vehicle } from 'src/+state/models/vehicle.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VehicleService {
+  private readonly apiUrl = environment.apiUrl;
   constructor(private readonly http: HttpClient) {}
 
   getVehicle(id: string | null | number): Observable<Vehicle> {
-    return this.http.get<Vehicle>(`http://localhost:3000/vehicle/${id}`);
+    return this.http.get<Vehicle>(`${this.apiUrl}/vehicle/${id}`);
   }
 
   getVehicleBrands(): Observable<string[]> {
-    const req = this.http.get<string[]>(`http://localhost:3000/vehicles/brands`);
+    const req = this.http.get<string[]>(`${this.apiUrl}/vehicles/brands`);
 
     return req;
   }
@@ -25,7 +27,7 @@ export class VehicleService {
 
     const vehicleId = this.http
       .post<string>(
-        `http://localhost:3000/host/addVehicle`,
+        `${this.apiUrl}/host/addVehicle`,
         {
           vehicle: convertedVehicle,
           userId
@@ -45,7 +47,7 @@ export class VehicleService {
   }
 
   removeVehicle(vehicleId: string, userId: string, token: string): Observable<any> {
-    return this.http.delete<any>(`http://localhost:3000/host/removeVehicle`, {
+    return this.http.delete<any>(`${this.apiUrl}/host/removeVehicle`, {
       body: { vehicleId, userId },
       headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
     });

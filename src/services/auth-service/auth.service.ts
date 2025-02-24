@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User, UserDataToUpdate, UserDataUpdate } from 'src/+state/models/user.model';
+import { User, UserDataToUpdate, UserDataUpdate } from '../../+state/models/user.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private readonly apiUrl = environment.apiUrl;
   constructor(private readonly http: HttpClient) {}
 
+  //TODO: is it necessary or maybe is a bug to use Partial<User> here?
   createUser(user: Partial<User>): Observable<Partial<User>> {
     const { firstName, lastName, email, password } = user;
-    const createdUser = this.http.post('http://localhost:3000/users', {
+    const createdUser = this.http.post(`${this.apiUrl}/users`, {
       firstName,
       lastName,
       email,
@@ -21,18 +24,15 @@ export class AuthService {
   }
 
   loginUser(email: string, password: string): Observable<{ access_token: string }> {
-    const auth_token = this.http.post<{ access_token: string }>(
-      'http://localhost:3000/users/login',
-      {
-        email,
-        password
-      }
-    );
+    const auth_token = this.http.post<{ access_token: string }>(`${this.apiUrl}/users/login`, {
+      email,
+      password
+    });
     return auth_token;
   }
 
   getUserProfile(token: string): Observable<User> {
-    const userProfile = this.http.get<User>('http://localhost:3000/users/profile', {
+    const userProfile = this.http.get<User>(`${this.apiUrl}/users/login/profile`, {
       headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
     });
 
@@ -48,7 +48,7 @@ export class AuthService {
       isPasswordValid: boolean;
       isMobileValid: boolean;
     }>(
-      'http://localhost:3000/validate',
+      `${this.apiUrl}/validate`,
       { updatedData },
       { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) }
     );
@@ -60,7 +60,7 @@ export class AuthService {
     token: string
   ): Observable<{ user: Partial<User>; token: string }> {
     const updateUserData = this.http.put<{ user: Partial<User>; token: string }>(
-      'http://localhost:3000/users',
+      `${this.apiUrl}/users`,
       { ...updateUser },
       { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) }
     );

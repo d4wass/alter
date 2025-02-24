@@ -1,16 +1,17 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PopulatedReservation, Reservation } from 'src/+state/models/reservation.model';
-
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
+  private readonly apiUrl = environment.apiUrl;
   constructor(private http: HttpClient) {}
 
   createVehicleReservation(reservation: Reservation) {
     const response = this.http.post<{ reservationId: string }>(
-      `http://localhost:3000/reservation/create-reservation`,
+      `${this.apiUrl}/reservation/create-reservation`,
       {
         reservation
       }
@@ -21,13 +22,13 @@ export class ReservationService {
 
   getReservation(reservationId: string | null) {
     return this.http.get<{ populateReservation: PopulatedReservation }>(
-      `http://localhost:3000/reservation/${reservationId}`
+      `${this.apiUrl}/reservation/${reservationId}`
     );
   }
 
   confirmReservation(reservationId: string, token: string, userId: string, hostId: string) {
     return this.http.put<{ reservation: any }>(
-      `http://localhost:3000/reservation/confirm-reservation/${reservationId}`,
+      `${this.apiUrl}/reservation/confirm-reservation/${reservationId}`,
       { userId, hostId },
       {
         headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
@@ -36,7 +37,7 @@ export class ReservationService {
   }
 
   cancelReservation(reservationId: string, token: string, userId: string, hostId: string) {
-    return this.http.delete<any>(`http://localhost:3000/reservation/delete`, {
+    return this.http.delete<any>(`${this.apiUrl}/reservation/delete`, {
       headers: new HttpHeaders().set('Authorization', `Bearer ${token}`),
       body: { reservationId, userId, hostId }
     });
