@@ -3,11 +3,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Vehicle } from 'src/+state/models/vehicle.model';
 import { VehicleQuery } from 'src/+state/models/vehicle.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
+  private readonly apiUrl = environment.apiUrl;
   constructor(private http: HttpClient) {}
 
   searchVehicles(query: VehicleQuery): Observable<Vehicle[]> {
@@ -20,6 +22,6 @@ export class SearchService {
       }
     });
 
-    return this.http.get<Vehicle[]>('http://localhost:3000/search', { params });
+    return this.http.get<Vehicle[]>(`${this.apiUrl}/search`, { params });
   }
 }
