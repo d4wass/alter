@@ -2,7 +2,6 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { AppState, APP_FEATURE } from './app-state.reducer';
 
 const appStateFeatureSelector = createFeatureSelector<AppState>(APP_FEATURE);
-const selectAppState = createSelector(appStateFeatureSelector, (state) => state);
 
 const selectIsLoginModalOpen = createSelector(
   appStateFeatureSelector,

@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { CarCardType, CardData, ReviewCardType } from 'src/project/model/customer-card.model';
 import { CarouselEnum } from './carousel.utils';
 
 @Component({
-    selector: 'app-carousel-section',
-    template: `
+  selector: 'app-carousel-section',
+  template: `
     <div class="carousel-section">
       <h1>{{ title }}</h1>
       <div class="carousel-content" appCarouselAnimation>
@@ -37,9 +37,8 @@ import { CarouselEnum } from './carousel.utils';
       </div>
     </ng-template>
   `,
-    styleUrls: ['./carousel-section.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  styleUrls: ['./carousel-section.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselSectionComponent {
   private _items!: Array<CardData<ReviewCardType | CarCardType>>;

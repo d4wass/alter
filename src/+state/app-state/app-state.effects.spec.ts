@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, of, Subject } from 'rxjs';
 import { AppActions } from './app-state.actions';
 import { AppEffects } from './app-state.effects';
 

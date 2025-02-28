@@ -1,8 +1,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-    selector: '[appEquipmentFormDirevtive]',
-    standalone: false
+  selector: '[appEquipmentFormDirevtive]'
 })
 export class EquipmentFormDirevtiveDirective {
   constructor() {}

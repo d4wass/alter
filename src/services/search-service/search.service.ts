@@ -14,7 +14,7 @@ export class SearchService {
 
   searchVehicles(query: VehicleQuery): Observable<Vehicle[]> {
     const { place, fromDate, endDate } = query;
-    let params = new HttpParams({
+    const params = new HttpParams({
       fromObject: {
         place,
         fromDate,

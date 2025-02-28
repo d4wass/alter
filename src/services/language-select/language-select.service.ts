@@ -9,7 +9,7 @@ export class LanguageSelectService {
 
   constructor() {}
 
-  handleOpenSelect(event: string) {}
+  handleOpenSelect() {}
 
   setOption() {}
 }

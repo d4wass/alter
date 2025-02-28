@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup } from '@ngneat/reactive-forms';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { FormControl } from '@ngneat/reactive-forms';
 
 @Component({
-    selector: 'app-datepicker',
-    template: `
+  selector: 'app-datepicker',
+  template: `
     <mat-form-field>
       <mat-label>{{ label }}</mat-label>
       <input matInput [matDatepicker]="picker1" [formControl]="control" />
@@ -11,9 +11,8 @@ import { FormControl, FormGroup } from '@ngneat/reactive-forms';
       <mat-datepicker #picker1></mat-datepicker>
     </mat-form-field>
   `,
-    styleUrls: ['./datepicker.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: false
+  styleUrls: ['./datepicker.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DatepickerComponent {
   @Input() label!: string;

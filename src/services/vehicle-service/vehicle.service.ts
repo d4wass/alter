@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IVehicleBasicData } from '@project/model/vehicle-form-models/vehicle-forms.model';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { Vehicle } from 'src/+state/models/vehicle.model';
 import { environment } from 'src/environments/environment';
 
@@ -22,7 +22,7 @@ export class VehicleService {
     return req;
   }
 
-  addVehicle(userId: string, vehicle: any, token: string): Observable<string> {
+  addVehicle(userId: string, vehicle: VehicleForm, token: string): Observable<string> {
     const convertedVehicle = this.vehicleDataConverter(vehicle);
 
     const vehicleId = this.http
@@ -46,8 +46,8 @@ export class VehicleService {
     return vehicleId;
   }
 
-  removeVehicle(vehicleId: string, userId: string, token: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/host/removeVehicle`, {
+  removeVehicle(vehicleId: string, userId: string, token: string): Observable<unknown> {
+    return this.http.delete<unknown>(`${this.apiUrl}/host/removeVehicle`, {
       body: { vehicleId, userId },
       headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
     });
@@ -56,9 +56,7 @@ export class VehicleService {
   // set proper types - create vehicle model on UI
   private vehicleDataConverter(value: VehicleForm) {
     const { gearbox, drive } = value.vehicleFeaturesInfo;
-    let convertedVehicle;
-
-    convertedVehicle = {
+    const convertedVehicle = {
       ...value.vehicleMainInfo,
       specification: {
         ...value.vehicleSpecInfo
@@ -73,7 +71,7 @@ export class VehicleService {
     return convertedVehicle;
   }
 
-  private stringToVehicleObjConverter(value: string): {} | undefined {
+  private stringToVehicleObjConverter(value: string): object | undefined {
     let convertedDrive;
     let convertedGearbox;
 

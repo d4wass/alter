@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-title-header',
-    template: `
+  selector: 'app-title-header',
+  template: `
     <div class="wrapper" [ngClass]="bgHeader">
       <div class="title-container">
         <h1 class="title">{{ title }}</h1>
@@ -13,8 +13,7 @@ import { Router } from '@angular/router';
       </div>
     </div>
   `,
-    styleUrls: ['./title-header.component.scss'],
-    standalone: false
+  styleUrls: ['./title-header.component.scss']
 })
 export class TitleHeaderComponent implements OnInit {
   @Input() title!: string;

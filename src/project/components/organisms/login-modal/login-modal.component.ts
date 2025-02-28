@@ -8,8 +8,8 @@ import { AppActions } from 'src/+state/app-state/app-state.actions';
 import { filter, map, Observable, tap, withLatestFrom } from 'rxjs';
 
 @Component({
-    selector: 'app-login-modal',
-    template: `
+  selector: 'app-login-modal',
+  template: `
     <ng-container *ngIf="isVisible$ | async">
       <div class="wrapper" appLoginModal>
         <div class="wrapper-modal" appLoginModal>
@@ -92,8 +92,7 @@ import { filter, map, Observable, tap, withLatestFrom } from 'rxjs';
       </div>
     </ng-container>
   `,
-    styleUrls: ['./login-modal.component.scss'],
-    standalone: false
+  styleUrls: ['./login-modal.component.scss']
 })
 export class LoginModalComponent implements OnInit {
   isVisible$?: Observable<boolean>;
@@ -119,7 +118,10 @@ export class LoginModalComponent implements OnInit {
     isNewsletter: new FormControl(false)
   });
 
-  constructor(private modalLoginService: ModalLoginService, private readonly store: Store) {}
+  constructor(
+    private modalLoginService: ModalLoginService,
+    private readonly store: Store
+  ) {}
 
   ngOnInit() {
     this.isVisible$ = this.modalLoginService.isVisible$;
@@ -161,7 +163,7 @@ export class LoginModalComponent implements OnInit {
   }
 
   setStateModalView(event: Event) {
-    let target = event.target as HTMLElement;
+    const target = event.target as HTMLElement;
 
     if (target.id === 'login') {
       this.store.dispatch(AppActions.setLoginModalToLoginView({ isLogin: true }));

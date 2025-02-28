@@ -7,8 +7,8 @@ import { UserFacade } from 'src/+state/facade/user/user.facade';
 import { UserActions } from 'src/+state/user/user.actions';
 
 @Component({
-    selector: 'app-account-edit-form',
-    template: `
+  selector: 'app-account-edit-form',
+  template: `
     <ng-container>
       <ng-container *ngIf="isPasswordModal">
         <app-update-user-modal
@@ -81,8 +81,7 @@ import { UserActions } from 'src/+state/user/user.actions';
       </div>
     </ng-container>
   `,
-    styleUrls: ['./account-edit-form.component.scss'],
-    standalone: false
+  styleUrls: ['./account-edit-form.component.scss']
 })
 export class AccountEditFormComponent {
   @Input() userToken: Observable<string> | undefined;
@@ -140,7 +139,10 @@ export class AccountEditFormComponent {
     }
   };
 
-  constructor(private readonly store: Store, private readonly userFacade: UserFacade) {}
+  constructor(
+    private readonly store: Store,
+    private readonly userFacade: UserFacade
+  ) {}
 
   handleModalVisibility(event: Event) {
     const target = event.target as HTMLElement;

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { LanguageSelectService } from 'src/services/language-select/language-select.service';
 
 @Component({
-    selector: 'app-language-select',
-    template: `
+  selector: 'app-language-select',
+  template: `
     <div class="wrapper">
       <div class="select">
         <div class="select__label" (click)="handleSelect($event)">Select the category</div>
@@ -17,8 +17,7 @@ import { LanguageSelectService } from 'src/services/language-select/language-sel
       </div>
     </div>
   `,
-    styleUrls: ['./language-select.component.scss'],
-    standalone: false
+  styleUrls: ['./language-select.component.scss']
 })
 export class LanguageSelectComponent {
   constructor(private languageSelectService: LanguageSelectService) {}
@@ -30,9 +29,7 @@ export class LanguageSelectComponent {
     { value: 'france', icon: 'assets/language/france.svg' }
   ];
 
-  handleSelect(event: Event) {
-    const target = event.target as HTMLElement;
-
+  handleSelect() {
     document.querySelector('.select__label')?.classList.toggle('select__label--open');
     document.querySelector('.select')?.classList.toggle('select__label--open');
     document

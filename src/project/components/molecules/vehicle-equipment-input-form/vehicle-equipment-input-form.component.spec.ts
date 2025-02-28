@@ -106,7 +106,7 @@ describe('VehicleFeatureCheckboxInputFormComponent', () => {
       ['   ', 'You provide incorrect value. Please enter equipement name'],
       ['value', 'You already add this value. Make sure your value is unique'],
       ['va', 'Provided value is too short']
-    ])('should show tooltip for invalid values', (controlValue, tooltipMsg) => {
+    ])('should show tooltip for invalid values', (controlValue) => {
       const event = new MouseEvent('click');
 
       component.equipment = ['value'];

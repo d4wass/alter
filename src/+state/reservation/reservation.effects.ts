@@ -1,17 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {
-  catchError,
-  exhaustMap,
-  map,
-  merge,
-  mergeMap,
-  of,
-  switchMap,
-  tap,
-  withLatestFrom
-} from 'rxjs';
+import { catchError, exhaustMap, map, merge, of, switchMap, tap, withLatestFrom } from 'rxjs';
 import { ReservationService } from 'src/services/reservation-service/reservation.service';
 import { UserFacade } from '../facade/user/user.facade';
 import { ReservationActions } from './reservation.actions';

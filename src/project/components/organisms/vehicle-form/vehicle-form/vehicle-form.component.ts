@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
-import { catchError, filter, Observable, of, take, tap } from 'rxjs';
+import { filter, Observable, take, tap } from 'rxjs';
 import { UserActions } from '../../../../../+state/user/user.actions';
 import { UserFacade } from '../../../../../+state/facade/user/user.facade';
 import {
@@ -14,8 +14,8 @@ import {
 } from '../vehicle-form.model';
 
 @Component({
-    selector: 'app-vehicle-form',
-    template: `
+  selector: 'app-vehicle-form',
+  template: `
     <div class="wrapper">
       <form [formGroup]="form">
         <app-vehicle-form-main-data
@@ -35,9 +35,8 @@ import {
       ></app-vehicle-success-create-modal>
     </div>
   `,
-    styleUrls: ['./vehicle-form.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  styleUrls: ['./vehicle-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VehicleFormComponent {
   isCreated$: Observable<boolean> = this.userFacade.isVehicleCreated();

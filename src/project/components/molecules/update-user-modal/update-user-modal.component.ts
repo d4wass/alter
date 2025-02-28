@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@ngneat/reactive-forms';
 
 @Component({
-    selector: 'app-update-user-modal',
-    template: `
+  selector: 'app-update-user-modal',
+  template: `
     <div class="wrapper">
       <div class="modal-container">
         <h3>{{ title }}</h3>
@@ -27,8 +27,7 @@ import { FormGroup } from '@ngneat/reactive-forms';
       </div>
     </div>
   `,
-    styleUrls: ['./update-user-modal.component.scss'],
-    standalone: false
+  styleUrls: ['./update-user-modal.component.scss']
 })
 export class UpdateUserModalComponent {
   @Input() formGroupCtrl!: FormGroup<any>;

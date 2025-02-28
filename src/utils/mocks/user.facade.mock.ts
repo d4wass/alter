@@ -4,7 +4,7 @@ import { FacadeMock } from '../facade.mock';
 import { UserFacade } from '../../+state/facade/user/user.facade';
 
 export class UserFacadeMock implements FacadeMock<Partial<UserFacade>> {
-  store = EMPTY as any;
+  store = EMPTY as unknown;
   vehicleCreated$ = new BehaviorSubject<boolean>(false);
 
   isVehicleCreated = () => this.vehicleCreated$;

@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { map, Observable, of, switchMap, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Vehicle } from 'src/+state/models/vehicle.model';
 import { UnshplashService, UnsplashImg } from 'src/services/unsplash-service/unshplash.service';
 
 @UntilDestroy()
 @Component({
-    selector: 'app-searched-car-card',
-    template: `
+  selector: 'app-searched-car-card',
+  template: `
     <div class="wrapper" (click)="showVehicleDetails()">
       <div
         class="card-image"
@@ -34,9 +34,8 @@ import { UnshplashService, UnsplashImg } from 'src/services/unsplash-service/uns
       </div>
     </div>
   `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    styleUrls: ['./searched-car-card.component.scss'],
-    standalone: false
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./searched-car-card.component.scss']
 })
 export class SearchedCarCardComponent implements OnInit {
   @Input() vehicle!: Vehicle;

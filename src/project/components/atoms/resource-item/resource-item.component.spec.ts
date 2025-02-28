@@ -1,7 +1,6 @@
 import { createComponentFactory, Spectator } from '@ngneat/spectator';
 import { dataTest } from '../../../../utils/data-test';
-import { ObjectType } from 'typescript';
-import { CtaBtn, ResourceItemComponent } from './resource-item.component';
+import { ResourceItemComponent } from './resource-item.component';
 
 describe('ResourceItemComponent', () => {
   let component: ResourceItemComponent;

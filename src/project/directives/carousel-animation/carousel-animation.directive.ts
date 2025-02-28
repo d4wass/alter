@@ -14,11 +14,10 @@ import {
   OnDestroy,
   OnInit
 } from '@angular/core';
-import { BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map } from 'rxjs';
 
 @Directive({
-    selector: '[appCarouselAnimation]',
-    standalone: false
+  selector: '[appCarouselAnimation]'
 })
 export class CarouselAnimationDirective implements AfterViewInit, OnInit, OnDestroy {
   private allCarouselItems: HTMLElement[] = [];
@@ -36,7 +35,10 @@ export class CarouselAnimationDirective implements AfterViewInit, OnInit, OnDest
   @ContentChild('carouselPrevBtn') prevBtn!: ElementRef;
   @ContentChild('carouselItems') carousel!: ElementRef;
   @ContentChild('carouselNextBtn') nextBtn!: ElementRef;
-  constructor(private animationBuilder: AnimationBuilder, private zone: NgZone) {}
+  constructor(
+    private animationBuilder: AnimationBuilder,
+    private zone: NgZone
+  ) {}
 
   ngOnInit(): void {
     this.resizeObserver = new ResizeObserver((entries) => {
@@ -186,7 +188,7 @@ export class CarouselAnimationDirective implements AfterViewInit, OnInit, OnDest
     this.displayedCarouselItems = displayed;
     this.nonDisplayedCarouselItems = nonDisplayed;
 
-    let movePx = howManyItemMove * carouselItemWidth;
+    const movePx = howManyItemMove * carouselItemWidth;
 
     return movePx;
   }
