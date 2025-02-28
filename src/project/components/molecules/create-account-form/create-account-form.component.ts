@@ -1,8 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { ControlsOf, FormControl, FormGroup } from '@ngneat/reactive-forms';
-import { Store } from '@ngrx/store';
-import { UserActions } from 'src/+state/user/user.actions';
+import { ControlsOf, FormGroup } from '@ngneat/reactive-forms';
 
 interface IAccount {
   firstName: string;
@@ -16,8 +13,8 @@ interface IAccount {
 }
 
 @Component({
-    selector: 'app-create-account-form',
-    template: `
+  selector: 'app-create-account-form',
+  template: `
     <div>
       <form [formGroup]="form" (ngSubmit)="handleSubmit.emit($event)">
         <div class="personal-info">
@@ -103,8 +100,7 @@ interface IAccount {
       <!-- <mat-progress-spinner mode="indeterminate"></mat-progress-spinner> -->
     </div>
   `,
-    styleUrls: ['./create-account-form.component.scss'],
-    standalone: false
+  styleUrls: ['./create-account-form.component.scss']
 })
 export class CreateAccountFormComponent {
   @Output() handleSubmit = new EventEmitter<any>();

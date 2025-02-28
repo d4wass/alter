@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
-import { map, Observable, take, tap } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 import { AppActions } from 'src/+state/app-state/app-state.actions';
 import { UserFacade } from 'src/+state/facade/user/user.facade';
 import { VehicleFacade } from 'src/+state/facade/vehicle.facade';
@@ -12,15 +12,14 @@ import { ReservationActions } from 'src/+state/reservation/reservation.actions';
 import moment from 'moment';
 
 @Component({
-    selector: 'app-vehicle-view',
-    templateUrl: './vehicle-view.component.html',
-    styleUrls: ['./vehicle-view.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'app-vehicle-view',
+  templateUrl: './vehicle-view.component.html',
+  styleUrls: ['./vehicle-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VehicleViewComponent implements OnInit {
   vehicle?: Vehicle;
-  owner?: any;
+  owner?: unknown;
   imageUrl?: string;
   isAuthorized?: boolean;
   userId?: string;
@@ -128,7 +127,7 @@ export class VehicleViewComponent implements OnInit {
 
   private getVehicleEquipment(feature: any): string[] | undefined {
     const { cruiseControl, lights, parkingAssist } = feature;
-    let type: any[] = [];
+    const type: any[] = [];
 
     for (const [key, value] of Object.entries(feature)) {
       if (value === true) {

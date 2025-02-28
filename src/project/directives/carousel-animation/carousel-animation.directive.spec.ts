@@ -1,13 +1,11 @@
 import { AnimationBuilder } from '@angular/animations';
 import { SpectatorDirective, createDirectiveFactory } from '@ngneat/spectator';
-import { BehaviorSubject } from 'rxjs';
 import { CarouselAnimationDirective } from './carousel-animation.directive';
 
 describe('CarouselAnimationDirective', () => {
   let spectator: SpectatorDirective<CarouselAnimationDirective>;
   let directive: CarouselAnimationDirective;
   let animationBuilder: AnimationBuilder;
-  const mockOffset = new BehaviorSubject<number>(0);
 
   const createDirective = createDirectiveFactory({
     directive: CarouselAnimationDirective,

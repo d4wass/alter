@@ -4,7 +4,7 @@ import { FacadeMock } from '../facade.mock';
 import { AppSettingFacade } from '../../+state/facade/app-state/app-settings.facade';
 
 export class AppSettingsFacadeMock implements FacadeMock<Partial<AppSettingFacade>> {
-  store$ = EMPTY as any;
+  store$ = EMPTY as unknown;
 
   isEditProfile$ = new BehaviorSubject<boolean>(false);
   vehicleBrands$ = new BehaviorSubject<string[]>([]);

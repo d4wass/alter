@@ -26,6 +26,6 @@ export function mockVehicleFormData(
       seats: 0
     }
   }
-): any {
+) {
   return vehicle;
 }

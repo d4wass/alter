@@ -3,8 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppActions } from 'src/+state/app-state/app-state.actions';
 
 @Directive({
-    selector: '[appLoginModal]',
-    standalone: false
+  selector: '[appLoginModal]'
 })
 export class LoginModalDirective {
   constructor(private store: Store) {}

@@ -1,33 +1,21 @@
 {
   "root": true,
   "ignorePatterns": ["projects/**/*"],
-  "env": {
-    "es6": true,
-    "node": true,
-    "jest": true,
-    "browser": true
-  },
-  "plugins": ["@typescript-eslint", "jest", "eslint-plugin-rxjs"],
+  "plugins": ["@angular-eslint/eslint-plugin", "jest", "eslint-plugin-rxjs"],
   "overrides": [
     {
       "files": ["*.ts"],
       "parserOptions": {
-        "project": ["tsconfig.json", "tsconfig.spec.json"],
+        "project": ["**/tsconfig.eslint.json"],
         "createDefaultProgram": true
       },
       "extends": [
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended"
       ],
       "rules": {
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": "app",
-            "style": "camelCase"
-          }
-        ],
+        "@typescript-eslint/explicit-function-return-type": "off",
         "@angular-eslint/component-selector": [
           "error",
           {

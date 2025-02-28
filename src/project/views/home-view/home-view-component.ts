@@ -77,11 +77,10 @@ const reviewsData = [
 ];
 
 @Component({
-    selector: 'app-home-view-component',
-    templateUrl: './home-view-component.html',
-    styleUrls: ['./home-view-component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'app-home-view-component',
+  templateUrl: './home-view-component.html',
+  styleUrls: ['./home-view-component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeViewComponent implements OnInit {
   constructor(private appSettingsFacade: AppSettingFacade) {}

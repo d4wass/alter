@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-host-panel-section',
-    template: `
+  selector: 'app-host-panel-section',
+  template: `
     <div class="wrapper">
       <div class="content">
         <h1>Host well, earn big</h1>
@@ -15,8 +15,7 @@ import { Component, OnInit } from '@angular/core';
       <div class="graphic-content"></div>
     </div>
   `,
-    styleUrls: ['./host-panel-section.component.scss'],
-    standalone: false
+  styleUrls: ['./host-panel-section.component.scss']
 })
 export class HostPanelSectionComponent {
   constructor() {}

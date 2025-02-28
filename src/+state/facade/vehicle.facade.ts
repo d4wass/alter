@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { filter, map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Vehicle, VehicleQuery } from '../models/vehicle.model';
 import { VehicleSelectors } from '../vehicles/vehicle.selectors';
 

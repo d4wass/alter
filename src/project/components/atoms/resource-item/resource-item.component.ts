@@ -6,8 +6,8 @@ export interface CtaBtn {
 }
 
 @Component({
-    selector: 'app-resource-item',
-    template: `
+  selector: 'app-resource-item',
+  template: `
     <div class="wrapper">
       <img src="{{ icon }}" />
       <div class="content">
@@ -18,8 +18,7 @@ export interface CtaBtn {
       <a routerLink="#">{{ cta?.content }}</a>
     </div>
   `,
-    styleUrls: ['./resource-item.component.scss'],
-    standalone: false
+  styleUrls: ['./resource-item.component.scss']
 })
 export class ResourceItemComponent {
   @Input() title!: string;

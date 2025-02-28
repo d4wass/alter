@@ -1,11 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { UserFacade } from 'src/+state/facade/user/user.facade';
 import { Vehicle } from 'src/+state/models/vehicle.model';
 
 @Component({
-    selector: 'app-vehicle-user-list',
-    template: `
+  selector: 'app-vehicle-user-list',
+  template: `
     <table>
       <thead>
         <tr>
@@ -26,8 +26,7 @@ import { Vehicle } from 'src/+state/models/vehicle.model';
       </tbody>
     </table>
   `,
-    styleUrls: ['./vehicle-user-list.component.scss'],
-    standalone: false
+  styleUrls: ['./vehicle-user-list.component.scss']
 })
 export class VehicleUserListComponent implements OnInit {
   @Output() removeEmitter: EventEmitter<string> = new EventEmitter<string>();
@@ -46,7 +45,7 @@ export class VehicleUserListComponent implements OnInit {
   private createVehicleArrayFromEntity(): Observable<Vehicle[]> {
     return this.userFacade.userVehicles$.pipe(
       map((x) => {
-        let arr: Vehicle[] = [];
+        const arr: Vehicle[] = [];
         for (const [, value] of Object.entries(x)) {
           arr.push(value as Vehicle);
         }

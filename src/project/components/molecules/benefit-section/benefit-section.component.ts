@@ -19,8 +19,8 @@ const benefitItems = [
 ];
 
 @Component({
-    selector: 'app-benefit-section',
-    template: `
+  selector: 'app-benefit-section',
+  template: `
     <div class="wrapper">
       <div class="graphic-content">
         <div class="svg-1"></div>
@@ -37,8 +37,7 @@ const benefitItems = [
       </div>
     </div>
   `,
-    styleUrls: ['./benefit-section.component.scss'],
-    standalone: false
+  styleUrls: ['./benefit-section.component.scss']
 })
 export class BenefitSectionComponent {
   benefitItems = benefitItems;

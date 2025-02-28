@@ -23,11 +23,10 @@ import { UserActions } from '../../../+state/user/user.actions';
 
 @UntilDestroy()
 @Component({
-    selector: 'app-profile-view',
-    templateUrl: './profile-view.component.html',
-    styleUrls: ['./profile-view.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'app-profile-view',
+  templateUrl: './profile-view.component.html',
+  styleUrls: ['./profile-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileViewComponent implements OnInit, OnDestroy {
   userName$!: Observable<string | undefined>;
