@@ -1,7 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { urlItem } from 'src/router/routes';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   selector: 'app-navigation-item',
   template: `
     <a

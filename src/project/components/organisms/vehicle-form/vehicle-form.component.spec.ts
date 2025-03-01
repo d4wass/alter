@@ -3,13 +3,13 @@ import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import { Store } from '@ngrx/store';
 import { MockComponent, MockProvider } from 'ng-mocks';
 import { of } from 'rxjs';
-import { UserActions } from '../../../../../+state/user/user.actions';
-import { UserFacade } from '../../../../../+state/facade/user/user.facade';
-import { dataTest } from '../../../../../utils/data-test';
+import { UserActions } from '../../../../+state/user/user.actions';
+import { UserFacade } from '../../../../+state/facade/user/user.facade';
+import { dataTest } from '../../../../utils/data-test';
 import { VehicleFormComponent } from './vehicle-form.component';
-import { mockVehicleFormData } from '../../../../../utils/mocks/mockVehicleFormData';
-import { VehicleSuccessCreateModalComponent } from '../../../../components/molecules/vehicle-success-create-modal/vehicle-success-create-modal.component';
-import { MOCK_USER_FACADE, UserFacadeMock } from '../../../../../utils/mocks/user.facade.mock';
+import { mockVehicleFormData } from '../../../../utils/mocks/mockVehicleFormData';
+import { VehicleSuccessCreateModalComponent } from '../../molecules/vehicle-success-create-modal/vehicle-success-create-modal.component';
+import { MOCK_USER_FACADE, UserFacadeMock } from '../../../../utils/mocks/user.facade.mock';
 
 describe('VehicleFormComponent', () => {
   let component: VehicleFormComponent;

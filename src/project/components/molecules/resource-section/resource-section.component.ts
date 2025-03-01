@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { ResourceItemComponent } from '@project/components/atoms/resource-item/resource-item.component';
 
 const resourceItems = [
   {
@@ -28,6 +30,8 @@ const resourceItems = [
 ];
 
 @Component({
+  standalone: true,
+  imports: [ResourceItemComponent, CommonModule],
   selector: 'app-resource-section',
   template: `
     <div class="wrapper">

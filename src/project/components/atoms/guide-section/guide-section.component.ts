@@ -1,6 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { GuideItemComponent } from '../guide-item/guide-item.component';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, GuideItemComponent],
   selector: 'app-guide-section',
   template: `
     <div class="wrapper">

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
+  standalone: true,
   selector: 'app-host-panel-section',
   template: `
     <div class="wrapper">

@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login-btn',
@@ -17,7 +19,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       </button>
     </ng-template>
   `,
-  styleUrls: ['./login-btn.component.scss']
+  styleUrls: ['./login-btn.component.scss'],
+  standalone: true,
+  imports: [RouterModule, CommonModule]
 })
 export class LoginBtnComponent {
   @Output() isClicked = new EventEmitter<boolean>();

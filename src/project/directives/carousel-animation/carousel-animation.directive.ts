@@ -17,6 +17,7 @@ import {
 import { BehaviorSubject, combineLatest, map } from 'rxjs';
 
 @Directive({
+  standalone: true,
   selector: '[appCarouselAnimation]'
 })
 export class CarouselAnimationDirective implements AfterViewInit, OnInit, OnDestroy {

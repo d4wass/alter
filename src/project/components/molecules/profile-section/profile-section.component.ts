@@ -1,7 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule],
   selector: 'app-profile-section',
   template: `
     <div class="profile-section">

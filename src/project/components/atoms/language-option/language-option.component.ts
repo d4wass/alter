@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
+  standalone: true,
   selector: 'app-language-option',
   template: `
     <div (click)="handleRadioSelect($event)">

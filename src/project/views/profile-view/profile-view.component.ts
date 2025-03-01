@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormControl } from '@ngneat/reactive-forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Store } from '@ngrx/store';
@@ -20,11 +20,26 @@ import { UserDataToUpdate } from '../../../+state/models/user.model';
 import { UserReservationsActions } from '../../../+state/user-reservations/user-reservations.actions';
 import { UserVehiclesActions } from '../../../+state/user-vehicles/user-vehicles.actions';
 import { UserActions } from '../../../+state/user/user.actions';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AccountEditFormComponent } from '@project/components/organisms/account-edit-form/account-edit-form.component';
+import { ProfileBtnComponent } from '@project/components/atoms/profile-btn/profile-btn.component';
+import { VehicleUserListComponent } from '@project/components/molecules/vehicle-user-list/vehicle-user-list.component';
+import { ReservationUserListComponent } from '@project/components/molecules/reservation-user-list/reservation-user-list.component';
 
 @UntilDestroy()
 @Component({
+  standalone: true,
   selector: 'app-profile-view',
   templateUrl: './profile-view.component.html',
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    AccountEditFormComponent,
+    ProfileBtnComponent,
+    VehicleUserListComponent,
+    ReservationUserListComponent
+  ],
   styleUrls: ['./profile-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

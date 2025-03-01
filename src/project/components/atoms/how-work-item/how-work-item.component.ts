@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -13,7 +14,8 @@ import { Component, Input } from '@angular/core';
       </div>
     </div>
   `,
-  styleUrls: ['./how-work-item.component.scss']
+  styleUrls: ['./how-work-item.component.scss'],
+  imports: [CommonModule]
 })
 export class HowWorkItemComponent {
   @Input() itemNumber?: string;

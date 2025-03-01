@@ -1,7 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatRadioModule,
+    BrowserAnimationsModule,
+    FormsModule
+  ],
   selector: 'app-vehicle-feature-radio-input-form',
   template: `
     <form>

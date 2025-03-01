@@ -1,13 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalLoginService } from '../../../../services/modal-login/modal-login-service.service';
 import { FormControl, FormGroup, ValuesOf } from '@ngneat/reactive-forms';
-import { Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { UserActions } from 'src/+state/user/user.actions';
 import { AppActions } from 'src/+state/app-state/app-state.actions';
 import { filter, map, Observable, tap, withLatestFrom } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { LoginModalDirective } from '@project/directives/login-modal/login-modal.directive';
+import { CreateAccountFormComponent } from '@project/components/molecules/create-account-form/create-account-form.component';
 
 @Component({
+  standalone: true,
+  imports: [
+    CommonModule,
+    CreateAccountFormComponent,
+    ReactiveFormsModule,
+    FormsModule,
+    LoginModalDirective
+  ],
   selector: 'app-login-modal',
   template: `
     <ng-container *ngIf="isVisible$ | async">

@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
 import { VehiclesActions } from '../../../../+state/vehicles/vehicle.actions';
+import { CommonModule } from '@angular/common';
+import { SearchHeaderInputComponent } from '@project/components/atoms/search-header-input/search-header-input.component';
+import { DatepickerComponent } from '../datepicker/datepicker.component';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, SearchHeaderInputComponent, DatepickerComponent, ReactiveFormsModule],
   selector: 'app-main-search-form',
   template: `
     <div class="wrapper">

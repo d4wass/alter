@@ -1,7 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormGroup } from '@ngneat/reactive-forms';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   selector: 'app-update-user-modal',
   template: `
     <div class="wrapper">

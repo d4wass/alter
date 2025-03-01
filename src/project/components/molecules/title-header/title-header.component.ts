@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MainSearchFormComponent } from '../main-search-form/main-search-form.component';
 
 @Component({
   selector: 'app-title-header',
@@ -13,7 +15,9 @@ import { Router } from '@angular/router';
       </div>
     </div>
   `,
-  styleUrls: ['./title-header.component.scss']
+  styleUrls: ['./title-header.component.scss'],
+  standalone: true,
+  imports: [CommonModule, MainSearchFormComponent]
 })
 export class TitleHeaderComponent implements OnInit {
   @Input() title!: string;

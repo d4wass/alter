@@ -1,12 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { LanguageOptionComponent } from '@project/components/atoms/language-option/language-option.component';
 import { LanguageSelectService } from 'src/services/language-select/language-select.service';
 
 @Component({
+  standalone: true,
+  imports: [LanguageOptionComponent, CommonModule],
   selector: 'app-language-select',
   template: `
     <div class="wrapper">
       <div class="select">
-        <div class="select__label" (click)="handleSelect($event)">Select the category</div>
+        <div class="select__label" (click)="handleSelect()">Select the category</div>
         <div class="select__option__container">
           <app-language-option
             *ngFor="let item of options"

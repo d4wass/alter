@@ -1,7 +1,26 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 import { ControlsOf, FormControl, FormGroup } from '@ngneat/reactive-forms';
+import { VehicleEquipmentInputFormComponent } from '../vehicle-equipment-input-form/vehicle-equipment-input-form.component';
+import { VehicleFeatureRadioInputFormComponent } from '@project/components/atoms/vehicle-feature-radio-input-form/vehicle-feature-radio-input-form.component';
 
 @Component({
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    VehicleEquipmentInputFormComponent,
+    VehicleFeatureRadioInputFormComponent
+  ],
   selector: 'app-vehicle-form-features-data',
   template: `
     <form [formGroup]="formGroupCtrl">

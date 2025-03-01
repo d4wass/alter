@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
@@ -8,7 +9,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
       <img src="assets/faq/plus-solid.svg" alt="" *ngIf="!isOpen" />
     </button>
   `,
-  styleUrls: ['./faq-button.component.scss']
+  styleUrls: ['./faq-button.component.scss'],
+  imports: [CommonModule]
 })
 export class FaqButtonComponent {
   isOpen: boolean = false;

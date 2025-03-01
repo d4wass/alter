@@ -6,13 +6,28 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { MatTooltip } from '@angular/material/tooltip';
+import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
 import { FormControl } from '@ngneat/reactive-forms';
 import { EquipmentValidationMsg } from 'src/+state/models/user.model';
 import { isNonNull } from '../../../../utils/helpers';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { VehicleEquipmentItemComponent } from '@project/components/atoms/vehicle-equipment-item/vehicle-equipment-item.component';
 
 @Component({
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatListModule,
+    VehicleEquipmentItemComponent
+  ],
   selector: 'app-vehicle-equipment-input-form',
   template: `
     <div>

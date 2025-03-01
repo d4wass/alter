@@ -1,10 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { LoginBtnComponent } from '@project/components/atoms/login-btn/login-btn.component';
+import { NavigationBarComponent } from '@project/components/molecules/navigation-bar/navigation-bar.component';
 import { Observable } from 'rxjs';
 import { AppActions } from 'src/+state/app-state/app-state.actions';
 import { UserFacade } from 'src/+state/facade/user/user.facade';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, RouterModule, NavigationBarComponent, LoginBtnComponent],
   selector: 'app-navigation',
   template: `
     <div>

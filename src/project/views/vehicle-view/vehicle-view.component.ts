@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
@@ -9,10 +10,13 @@ import { UserFacade } from 'src/+state/facade/user/user.facade';
 import { VehicleFacade } from 'src/+state/facade/vehicle.facade';
 import { Vehicle, VehicleQuery } from 'src/+state/models/vehicle.model';
 import { ReservationActions } from 'src/+state/reservation/reservation.actions';
-import moment from 'moment';
+import { DatepickerComponent } from '@project/components/molecules/datepicker/datepicker.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-vehicle-view',
+  imports: [CommonModule, DatepickerComponent],
   templateUrl: './vehicle-view.component.html',
   styleUrls: ['./vehicle-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

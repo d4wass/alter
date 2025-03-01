@@ -1,8 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { ControlsOf, FormGroup } from '@ngneat/reactive-forms';
 import { IVehicleBasicData } from 'src/project/model/vehicle-form-models/vehicle-forms.model';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule],
   selector: 'app-vehicle-form-main-data',
   template: `
     <form [formGroup]="formGroupCtrl">

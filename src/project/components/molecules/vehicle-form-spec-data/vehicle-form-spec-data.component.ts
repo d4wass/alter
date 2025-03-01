@@ -1,8 +1,23 @@
 import { Component, Input } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 import { ControlsOf, FormGroup } from '@ngneat/reactive-forms';
 import { IVehicleSpecificationData } from 'src/project/model/vehicle-form-models/vehicle-forms.model';
 
 @Component({
+  standalone: true,
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    ReactiveFormsModule
+  ],
   selector: 'app-vehicle-form-spec-data',
   template: `
     <form [formGroup]="formGroupCtrl" class="wrapper">

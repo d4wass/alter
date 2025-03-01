@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 export interface CtaBtn {
@@ -18,7 +19,8 @@ export interface CtaBtn {
       <a routerLink="#">{{ cta?.content }}</a>
     </div>
   `,
-  styleUrls: ['./resource-item.component.scss']
+  styleUrls: ['./resource-item.component.scss'],
+  imports: [CommonModule]
 })
 export class ResourceItemComponent {
   @Input() title!: string;

@@ -1,6 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormControl } from '@ngneat/reactive-forms';
 @Component({
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   selector: 'app-search-header-input',
   template: `
     <form class="search">

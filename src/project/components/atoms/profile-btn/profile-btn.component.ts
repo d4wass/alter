@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
+  standalone: true,
   selector: 'app-profile-btn',
   template: `
     <ng-container>
