@@ -1,6 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FaqQuestionComponent } from '@project/components/molecules/faq-question/faq-question.component';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, FaqQuestionComponent],
   selector: 'app-faq-section',
   template: `
     <div class="wrapper">

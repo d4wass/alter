@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -7,6 +8,8 @@ import { UnshplashService, UnsplashImg } from 'src/services/unsplash-service/uns
 
 @UntilDestroy()
 @Component({
+  standalone: true,
+  imports: [CommonModule],
   selector: 'app-searched-car-card',
   template: `
     <div class="wrapper" (click)="showVehicleDetails()">

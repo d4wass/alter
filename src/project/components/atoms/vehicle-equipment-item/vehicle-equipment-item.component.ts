@@ -1,6 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
+  standalone: true,
+  imports: [MatListModule, MatIconModule],
   selector: 'app-vehicle-equipment-item',
   template: `
     <mat-list-item class="equipment-item">

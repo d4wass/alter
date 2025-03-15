@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Store } from '@ngrx/store';
+import { ProfileBtnComponent } from '@project/components/atoms/profile-btn/profile-btn.component';
 import { filter, map, Observable } from 'rxjs';
 import { VehicleFacade } from 'src/+state/facade/vehicle.facade';
 import { PopulatedReservation } from 'src/+state/models/reservation.model';
@@ -11,6 +12,8 @@ import { VehiclesActions } from 'src/+state/vehicles/vehicle.actions';
 
 @UntilDestroy()
 @Component({
+  standalone: true,
+  imports: [ProfileBtnComponent],
   selector: 'app-reservation-vehicle-modal',
   template: `
     <div class="wrapper">

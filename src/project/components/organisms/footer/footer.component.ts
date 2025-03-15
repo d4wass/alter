@@ -1,6 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { LanguageSelectComponent } from '@project/components/molecules/language-select/language-select.component';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, LanguageSelectComponent],
   selector: 'app-footer',
   template: `
     <div class="wrapper">

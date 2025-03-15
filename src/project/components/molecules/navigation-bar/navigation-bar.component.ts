@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { urlList } from '../../../../router/routes';
+import { NavigationItemComponent } from '@project/components/atoms/navigation-item/navigation-item.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, NavigationItemComponent],
   selector: 'app-navigation-bar',
   template: `
     <nav>

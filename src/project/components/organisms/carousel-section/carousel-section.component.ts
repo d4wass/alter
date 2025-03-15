@@ -2,8 +2,21 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CarCardType, CardData, ReviewCardType } from 'src/project/model/customer-card.model';
 import { CarouselEnum } from './carousel.utils';
+import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CarCardComponent } from '@project/components/molecules/car-card/car-card.component';
+import { ReviewCardComponent } from '@project/components/molecules/customer-card/customer-card.component';
+import { CarouselAnimationDirective } from '@project/directives/carousel-animation/carousel-animation.directive';
 
 @Component({
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatProgressSpinnerModule,
+    CarCardComponent,
+    ReviewCardComponent,
+    CarouselAnimationDirective
+  ],
   selector: 'app-carousel-section',
   template: `
     <div class="carousel-section">

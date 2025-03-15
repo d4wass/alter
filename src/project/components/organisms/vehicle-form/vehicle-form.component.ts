@@ -1,20 +1,44 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
 import { filter, Observable, take, tap } from 'rxjs';
-import { UserActions } from '../../../../../+state/user/user.actions';
-import { UserFacade } from '../../../../../+state/facade/user/user.facade';
+import { UserActions } from '../../../../+state/user/user.actions';
+import { UserFacade } from '../../../../+state/facade/user/user.facade';
+import { CommonModule } from '@angular/common';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 import {
-  VehicleFeaturesInformation,
-  VehicleForm,
   VehicleMainInformation,
-  VehicleSpecificationInformation
-} from '../vehicle-form.model';
+  VehicleSpecificationInformation,
+  VehicleFeaturesInformation,
+  VehicleForm
+} from '@project/model/vehicle-form-models/vehicle-forms.model';
+import { VehicleFormSpecDataComponent } from '@project/components/molecules/vehicle-form-spec-data/vehicle-form-spec-data.component';
+import { VehicleFormMainDataComponent } from '@project/components/molecules/vehicle-form-main-data/vehicle-form-main-data.component';
+import { VehicleFormFeaturesDataComponent } from '@project/components/molecules/vehicle-form-features-data/vehicle-form-features-data.component';
+import { VehicleSuccessCreateModalComponent } from '@project/components/molecules/vehicle-success-create-modal/vehicle-success-create-modal.component';
 
 @Component({
+  standalone: true,
   selector: 'app-vehicle-form',
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    VehicleFormMainDataComponent,
+    VehicleFormSpecDataComponent,
+    VehicleSuccessCreateModalComponent,
+    VehicleFormFeaturesDataComponent,
+    ReactiveFormsModule
+  ],
   template: `
     <div class="wrapper">
       <form [formGroup]="form">

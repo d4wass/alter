@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { Store } from '@ngrx/store';
@@ -6,6 +7,8 @@ import { UserFacade } from 'src/+state/facade/user/user.facade';
 import { Reservation } from 'src/+state/models/reservation.model';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule],
   selector: 'app-reservation-user-list',
   template: `
     <table>

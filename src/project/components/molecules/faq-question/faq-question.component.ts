@@ -1,6 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { FaqButtonComponent } from '@project/components/atoms/faq-button/faq-button.component';
+import { FaqTitleComponent } from '@project/components/atoms/faq-title/faq-title.component';
 
 @Component({
+  standalone: true,
+  imports: [FaqButtonComponent, FaqTitleComponent, CommonModule],
   selector: 'app-faq-question',
   template: `
     <div class="faq-wrapper">

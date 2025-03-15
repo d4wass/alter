@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Vehicle } from 'src/+state/models/vehicle.model';
 import { VehicleService } from 'src/services/vehicle-service/vehicle.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class VehicleResolver {
   constructor(private readonly vehicleService: VehicleService) {}
 

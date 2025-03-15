@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { UserFacade } from 'src/+state/facade/user/user.facade';
@@ -26,7 +27,9 @@ import { Vehicle } from 'src/+state/models/vehicle.model';
       </tbody>
     </table>
   `,
-  styleUrls: ['./vehicle-user-list.component.scss']
+  styleUrls: ['./vehicle-user-list.component.scss'],
+  standalone: true,
+  imports: [CommonModule]
 })
 export class VehicleUserListComponent implements OnInit {
   @Output() removeEmitter: EventEmitter<string> = new EventEmitter<string>();

@@ -1,4 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ControlsOf, FormGroup } from '@ngneat/reactive-forms';
 
 interface IAccount {
@@ -13,6 +16,8 @@ interface IAccount {
 }
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatProgressSpinnerModule],
   selector: 'app-create-account-form',
   template: `
     <div>

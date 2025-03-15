@@ -2,6 +2,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { AppSettingFacade } from '../../../+state/facade/app-state/app-settings.facade';
 import { CarouselEnum } from '../../components/organisms/carousel-section/carousel.utils';
+import { CommonModule } from '@angular/common';
+import { TitleHeaderComponent } from '@project/components/molecules/title-header/title-header.component';
+import { FaqSectionComponent } from '@project/components/organisms/faq-section/faq-section.component';
+import { CarouselSectionComponent } from '@project/components/organisms/carousel-section/carousel-section.component';
 
 const reviewsData = [
   {
@@ -77,8 +81,10 @@ const reviewsData = [
 ];
 
 @Component({
+  standalone: true,
   selector: 'app-home-view-component',
   templateUrl: './home-view-component.html',
+  imports: [CommonModule, TitleHeaderComponent, FaqSectionComponent, CarouselSectionComponent],
   styleUrls: ['./home-view-component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

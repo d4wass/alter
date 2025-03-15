@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -11,7 +12,8 @@ import { Component, Input } from '@angular/core';
       <p data-test="content">{{ content }}</p>
     </div>
   `,
-  styleUrls: ['./guide-item.component.scss']
+  styleUrls: ['./guide-item.component.scss'],
+  imports: [CommonModule]
 })
 export class GuideItemComponent {
   @Input() title!: string;

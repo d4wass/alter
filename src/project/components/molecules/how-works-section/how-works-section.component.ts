@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { HowWorkItemComponent } from '@project/components/atoms/how-work-item/how-work-item.component';
 
 type WorkItems = {
   itemNumber: string;
@@ -27,6 +29,8 @@ const worksItems = [
 ];
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, HowWorkItemComponent],
   selector: 'app-how-works-section',
   template: `
     <div class="wrapper">

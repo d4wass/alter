@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { HowWorkItemComponent } from '@project/components/atoms/how-work-item/how-work-item.component';
 
 const benefitItems = [
   {
@@ -19,6 +21,8 @@ const benefitItems = [
 ];
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, HowWorkItemComponent],
   selector: 'app-benefit-section',
   template: `
     <div class="wrapper">

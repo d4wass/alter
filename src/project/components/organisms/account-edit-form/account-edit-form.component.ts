@@ -1,12 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { FormControl, FormGroup } from '@ngneat/reactive-forms';
 import { Store } from '@ngrx/store';
+import { UpdateUserModalComponent } from '@project/components/molecules/update-user-modal/update-user-modal.component';
 import { debounceTime, distinctUntilChanged, Observable } from 'rxjs';
 import { UserFacade } from 'src/+state/facade/user/user.facade';
 import { UserActions } from 'src/+state/user/user.actions';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, UpdateUserModalComponent, ReactiveFormsModule],
   selector: 'app-account-edit-form',
   template: `
     <ng-container>

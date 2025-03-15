@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 
 export interface CustomerReview {
@@ -35,7 +36,8 @@ export interface CustomerReview {
       </div>
     </div>
   `,
-  styleUrls: ['./customer-card.component.scss']
+  styleUrls: ['./customer-card.component.scss'],
+  imports: [CommonModule]
 })
 export class ReviewCardComponent implements OnInit {
   @Input() review!: CustomerReview;
