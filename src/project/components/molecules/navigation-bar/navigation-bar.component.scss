@@ -1,9 +1,36 @@
+@use '../../../../mixins';
+
+:host {
+  @include mixins.for-size(tablet-landscape-up, desktop-up, big-desktop-up) {
+    flex-grow: 2;
+  }
+}
+
+nav {
+  // display: flex;
+  // justify-content: center;
+  // margin-inline: auto;
+}
+
 ul {
   padding: 0;
   list-style: none;
-  display: flex;
+  // display: flex;
 }
 
 li {
   margin: 0 20px;
+}
+
+.navigation-bar {
+  --min: 15ch;
+  --gap: 1rem;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 150px));
+  gap: var(--gap);
+  justify-content: center;
+}
+
+.navigation-bar {
 }

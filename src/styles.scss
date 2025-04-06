@@ -16,6 +16,7 @@ $mainSidePadding: 6.3em;
 
 body {
   font-family: base.$main-font;
+  overflow-x: hidden;
 }
 
 .flex-wrapper {
