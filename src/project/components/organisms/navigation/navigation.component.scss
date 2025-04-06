@@ -1,12 +1,88 @@
-$gridGap: 1em;
-$mainSidePadding: 6.3em;
+@use '../../../../mixins';
 
-div {
+:host {
   display: flex;
   justify-content: space-between;
-  padding: $gridGap $mainSidePadding;
+  padding: 1em max(5vw, 1rem);
+  align-items: center;
 }
 
 .logo {
   height: 50px;
+
+  @include mixins.for-size(phone-only) {
+    height: 30px;
+  }
+}
+
+.nav-routing {
+  @include mixins.for-size(tablet-landscape-up, desktop-up, big-desktop-up) {
+    display: inherit;
+    width: 100%;
+    flex-direction: row;
+  }
+
+  @include mixins.for-size(phone-only) {
+    &.collapsed {
+      transition: all 0.3s ease-out;
+      transform: translateX(0%);
+      background-color: red;
+    }
+    transform: translateX(100%);
+    position: fixed;
+    inset: 0 0 0 35%;
+
+    display: inherit;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    padding: min(20vh, 10rem) 2em;
+  }
+}
+
+.nav-toggle-btn {
+  display: none;
+
+  button {
+    height: 100%;
+    --button-color: #000;
+    background: transparent;
+    border: none;
+    .line {
+      transition:
+        y 0.3s ease-in 0.3s,
+        rotate 0.3s ease-in,
+        opacity 0ms 0.3s;
+      transform-origin: center;
+    }
+  }
+
+  @include mixins.for-size(phone-only) {
+    display: block;
+    z-index: 9999;
+    aspect-ratio: 1;
+  }
+}
+
+.nav-toggle-btn[aria-expanded='true'] button .line {
+  transition:
+    y 0.3s ease-in,
+    rotate 0.3s ease-in 0.3s,
+    opacity 0ms 0.3s;
+}
+
+.nav-toggle-btn[aria-expanded='true'] button :is(.top, .bottom) {
+  y: 45;
+}
+
+.nav-toggle-btn[aria-expanded='true'] button .top {
+  rotate: 45deg;
+}
+
+.nav-toggle-btn[aria-expanded='true'] button .middle {
+  opacity: 0;
+}
+
+.nav-toggle-btn[aria-expanded='true'] button .bottom {
+  rotate: -45deg;
 }

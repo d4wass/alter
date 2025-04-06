@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-navigation-bar',
   template: `
     <nav>
-      <ul>
+      <ul class="navigation-bar">
         <li *ngFor="let item of urlList">
           <app-navigation-item [item]="item"></app-navigation-item>
         </li>

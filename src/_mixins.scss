@@ -1,25 +1,51 @@
 @use './base';
 
-@mixin title($size){
-    h1{
-        font-family: base.$title-font;
-        font-weight: 900;
-        font-size: $size;
-        margin-bottom: 10px;
-    }
+@mixin title($size) {
+  h1 {
+    font-family: base.$title-font;
+    font-weight: 900;
+    font-size: $size;
+    margin-bottom: 10px;
+  }
 }
 
 @mixin subtitle($size) {
-    h3{
-        font-family: base.$main-font;
-        font-weight: 900;
-        font-size: $size;
-    }
+  h3 {
+    font-family: base.$main-font;
+    font-weight: 900;
+    font-size: $size;
+  }
 }
 
 @mixin paragraph {
-    p{
-        line-height: 1.50;
-        font-weight: 300;
+  p {
+    line-height: 1.5;
+    font-weight: 300;
+  }
+}
+
+@mixin for-size($sizes...) {
+  @each $size in $sizes {
+    @if $size == phone-only {
+      @media (max-width: 35em) {
+        @content;
+      }
+    } @else if $size == tablet-portrait-up {
+      @media (min-width: 36em) {
+        @content;
+      }
+    } @else if $size == tablet-landscape-up {
+      @media (min-width: 57em) {
+        @content;
+      }
+    } @else if $size == desktop-up {
+      @media (min-width: 75em) {
+        @content;
+      }
+    } @else if $size == big-desktop-up {
+      @media (min-width: 112em) {
+        @content;
+      }
     }
+  }
 }

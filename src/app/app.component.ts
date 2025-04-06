@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { LoginModalComponent } from '@project/components/organisms/login-modal/login-modal.component';
+//! app component cannot have access to NavigationComponent before initialization
+// import { NavigationComponent } from '@project/components/organisms/navigation/navigation.component';
 import { AppActions } from 'src/+state/app-state/app-state.actions';
 
 @Component({
